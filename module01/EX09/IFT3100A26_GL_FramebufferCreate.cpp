@@ -45,7 +45,7 @@ glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER,
 // générer un identifiant pour un nouveau buffer de profondeur
 glGenRenderbuffers(1, &depthbuffer);
 
-// sélectionner ce nouveau buffer comme buffer de rendu actif
+// sélectionner ce nouveau buffer comme buffer de profondeur actif
 glBindRenderbuffer(GL_RENDERBUFFER, depthbuffer);
 
 // allouer l'espace mémoire du buffer de profondeur
