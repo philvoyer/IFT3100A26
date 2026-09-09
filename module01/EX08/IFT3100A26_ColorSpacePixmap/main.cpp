@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
   // valeur maximale d'une composante de l'espace de couleur
   const std::uint32_t color_space_max = 255;
 
-  // 2. extractions des paramètres du programme
+  // 2. extraction des paramètres du programme
 
   switch (argc)
   {
@@ -118,13 +118,13 @@ int main(int argc, char* argv[])
   std::ofstream file;
   file.open(filename, std::ios::out);
 
-  // entête du ficher pour une image avec un espace de couleur RGB 24 bits (P3 pour pixmap)
+  // en-tête du fichier pour une image avec un espace de couleur RGB 24 bits (P3 pour pixmap)
   file << "P3\n";
 
-  // largeur et hauteur de l'image sur la seconde ligne de l'entête
+  // largeur et hauteur de l'image sur la seconde ligne de l'en-tête
   file << width << ' ' << height << '\n';
 
-  // valeur maximale de l'espace de couleur sur la troisième ligne de l'entête
+  // valeur maximale de l'espace de couleur sur la troisième ligne de l'en-tête
   file << "255\n";
 
   // écriture des pixels dans le fichier image
