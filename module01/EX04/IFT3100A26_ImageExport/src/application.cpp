@@ -17,7 +17,7 @@ void Application::draw()
   renderer.draw();
 }
 
-// fonction appelée quand une touche du clavier est relachée
+// fonction appelée quand une touche du clavier est relâchée
 void Application::keyReleased(int key)
 {
   ofLog() << "<app::keyReleased: " << key << ">";
