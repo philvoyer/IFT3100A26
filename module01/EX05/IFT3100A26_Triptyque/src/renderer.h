@@ -1,4 +1,4 @@
-// IFT3100A25_Triptyque/renderer.h
+// IFT3100A26_Triptyque/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once

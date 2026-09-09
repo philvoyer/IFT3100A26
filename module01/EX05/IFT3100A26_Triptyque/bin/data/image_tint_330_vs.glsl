@@ -1,4 +1,4 @@
-// IFT3100A25 ~ image_tint_330_vs.glsl
+// IFT3100A26 ~ image_tint_330_vs.glsl
 
 #version 330
 
