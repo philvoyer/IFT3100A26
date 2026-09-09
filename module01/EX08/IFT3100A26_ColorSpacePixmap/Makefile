@@ -1,3 +1,5 @@
+# IFT3100A26_ColorSpacePixmap/Makefile
+
 TARGET = generate_pixmap
 
 CC = g++               # gcc c++ compiler
