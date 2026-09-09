@@ -11,7 +11,7 @@ int main()
   // paramètres du contexte de rendu OpenGL
   ofGLFWWindowSettings windowSettings;
 
-  // option de redimentionnement de la fenêtre d'affichage
+  // option de redimensionnement de la fenêtre d'affichage
   windowSettings.resizable = false;
 
   // sélection de la version de OpenGL

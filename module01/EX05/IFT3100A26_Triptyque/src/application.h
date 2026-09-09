@@ -1,4 +1,4 @@
-// IFT3100A26_Triptyque/application.cpp
+// IFT3100A26_Triptyque/application.h
 // Classe principale de l'application.
 
 #pragma once

@@ -10,7 +10,7 @@ void Renderer::setup()
   // couleur de l'arrière-plan
   ofSetBackgroundColor(31);
 
-  // mode d'échantillonage des coordonnées de texture
+  // mode d'échantillonnage des coordonnées de texture
   ofDisableArbTex();
 
   // définir la valeur de l'espacement vertical et horizontal
