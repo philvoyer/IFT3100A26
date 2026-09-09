@@ -7,7 +7,7 @@ void Renderer::setup()
 {
   ofSetFrameRate(60);
 
-  // mode d'échantillonage des coordonnées de texture
+  // mode d'échantillonnage des coordonnées de texture
   ofDisableArbTex();
 
   // chargement du code source des shaders
@@ -44,7 +44,7 @@ void Renderer::draw()
   shader.end();
 }
 
-// fonction qui exporte une image à partir de son nom et de son extension, à partir du répertoire ./bin/data ou d'un chemin absolue
+// fonction qui exporte une image à partir de son nom et de son extension, à partir du répertoire ./bin/data ou d'un chemin absolu
 void Renderer::image_export(const string name, const string extension) const
 {
   ofImage image;
