@@ -1,4 +1,4 @@
-// IFT3100A25_ImageExport/renderer.cpp
+// IFT3100A26_ImageExport/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
