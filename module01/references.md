@@ -22,7 +22,7 @@ Espace de couleur HSB
 https://fr.wikipedia.org/wiki/Teinte_saturation_lumière  
 https://en.wikipedia.org/wiki/HSL_and_HSV
 
-Espace de couleur YUL  
+Espace de couleur YUV  
 https://fr.wikipedia.org/wiki/YUV  
 https://en.wikipedia.org/wiki/YUV  
 https://fr.wikipedia.org/wiki/YCbCr  
@@ -38,7 +38,7 @@ https://en.wikipedia.org/wiki/CMYK_color_model
 
 Histogramme  
 https://en.wikipedia.org/wiki/Color_histogram  
-https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
+https://docs.opencv.org/4.x/d8/dbc/tutorial_histogram_calculation.html
 
 Format de fichier image  
 https://en.wikipedia.org/wiki/Image_file_formats  
@@ -67,14 +67,14 @@ https://en.wikipedia.org/wiki/TIFF
 ## OpenGL
 
 OpenGL Wiki : Image Format  
-https://www.khronos.org/opengl/wiki/Image_Format
+https://wikis.khronos.org/opengl/Image_Format
 
 ## Logiciels
 
 Adobe Photoshop  
-https://www.photoshop.com/products
+https://www.adobe.com/products/photoshop.html
 
-GIMP : GNU Image Manipulator Program  
+GIMP : GNU Image Manipulation Program  
 https://www.gimp.org
 
 ## Divers
