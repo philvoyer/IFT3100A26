@@ -11,7 +11,7 @@ void Renderer::setup()
   // résolution de la fenêtre d'affichage en fonction de l'image
   ofSetWindowShape(512, 512);
 
-  // configurer le niveau de précision des ellipse
+  // configurer le niveau de précision des ellipses
   ofSetCircleResolution(64);
 
   // chargement du code source des shaders
@@ -63,7 +63,7 @@ void Renderer::select_random_colors()
   // utiliser la couleur aléatoire comme couleur d'arrière-plan
   color_background.set(color_random.r, color_random.g, color_random.b);
 
-  // utiliser l'inverse de couleur aléatoire comme couleur de tinte
+  // utiliser l'inverse de la couleur aléatoire comme couleur de teinte
   color_tint.set(255 - color_random.r, 255 - color_random.g, 255 - color_random.b);
 
   ofLog() << "<renderer::select random colors (" << color_random << ")>";
