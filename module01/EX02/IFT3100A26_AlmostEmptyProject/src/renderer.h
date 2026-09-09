@@ -1,4 +1,4 @@
-// IFT3100A25_AlmostEmptyProject/renderer.h
+// IFT3100A26_AlmostEmptyProject/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once

@@ -1,4 +1,4 @@
-// IFT3100A25_AlmostEmptyProject/renderer.cpp
+// IFT3100A26_AlmostEmptyProject/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
