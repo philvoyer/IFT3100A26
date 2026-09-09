@@ -1,4 +1,4 @@
-# IFT3100A25
+# IFT3100A26
 
 ## Module 1 : Image
 
