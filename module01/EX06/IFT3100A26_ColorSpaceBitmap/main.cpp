@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
   int height;
 
 
-  // 2. extractions des paramètres du programme
+  // 2. extraction des paramètres du programme
 
   switch (argc)
   {
@@ -101,10 +101,10 @@ int main(int argc, char* argv[])
   std::ofstream file;
   file.open(filename, std::ios::out);
 
-  // entête du ficher pour une image avec un espace de couleur binaire (P1 pour bitmap)
+  // en-tête du fichier pour une image avec un espace de couleur binaire (P1 pour bitmap)
   file << "P1\n";
 
-  // largeur et hauteur de l'image sur la seconde ligne de l'entête
+  // largeur et hauteur de l'image sur la seconde ligne de l'en-tête
   file << width << ' ' << height << '\n';
 
   // écriture des pixels dans le fichier image
