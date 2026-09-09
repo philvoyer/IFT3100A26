@@ -1,3 +1,5 @@
+# IFT3100A26_ColorSpaceGraymap/Makefile
+
 TARGET = generate_graymap
 
 CC = g++               # gcc c++ compiler
