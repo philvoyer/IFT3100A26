@@ -1,4 +1,4 @@
-// IFT3100A25_BonjourMonde/main.cpp
+// IFT3100A26_BonjourMonde/main.cpp
 // Exemple d'un programme minimaliste.
 // Les événements du clavier et de la souris changent les 3 composantes d'une couleur RGB aléatoire.
 // La couleur aléatoire est appliquée comme couleur d'arrière-plan.
