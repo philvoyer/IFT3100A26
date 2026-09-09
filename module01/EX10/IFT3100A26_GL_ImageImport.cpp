@@ -1,4 +1,4 @@
-// IFT3100A25_GL_ImageImport.cpp
+// IFT3100A26_GL_ImageImport.cpp
 // Exemple d'une section de code pour importer une image et la convertir en texture avec OpenGL.
 
 // entrées
