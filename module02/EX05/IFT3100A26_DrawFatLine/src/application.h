@@ -1,4 +1,4 @@
-// IFT3100A25_DrawFatLine/application.h
+// IFT3100A26_DrawFatLine/application.h
 // Classe principale de l'application.
 
 #pragma once
