@@ -1,4 +1,4 @@
-// IFT3100A25_DrawVectorPrimitive/main.cpp
+// IFT3100A26_DrawVectorPrimitive/main.cpp
 // Dessiner des primitives vectorielles dans une zone de dessin (pixel, point, ligne, rectangle et ellipse)
 // avec des couleurs aléatoires pour les lignes de contour et les zones de remplissage.
 
