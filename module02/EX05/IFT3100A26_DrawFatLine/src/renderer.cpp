@@ -234,6 +234,20 @@ void Renderer::raster_line_dda(int x1, int y1, int x2, int y2)
 
   int length = std::max(abs(delta_x), abs(delta_y));
 
+  // cas dégénéré : le point de départ et le point d'arrivée coïncident (division par zéro évitée)
+  if (length == 0)
+  {
+    count = 1;
+
+    index = fat_pixel_index_by_coord(x1, y1);
+
+    change_fat_pixel_state(index, PixelState::on);
+
+    ofLog() << "<rastérisation d'une ligne avec DDA entre : (" << x1 << ", " << y1 << ") et (" << x2 << ", " << y2 << ") avec " << count << " gros pixels>";
+
+    return;
+  }
+
   float step_x = delta_x / (float) length;
   float step_y = delta_y / (float) length;
 
@@ -297,7 +311,7 @@ void Renderer::raster_line_bresenham(int x1, int y1, int x2, int y2)
     }
   }
 
-  ofLog() << "<rastérisation d'une ligne avec Bresensam entre : (" << x1 << ", " << y1 << ") et (" << x2 << ", " << y2 << ") avec " << count << " gros pixels>";
+  ofLog() << "<rastérisation d'une ligne avec Bresenham entre : (" << x1 << ", " << y1 << ") et (" << x2 << ", " << y2 << ") avec " << count << " gros pixels>";
 }
 
 // fonction qui dessine un gros pixel

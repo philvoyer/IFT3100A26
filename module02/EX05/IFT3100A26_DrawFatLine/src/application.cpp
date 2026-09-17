@@ -58,7 +58,7 @@ void Application::mousePressed(int x, int y, int button)
     renderer.change_fat_pixel_state(fatPixelIndex, PixelState::on);
   }
 
-  ofLog() << "<app::mouse press at: (" << x << ", " << y << ")>";
+  ofLog() << "<app::mouse pressed at: (" << x << ", " << y << ")>";
 }
 
 void Application::mouseReleased(int x, int y, int button)
@@ -73,9 +73,9 @@ void Application::mouseReleased(int x, int y, int button)
     int fatPixelIndex1 = renderer.fat_pixel_index_by_position(renderer.mouse_press_x, renderer.mouse_press_y);
     int fatPixelIndex2 = renderer.fat_pixel_index_by_position(renderer.mouse_current_x, renderer.mouse_current_y);
 
-    int x1 = fatPixelIndex1 % renderer.fat_pixel_grid_height;
+    int x1 = fatPixelIndex1 % renderer.fat_pixel_grid_width;
     int y1 = fatPixelIndex1 / renderer.fat_pixel_grid_width;
-    int x2 = fatPixelIndex2 % renderer.fat_pixel_grid_height;
+    int x2 = fatPixelIndex2 % renderer.fat_pixel_grid_width;
     int y2 = fatPixelIndex2 / renderer.fat_pixel_grid_width;
 
     switch (renderer.line_renderer)
@@ -96,7 +96,7 @@ void Application::mouseReleased(int x, int y, int button)
     renderer.change_fat_pixel_state(fatPixelIndex2, PixelState::end);
   }
 
-  ofLog() << "<app::mouse release at: (" << x << ", " << y << ")>";
+  ofLog() << "<app::mouse released at: (" << x << ", " << y << ")>";
 }
 
 void Application::mouseEntered(int x, int y)
