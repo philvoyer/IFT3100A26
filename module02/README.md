@@ -1,4 +1,4 @@
-# IFT3100A25
+# IFT3100A26
 
 ## Module 2 : Dessin vectoriel
 
@@ -12,9 +12,11 @@ Dans cet exemple, le programme configure la couleur d'arrière-plan avec différ
 
 ### Exemple 2.2 (DrawCursor)
 
-Un programme peut utiliser les états d'un périphérique de pointage comme une souris, un trackpad ou une tablette graphique comme source d'interactivité pour influencer une application.
+Un programme peut utiliser les états d'un périphérique de pointage tel qu'une souris, un trackpad ou une tablette graphique comme source d'interactivité pour influencer une application.
 
 Dans cet exemple, le programme dessine un curseur en fonction des états et des événements d'un périphérique de pointage et il affiche certaines de ces informations dans la console.
+
+Une touche du clavier permet aussi de désactiver l'effacement automatique de l'arrière-plan à chaque frame, ce qui laisse une traînée visuelle du curseur.
 
 ### Exemple 2.3 (DrawZone)
 
@@ -24,7 +26,7 @@ Dans cet exemple, le programme dessine une zone rectangulaire en fonction de la 
 
 ### Exemple 2.4 (DrawVectorPrimitive)
 
-Un programme peut permettre de dessiner des primitives vectorielles de manière interactive à partir des événements d'un périphérique de pointage.
+Un programme peut permettre à l'utilisateur de dessiner des primitives vectorielles de manière interactive à partir des événements d'un périphérique de pointage.
 
 Dans cet exemple, le programme dessine des primitives vectorielles dans une zone de dessin (pixel, point, ligne, rectangle et ellipse) avec des couleurs aléatoires pour les lignes de contour et les zones de remplissage.
 
@@ -38,4 +40,4 @@ La fenêtre d'affichage est divisée en une grille de gros pixels qui sont color
 
 Ce programme présente un exemple d'une interface graphique qui permet de paramétrer des options de dessin.
 
-Les contrôles de l'interface permettent de modifier la couleur du trait et de l'arrière-plan ainsi que le texte affiché au centre de la fenêtre d'affichage et l'épaisseur de la ligne située juste en dessous.
+Les contrôles de l'interface permettent de modifier la couleur du trait et de l'arrière-plan, le texte affiché au centre de la fenêtre d'affichage ainsi que l'épaisseur de la ligne située juste en dessous du texte.
