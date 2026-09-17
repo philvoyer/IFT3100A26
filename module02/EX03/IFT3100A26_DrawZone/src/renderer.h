@@ -15,14 +15,12 @@ public:
   int mouse_current_x;
   int mouse_current_y;
 
-  int radius;
+  float radius;
 
   bool is_mouse_button_pressed;
 
   void setup();
   void draw();
-
-  void reset();
 
   void draw_zone(float x1, float y1, float x2, float y2) const;
   void draw_cursor(float x, float y) const;
