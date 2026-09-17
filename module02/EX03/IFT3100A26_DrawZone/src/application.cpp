@@ -1,4 +1,4 @@
-// IFT3100A25_DrawZone/application.cpp
+// IFT3100A26_DrawZone/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
