@@ -23,12 +23,12 @@ void Renderer::update()
   time_last = time_current;
 
   // trace des données temporelles dans la console
-  ofLog() << std::setprecision(2) << "<frame: " << ofGetFrameNum() << " time current: " << time_current << " time elapsed: " << time_elapsed << " fps: " << 1.0 / time_elapsed << ">";
+  ofLog() << std::setprecision(2) << "<frame: " << ofGetFrameNum() << " time current: " << time_current << " time elapsed: " << time_elapsed << " fps: " << 1.0f / time_elapsed << ">";
 }
 
 // fonction de rendu
 void Renderer::draw()
 {
   // couleur d'arrière-plan en niveau de gris en fonction du numéro de frame courant.
-  ofClear(ofGetFrameNum() % 255);
+  ofClear(ofGetFrameNum() % 255, 255.0f);
 }
