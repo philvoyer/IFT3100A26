@@ -74,40 +74,40 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case 49:  // key 1
+    case 49:  // touche 1
       renderer.draw_mode = VectorPrimitiveType::pixel;
       ofLog() << "<mode: pixel>";
       break;
 
-    case 50:  // key 2
+    case 50:  // touche 2
       renderer.draw_mode = VectorPrimitiveType::point;
       ofLog() << "<mode: point>";
       break;
 
-    case 51:  // key 3
+    case 51:  // touche 3
       renderer.draw_mode = VectorPrimitiveType::line;
       ofLog() << "<mode: line>";
       break;
 
-    case 52:  // key 4
+    case 52:  // touche 4
       renderer.draw_mode = VectorPrimitiveType::rectangle;
       ofLog() << "<mode: rectangle>";
       break;
 
-    case 53:  // key 5
+    case 53:  // touche 5
       renderer.draw_mode = VectorPrimitiveType::ellipse;
       ofLog() << "<mode: ellipse>";
       break;
 
-    case 102: // key f
+    case 102: // touche f
       renderer.random_color_fill();
       break;
 
-    case 114: // key r
+    case 114: // touche r
       renderer.reset();
       break;
 
-    case 115: // key s
+    case 115: // touche s
       renderer.random_color_stroke();
       break;
 

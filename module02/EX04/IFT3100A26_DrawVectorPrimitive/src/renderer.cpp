@@ -40,6 +40,8 @@ void Renderer::setup()
   is_mouse_button_pressed = false;
 
   radius = 4.0f;
+
+  reset();
 }
 
 void Renderer::draw()
@@ -161,7 +163,7 @@ void Renderer::draw()
   draw_cursor(mouse_current_x, mouse_current_y);
 }
 
-// fonction qui vide le tableau de primitives vectorielles
+// fonction qui initialise le tableau de primitives vectorielles
 void Renderer::reset()
 {
   for (index = 0; index < buffer_count; ++index)
