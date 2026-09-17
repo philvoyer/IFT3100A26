@@ -20,10 +20,10 @@ void Renderer::setup()
 
   // 1. couleur d'arrière-plan fixe et automatique
 
-  // efface automatiquement le framebuffer et le rempli avec la couleur d'arrière-plan courante au début de chaque appel de la fonction draw (actif par défaut)
+  // efface automatiquement le framebuffer et le remplit avec la couleur d'arrière-plan courante au début de chaque appel de la fonction draw (actif par défaut)
   ofSetBackgroundAuto(true);
 
-  // si la couleur d'arrière-plan de ne change pas et est en mode automatique, elle peut être configurée et appliquée en une seule étape dans la fonction d'initialisation
+  // si la couleur d'arrière-plan ne change pas et est en mode automatique, elle peut être configurée et appliquée en une seule étape dans la fonction d'initialisation
   ofSetBackgroundColor(clear_color_r, clear_color_g, clear_color_b);
 
   // 2. couleur d'arrière-plan variable et/ou changée explicitement
@@ -79,13 +79,13 @@ void Renderer::clear() const
   ofBackground(clear_color_r, clear_color_g, clear_color_b);
 }
 
-// fonction qui efface le contenu du framebuffer actif et le remplace par la couleur noir
+// fonction qui efface le contenu du framebuffer actif et le remplace par la couleur noire
 void Renderer::clear_to_black() const
 {
   ofBackground(0);
 }
 
-// fonction qui efface le contenu du framebuffer actif et le remplace par la couleur blanc
+// fonction qui efface le contenu du framebuffer actif et le remplace par la couleur blanche
 void Renderer::clear_to_white() const
 {
   ofBackground(255);
