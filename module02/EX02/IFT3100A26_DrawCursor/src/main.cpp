@@ -1,4 +1,4 @@
-// IFT3100A25_DrawCursor/main.cpp
+// IFT3100A26_DrawCursor/main.cpp
 // Dessiner un curseur en fonction des états et des événements d'un périphérique de pointage.
 
 #include "ofMain.h"
