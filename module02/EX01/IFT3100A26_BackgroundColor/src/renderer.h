@@ -1,4 +1,4 @@
-// IFT3100A25_BackgroundColor/renderer.h
+// IFT3100A26_BackgroundColor/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once

@@ -1,4 +1,4 @@
-// IFT3100A25_BackgroundColor/application.cpp
+// IFT3100A26_BackgroundColor/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"

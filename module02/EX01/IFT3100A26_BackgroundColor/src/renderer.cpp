@@ -1,4 +1,4 @@
-// IFT3100A25_BackgroundColor/renderer.cpp
+// IFT3100A26_BackgroundColor/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
