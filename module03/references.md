@@ -7,37 +7,37 @@ Références en lien avec le module 3 : transformation.
 OpenGL: Transformation FAQ  
 https://www.opengl.org/archives/resources/faq/technical/transformations.htm
 
-##  OpenGL (fixed-function pipeline)
+## OpenGL (fixed-function pipeline)
 
 Red Book - Chapitre 3  
 http://glprogramming.com/red/chapter03.html
 
 Commande glMatrixMode  
-https://www.opengl.org/sdk/docs/man2/xhtml/glMatrixMode.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glMatrixMode.xml
 
 Commande glLoadMatrix  
-https://www.opengl.org/sdk/docs/man2/xhtml/glLoadMatrix.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glLoadMatrix.xml
 
 Commande glMultMatrix  
-https://www.opengl.org/sdk/docs/man2/xhtml/glMultMatrix.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glMultMatrix.xml
 
 Commande glLoadIdentity  
-https://www.opengl.org/sdk/docs/man2/xhtml/glLoadIdentity.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glLoadIdentity.xml
 
 Commande glTranslate  
-https://www.opengl.org/sdk/docs/man2/xhtml/glTranslate.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml
 
 Commande glRotate  
-https://www.opengl.org/sdk/docs/man2/xhtml/glRotate.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml
 
 Commande glScale  
-https://www.opengl.org/sdk/docs/man2/xhtml/glScale.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glScale.xml
 
 Commande glPushMatrix  
-https://www.opengl.org/sdk/docs/man2/xhtml/glPushMatrix.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glPushMatrix.xml
 
 Commande glPopMatrix  
-https://www.opengl.org/sdk/docs/man2/xhtml/glPopMatrix.xml
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glPopMatrix.xml
 
 ## GLSL
 
@@ -223,8 +223,8 @@ https://www.youtube.com/watch?v=1NLekEd770w
 Freya Holmér - Math for Game Devs [Part 4] - Interpolation & Velocity  
 https://www.youtube.com/watch?v=-Ii3MrJFBkQ&t
 
-Epic Games - Unreal and UEFN - Left-Up-Forward Coordinate System
-https://dev.epicgames.com/documentation/en-us/fortnite/leftupforward-coordinate-system-in-unreal-editor-for-fortnite  
+Epic Games - Unreal and UEFN - Left-Up-Forward Coordinate System  
+https://dev.epicgames.com/documentation/en-us/fortnite/leftupforward-coordinate-system-in-unreal-editor-for-fortnite
 
 ## Formes fractales
 
@@ -232,7 +232,7 @@ L-système
 https://en.wikipedia.org/wiki/L-system  
 https://fr.wikipedia.org/wiki/L-Système  
 https://cgjennings.ca/articles/l-systems.html  
-http://paulbourke.net/fractals/lsys/
+https://paulbourke.net/fractals/lsys/
 
 Mandelbrot  
 https://fr.wikipedia.org/wiki/Ensemble_de_Mandelbrot  
