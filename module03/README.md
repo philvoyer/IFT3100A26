@@ -12,7 +12,7 @@ Dans cet exemple, une transformation de type translation est appliquée sur l'or
 
 ### Exemple 3.3 (Locator)
 
-Dans cet exemple, une scène est générée par transformation d'un ensemble de localisateurs au hasard dans un espace cubique, avec possibilités d'activer et de désactiver les attributs de translation, de rotation et de proportion.
+Dans cet exemple, une scène est générée par transformation d'un ensemble de localisateurs au hasard dans un espace cubique, avec la possibilité d'activer et de désactiver les attributs de translation, de rotation et de proportion.
 
 ### Exemple 3.4 (Oscillator)
 
