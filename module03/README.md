@@ -1,4 +1,4 @@
-# IFT3100A25
+# IFT3100A26
 
 ## Module 3 : Transformation
 
@@ -36,7 +36,7 @@ Exemples de déclaration de variables de type vecteur en **GLSL**.
 
 ### Exemple 3.8 (GLSL_VectorComponent)
 
-Exemples d’accès aux composantes d’un vecteur en **GLSL**.
+Exemples d'accès aux composantes d'un vecteur en **GLSL**.
 
 ### Exemple 3.9 (GLSL_VectorFunction)
 
@@ -48,7 +48,7 @@ Exemples de déclaration de variables de type matrice en **GLSL**.
 
 ### Exemple 3.11 (GLSL_MatrixComponent)
 
-Exemples d’accès aux composantes d’une matrice en **GLSL**.
+Exemples d'accès aux composantes d'une matrice en **GLSL**.
 
 ### Exemple 3.12 (GLSL_MatrixFunction)
 
