@@ -1,4 +1,4 @@
-// IFT3100A25_GLSL_MatrixFunction.glsl
+// IFT3100A26_GLSL_MatrixFunction.glsl
 // Exemples de fonctions applicables aux variables de type matrice en GLSL.
 
 // déclaration d'une matrice 4x4
