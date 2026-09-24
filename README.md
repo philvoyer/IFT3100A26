@@ -1,6 +1,6 @@
 # IFT3100A26
 
-Exemples et références du cours 'IFT-3100 Infographie' de l'Université Laval (édition automne 2026).
+Exemples et références du cours 'IFT-3100 Infographie' du Département d'informatique et de génie logiciel de l'Université Laval (édition automne 2026).
 
 ## Module 1
 
