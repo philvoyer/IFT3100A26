@@ -1,8 +1,8 @@
-// IFT3100A25_GLSL_VectorFunction.glsl
+// IFT3100A26_GLSL_VectorFunction.glsl
 // Exemples de fonctions applicables aux variables de type vecteur en GLSL.
 
 // 1. calculer la magnitude d'un vecteur (sa longueur dans l'espace)
-float lenght_of_vector = length(vec3(1.0, 2.0, 3.0));
+float length_of_vector = length(vec3(1.0, 2.0, 3.0));
 
 // 2. normaliser un vecteur (donne un vecteur dont la magnitude est de 1 unité)
 vec3 normalized_vector = normalize(vec3(1.0, 2.0, 3.0));
@@ -10,7 +10,7 @@ vec3 normalized_vector = normalize(vec3(1.0, 2.0, 3.0));
 // 3. calculer le produit vectoriel entre 2 vecteurs
 vec3 axis_x = vec3(1.0, 0.0, 0.0);
 vec3 axis_y = vec3(0.0, 1.0, 0.0);
-vec3 axis_z = cross(axis_x, axis_y; // le résultat sera vec3(0.0, 0.0, 1.0)
+vec3 axis_z = cross(axis_x, axis_y); // le résultat sera vec3(0.0, 0.0, 1.0)
 
 // 4. calculer la réflexion diffuse d'un matériau
 vec3 normal = vec3(...); // normale du sommet transformée dans l'espace de la vue
@@ -23,7 +23,7 @@ vec3 r = reflect(-light, normal);
 // 6. calculer la réflexion spéculaire d'un matériau
 float p = ...; // facteur de puissance spéculaire
 vec3 v = vec3(...); // vecteur normalisé en direction d'une caméra
-float r_dot_v = pow(dot(r, v) p);
+float r_dot_v = pow(dot(r, v), p);
 
 // 7. calculer des couleurs par mixage (interpolation) entre deux autres couleurs
 vec3 color_ambient  = mix(vec3(0.0), vec3(1.0), 0.1); // gris foncé
