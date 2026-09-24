@@ -1,4 +1,4 @@
-// IFT3100A25_Move/application.cpp
+// IFT3100A26_Move/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -29,9 +29,9 @@ void Application::update()
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
   if (is_key_press_left)
-    renderer.offset_x += renderer.delta_x * time_elapsed;
-  if (is_key_press_right)
     renderer.offset_x -= renderer.delta_x * time_elapsed;
+  if (is_key_press_right)
+    renderer.offset_x += renderer.delta_x * time_elapsed;
 
   renderer.update();
 }
@@ -45,19 +45,19 @@ void Application::keyPressed(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // key ←
+    case OF_KEY_LEFT: // touche ←
       is_key_press_left = true;
       break;
 
-    case OF_KEY_UP: // key ↑
+    case OF_KEY_UP: // touche ↑
       is_key_press_up = true;
       break;
 
-    case OF_KEY_RIGHT: // key →
+    case OF_KEY_RIGHT: // touche →
       is_key_press_right = true;
       break;
 
-    case OF_KEY_DOWN: // key ↓
+    case OF_KEY_DOWN: // touche ↓
       is_key_press_down = true;
       break;
 
@@ -70,19 +70,19 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // key ←
+    case OF_KEY_LEFT: // touche ←
       is_key_press_left = false;
       break;
 
-    case OF_KEY_UP: // key ↑
+    case OF_KEY_UP: // touche ↑
       is_key_press_up = false;
       break;
 
-    case OF_KEY_RIGHT: // key →
+    case OF_KEY_RIGHT: // touche →
       is_key_press_right = false;
       break;
 
-    case OF_KEY_DOWN: // key ↓
+    case OF_KEY_DOWN: // touche ↓
       is_key_press_down = false;
       break;
 

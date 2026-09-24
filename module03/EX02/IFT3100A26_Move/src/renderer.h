@@ -1,4 +1,4 @@
-// IFT3100A25_Move/renderer.h
+// IFT3100A26_Move/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once

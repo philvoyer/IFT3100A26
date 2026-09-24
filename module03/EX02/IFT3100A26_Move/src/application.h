@@ -1,4 +1,4 @@
-// IFT3100A25_Move/Application.h
+// IFT3100A26_Move/application.h
 // Classe principale de l'application.
 
 #pragma once
