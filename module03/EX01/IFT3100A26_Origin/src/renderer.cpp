@@ -1,4 +1,4 @@
-// IFT3100A25_Origin/renderer.cpp
+// IFT3100A26_Origin/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -33,7 +33,7 @@ void Renderer::draw()
   // revenir à la matrice de transformation précédente dans la pile
   ofPopMatrix();
 
-  // rendre l'origine de la scène après transformation du système de coordonnées
+  // rendre à nouveau l'origine de la scène après restauration de la matrice de transformation (retour à l'état d'avant la translation)
   draw_locator(10.0f);
 }
 

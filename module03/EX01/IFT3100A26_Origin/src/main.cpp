@@ -1,4 +1,4 @@
-// IFT3100A25_Origin/main.cpp
+// IFT3100A26_Origin/main.cpp
 // Dans cet exemple, une représentation de l'origine de la scène est dessinée à deux localisations,
 // une avant transformation et une après transformation du système de coordonnées par translation
 // pour modifier la position de l'origine de la scène.
