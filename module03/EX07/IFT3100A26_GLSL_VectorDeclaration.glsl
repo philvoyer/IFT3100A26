@@ -1,4 +1,4 @@
-// IFT3100A25_GLSL_VectorDeclaration.glsl
+// IFT3100A26_GLSL_VectorDeclaration.glsl
 // Exemples de déclaration de variables de type vecteur en GLSL.
 
 // 1. déclaration d'un vecteur pour l'origine d'un espace
