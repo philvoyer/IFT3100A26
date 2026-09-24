@@ -1,4 +1,4 @@
-// IFT3100A25 ~ vertex_oscillator_330_vs.glsl
+// IFT3100A26 ~ vertex_oscillator_330_vs.glsl
 
 #version 330
 
@@ -19,10 +19,10 @@ in vec4 position;
 // constantes
 const float PI = 3.1415926535897932384626433832795;
 
-// fonction d'oscillation
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * frequency * t)
 float oscillate(float time, float amplitude, float frequency)
 {
-  return amplitude * sin(time * 2.0 * PI / frequency);
+  return amplitude * sin(2.0 * PI * frequency * time);
 }
 
 void main()

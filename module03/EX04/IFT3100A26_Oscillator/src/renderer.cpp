@@ -1,4 +1,4 @@
-// IFT3100A25_Oscillator/renderer.cpp
+// IFT3100A26_Oscillator/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -39,8 +39,8 @@ void Renderer::update()
   time_current = ofGetElapsedTimef();
 
   // calculer la position du cercle animé par le CPU
-  position_x = ofGetWidth() / 2.0f - oscillate(time_current, amplitude_x, frequency_x);
-  position_y = ofGetHeight() / 2.0f - oscillate(time_current, amplitude_y, frequency_y);
+  position_x = ofGetWidth() / 2.0f + oscillate(time_current, amplitude_x, frequency_x);
+  position_y = ofGetHeight() / 2.0f + oscillate(time_current, amplitude_y, frequency_y);
 }
 
 void Renderer::draw()
@@ -93,8 +93,8 @@ void Renderer::draw()
   shader.end();
 }
 
-// fonction d'oscillation
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * frequency * t)
 float Renderer::oscillate(float time, float amplitude, float frequency)
 {
-  return amplitude * sin(time * 2.0 * PI / frequency);
+  return amplitude * sin(2.0 * PI * frequency * time);
 }

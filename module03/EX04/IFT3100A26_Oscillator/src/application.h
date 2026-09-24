@@ -1,4 +1,4 @@
-// IFT3100A25_Oscillator/application.h
+// IFT3100A26_Oscillator/application.h
 // Classe principale de l'application.
 
 #pragma once
@@ -12,8 +12,6 @@ class Application : public ofBaseApp
 public:
 
   ofxPanel gui;
-
-  ofxGuiGroup gui_group;
 
   ofParameter<float> slider_amplitude_x;
   ofParameter<float> slider_amplitude_y;

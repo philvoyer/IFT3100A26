@@ -1,4 +1,4 @@
-// IFT3100A25_Oscillator/main.cpp
+// IFT3100A26_Oscillator/main.cpp
 // Dans cet exemple, deux approches différentes sont utilisées pour animer un modèle par oscillation.
 // Un cercle rouge est animé par le CPU avec une fonction d'oscillation implémentée en C++ et
 // un cercle vert est animé par le GPU avec la même fonction implémentée en GLSL dans un shader de sommets.
@@ -12,7 +12,7 @@ int main()
   // paramètres du contexte de rendu OpenGL
   ofGLFWWindowSettings windowSettings;
 
-  // option de redimentionnement de la fenêtre d'affichage
+  // option de redimensionnement de la fenêtre d'affichage
   windowSettings.resizable = true;
 
   // sélection de la version de OpenGL
