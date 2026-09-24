@@ -1,4 +1,4 @@
-// IFT3100A25_Locator/main.cpp
+// IFT3100A26_Locator/main.cpp
 // Dans cet exemple, une scène est générée par transformation d'un ensemble de localisateurs au hasard dans un espace cubique,
 // avec possibilités d'activer et de désactiver les attributs de translation, de rotation et de proportion.
 

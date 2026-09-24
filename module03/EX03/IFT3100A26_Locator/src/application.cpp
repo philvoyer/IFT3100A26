@@ -1,4 +1,4 @@
-// IFT3100A25_Locator/application.cpp
+// IFT3100A26_Locator/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -29,9 +29,9 @@ void Application::update()
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
   if (is_key_press_left)
-    renderer.offset_x += renderer.delta_x * time_elapsed;
-  if (is_key_press_right)
     renderer.offset_x -= renderer.delta_x * time_elapsed;
+  if (is_key_press_right)
+    renderer.offset_x += renderer.delta_x * time_elapsed;
 
   renderer.update();
 }
@@ -50,19 +50,19 @@ void Application::keyPressed(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // key ←
+    case OF_KEY_LEFT: // touche ←
       is_key_press_left = true;
       break;
 
-    case OF_KEY_UP: // key ↑
+    case OF_KEY_UP: // touche ↑
       is_key_press_up = true;
       break;
 
-    case OF_KEY_RIGHT: // key →
+    case OF_KEY_RIGHT: // touche →
       is_key_press_right = true;
       break;
 
-    case OF_KEY_DOWN: // key ↓
+    case OF_KEY_DOWN: // touche ↓
       is_key_press_down = true;
       break;
 
@@ -75,38 +75,38 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // key ←
+    case OF_KEY_LEFT: // touche ←
       is_key_press_left = false;
       break;
 
-    case OF_KEY_UP: // key ↑
+    case OF_KEY_UP: // touche ↑
       is_key_press_up = false;
       break;
 
-    case OF_KEY_RIGHT: // key →
+    case OF_KEY_RIGHT: // touche →
       is_key_press_right = false;
       break;
 
-    case OF_KEY_DOWN: // key ↓
+    case OF_KEY_DOWN: // touche ↓
       is_key_press_down = false;
       break;
 
-    case 101: // key e
+    case 101: // touche e
       renderer.is_active_rotation = !renderer.is_active_rotation;
       ofLog() << "<rotation is active: " << renderer.is_active_rotation << ">";
       break;
 
-    case 102: // key f
+    case 102: // touche f
       renderer.is_flip_axis_y = !renderer.is_flip_axis_y;
       ofLog() << "<axis Y is flipped: " << renderer.is_flip_axis_y << ">";
       break;
 
-    case 114: // key r
+    case 114: // touche r
       renderer.is_active_proportion = !renderer.is_active_proportion;
       ofLog() << "<proportion is active: " << renderer.is_active_proportion << ">";
       break;
 
-    case 119: // key w
+    case 119: // touche w
       renderer.is_active_translation = !renderer.is_active_translation;
       ofLog() << "<translation is active: " << renderer.is_active_translation << ">";
       break;

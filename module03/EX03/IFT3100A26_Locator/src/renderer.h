@@ -1,4 +1,4 @@
-// IFT3100A25_Locator/renderer.h
+// IFT3100A26_Locator/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
