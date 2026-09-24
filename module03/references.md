@@ -82,6 +82,10 @@ Formule de rotation de Rodrigues
 https://fr.wikipedia.org/wiki/Rotation_vectorielle
 https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
 
+Oscillateur harmonique  
+https://fr.wikipedia.org/wiki/Oscillateur_harmonique
+https://en.wikipedia.org/wiki/Simple_harmonic_motion
+
 ## openFrameworks
 
 Classe de vecteur 2D  
