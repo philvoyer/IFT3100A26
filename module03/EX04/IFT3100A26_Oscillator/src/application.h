@@ -15,8 +15,12 @@ public:
 
   ofParameter<float> slider_amplitude_x;
   ofParameter<float> slider_amplitude_y;
-  ofParameter<float> slider_frequency_x;
-  ofParameter<float> slider_frequency_y;
+  ofParameter<float> slider_period_x;
+  ofParameter<float> slider_period_y;
+
+  // affichage en lecture seule de la fréquence calculée (f = 1 / T)
+  ofxLabel label_frequency_x;
+  ofxLabel label_frequency_y;
 
   Renderer renderer;
 

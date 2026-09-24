@@ -17,8 +17,8 @@ void Renderer::setup()
   // valeurs d'oscillation initiales
   amplitude_x = 127.0f;
   amplitude_y = 63.0f;
-  frequency_x = 3.0f;
-  frequency_y = 6.0f;
+  period_x = 3.0f;
+  period_y = 6.0f;
 
   // initialisation des couleurs
   color_cpu.set(255, 0, 0, 127);
@@ -38,9 +38,13 @@ void Renderer::update()
   // temps courant en secondes
   time_current = ofGetElapsedTimef();
 
+  // calculer la fréquence équivalente à la période (f = 1 / T)
+  frequency_x = 1.0f / period_x;
+  frequency_y = 1.0f / period_y;
+
   // calculer la position du cercle animé par le CPU
-  position_x = ofGetWidth() / 2.0f + oscillate(time_current, amplitude_x, frequency_x);
-  position_y = ofGetHeight() / 2.0f + oscillate(time_current, amplitude_y, frequency_y);
+  position_x = ofGetWidth() / 2.0f - oscillate(time_current, amplitude_x, period_x);
+  position_y = ofGetHeight() / 2.0f - oscillate(time_current, amplitude_y, period_y);
 }
 
 void Renderer::draw()
@@ -82,8 +86,8 @@ void Renderer::draw()
   // passer au shader la valeur courante des attributs d'oscillation
   shader.setUniform1f("amplitude_x", amplitude_x);
   shader.setUniform1f("amplitude_y", amplitude_y);
-  shader.setUniform1f("frequency_x", frequency_x);
-  shader.setUniform1f("frequency_y", frequency_y);
+  shader.setUniform1f("period_x", period_x);
+  shader.setUniform1f("period_y", period_y);
   shader.setUniform1f("time", time_current);
 
   // dessiner le cercle animé par le GPU
@@ -93,8 +97,8 @@ void Renderer::draw()
   shader.end();
 }
 
-// fonction d'oscillation x(t) = amplitude * sin(2 * PI * frequency * t)
-float Renderer::oscillate(float time, float amplitude, float frequency)
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * t / période)
+float Renderer::oscillate(float time, float amplitude, float period)
 {
-  return amplitude * sin(2.0 * PI * frequency * time);
+  return amplitude * sin(2.0 * PI * time / period);
 }

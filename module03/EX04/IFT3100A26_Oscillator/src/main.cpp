@@ -2,7 +2,7 @@
 // Dans cet exemple, deux approches différentes sont utilisées pour animer un modèle par oscillation.
 // Un cercle rouge est animé par le CPU avec une fonction d'oscillation implémentée en C++ et
 // un cercle vert est animé par le GPU avec la même fonction implémentée en GLSL dans un shader de sommets.
-// La fonction d'oscillation génère un mouvement perpétuel en fonction du temps courant, d'une amplitude et d'une fréquence.
+// La fonction d'oscillation génère un mouvement perpétuel en fonction du temps courant, d'une amplitude et d'une période.
 
 #include "ofMain.h"
 #include "application.h"

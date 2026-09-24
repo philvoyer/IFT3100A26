@@ -15,6 +15,10 @@ public:
   float amplitude_x;
   float amplitude_y;
 
+  float period_x;
+  float period_y;
+
+  // fréquence calculée à partir de la période (f = 1 / T), en lecture seule
   float frequency_x;
   float frequency_y;
 
@@ -31,5 +35,5 @@ public:
   void update();
   void draw();
 
-  float oscillate(float time, float amplitude, float frequency);
+  float oscillate(float time, float amplitude, float period);
 };
