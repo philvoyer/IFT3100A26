@@ -18,7 +18,6 @@ public:
   float period_x;
   float period_y;
 
-  // fréquence calculée à partir de la période (f = 1 / T), en lecture seule
   float frequency_x;
   float frequency_y;
 
