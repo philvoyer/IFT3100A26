@@ -1,4 +1,4 @@
-// IFT3100A25_BonjourTriangle/renderer.h
+// IFT3100A26_BonjourTriangle/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -16,11 +16,11 @@ public:
   float vertex3_x;
   float vertex3_y;
 
-  float color_r;
-  float color_g;
-  float color_b;
+  unsigned char color_r;
+  unsigned char color_g;
+  unsigned char color_b;
 
-  float point_radius;
+  float point_diameter;
 
   int framebuffer_width;
   int framebuffer_height;

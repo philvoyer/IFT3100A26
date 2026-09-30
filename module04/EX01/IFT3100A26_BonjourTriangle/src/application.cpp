@@ -1,10 +1,12 @@
-// IFT3100A25_BonjourTriangle/application.cpp
+// IFT3100A26_BonjourTriangle/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
 
 void Application::setup()
 {
+  ofLog() << "<app::setup>";
+
   ofSetWindowTitle("bonjour triangle");
 
   renderer.setup();
@@ -18,4 +20,9 @@ void Application::update()
 void Application::draw()
 {
   renderer.draw();
+}
+
+void Application::exit()
+{
+  ofLog() << "<app::exit>";
 }

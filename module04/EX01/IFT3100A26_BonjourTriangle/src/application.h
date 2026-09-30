@@ -1,4 +1,4 @@
-// IFT3100A25_BonjourTriangle/application.h
+// IFT3100A26_BonjourTriangle/application.h
 // Classe principale de l'application.
 
 #pragma once
@@ -15,4 +15,5 @@ public:
   void setup();
   void update();
   void draw();
+  void exit();
 };
