@@ -133,23 +133,20 @@ void Renderer::draw()
 void Renderer::reset()
 {
   // distribuer les localisateurs dans l'espace visible de la scène
-  dispatch_locators(locator_count, std::min(ofGetWidth(), ofGetHeight()));
+  distribute_locators(locator_count, std::min(ofGetWidth(), ofGetHeight()));
 
   ofLog() << "<reset>";
 }
 
 // fonction qui distribue les localisateurs dans un espace cubique
-void Renderer::dispatch_locators(int count, float range)
+void Renderer::distribute_locators(int count, float range)
 {
-  // variable temporaire
-  float scale;
-
-  // validations
+  // valider les paramètres
   if (count <= 0 || range <= 0 || count > locator_count)
     return;
 
   // calculer la valeur de la moitié du diamètre du cube
-  float halfRange = range / 2.0f;
+  float half_range = range / 2.0f;
 
   // configurer le nombre de localisateurs
   locator_buffer_head = count;
@@ -157,9 +154,9 @@ void Renderer::dispatch_locators(int count, float range)
   for (int index = 0; index < locator_buffer_head; ++index)
   {
     // déterminer des valeurs de position aléatoires dans le cube
-    vector_position.x = ofRandom(-halfRange, halfRange);
-    vector_position.y = ofRandom(-halfRange, halfRange);
-    vector_position.z = ofRandom(-halfRange, halfRange);
+    vector_position.x = ofRandom(-half_range, half_range);
+    vector_position.y = ofRandom(-half_range, half_range);
+    vector_position.z = ofRandom(-half_range, half_range);
 
     // déterminer une rotation aléatoire sur l'axe Y
     vector_rotation.x = 0;
@@ -167,12 +164,12 @@ void Renderer::dispatch_locators(int count, float range)
     vector_rotation.z = 0;
 
     // déterminer une proportion uniforme au hasard entre 10% et 200%
-    scale = ofRandom(0.1f, 2.0f);
+    float scale = ofRandom(0.1f, 2.0f);
     vector_proportion.x = scale;
     vector_proportion.y = scale;
     vector_proportion.z = scale;
 
-    // configurer les attributs de transformation du localisateur
+    // enregistrer les attributs de transformation du localisateur
     locators[index].position[0] = vector_position.x;
     locators[index].position[1] = vector_position.y;
     locators[index].position[2] = vector_position.z;

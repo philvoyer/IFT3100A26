@@ -52,7 +52,7 @@ public:
 
   void reset();
 
-  void dispatch_locators(int count, float range);
+  void distribute_locators(int count, float range);
 
   void draw_locator(float scale);
 
