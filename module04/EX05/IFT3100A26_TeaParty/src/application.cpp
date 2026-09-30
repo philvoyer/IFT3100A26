@@ -14,7 +14,6 @@ void Application::setup()
   is_key_press_left = false;
   is_key_press_right = false;
 
-  // initialiser le chronomètre pour que le premier delta de temps soit valide
   time_current = ofGetElapsedTimef();
   time_last = time_current;
   time_elapsed = 0.0f;
@@ -32,11 +31,10 @@ void Application::update()
     renderer.offset_z += renderer.delta_z * time_elapsed;
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
-  // les flèches ← et → déplacent la scène vers la gauche et vers la droite de la fenêtre
   if (is_key_press_left)
-    renderer.offset_x -= renderer.delta_x * time_elapsed;
-  if (is_key_press_right)
     renderer.offset_x += renderer.delta_x * time_elapsed;
+  if (is_key_press_right)
+    renderer.offset_x -= renderer.delta_x * time_elapsed;
 
   renderer.update();
 }
@@ -55,11 +53,11 @@ void Application::keyPressed(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // touche ←
+    case OF_KEY_LEFT:  // touche ←
       is_key_press_left = true;
       break;
 
-    case OF_KEY_UP: // touche ↑
+    case OF_KEY_UP:    // touche ↑
       is_key_press_up = true;
       break;
 
@@ -67,7 +65,7 @@ void Application::keyPressed(int key)
       is_key_press_right = true;
       break;
 
-    case OF_KEY_DOWN: // touche ↓
+    case OF_KEY_DOWN:  // touche ↓
       is_key_press_down = true;
       break;
 
@@ -95,11 +93,11 @@ void Application::keyReleased(int key)
       ofLog() << "<mesh render mode: vertex>";
       break;
 
-    case OF_KEY_LEFT: // touche ←
+    case OF_KEY_LEFT:  // touche ←
       is_key_press_left = false;
       break;
 
-    case OF_KEY_UP: // touche ↑
+    case OF_KEY_UP:    // touche ↑
       is_key_press_up = false;
       break;
 
@@ -107,12 +105,10 @@ void Application::keyReleased(int key)
       is_key_press_right = false;
       break;
 
-    case OF_KEY_DOWN: // touche ↓
+    case OF_KEY_DOWN:  // touche ↓
       is_key_press_down = false;
       break;
 
-    // les touches w, e et r activent ou désactivent la translation, la rotation et la proportion
-    // (mêmes touches que les outils de manipulation W, E et R de Unity)
     case 'e':
       renderer.is_active_rotation = !renderer.is_active_rotation;
       ofLog() << "<rotation is active: " << renderer.is_active_rotation << ">";
