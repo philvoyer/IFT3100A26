@@ -5,7 +5,7 @@ Références en lien avec le module 4 : géométrie.
 ## OpenGL
 
 Spécifications sur les sommets  
-https://www.opengl.org/wiki/Vertex_Specification
+https://wikis.khronos.org/opengl/Vertex_Specification
 
 ### Buffer de géométrie
 
@@ -27,16 +27,7 @@ https://khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferSubData.xhtml
 Commande OpenGL : **glDeleteBuffers**  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDeleteBuffers.xhtml
 
-### Attribut
-
-Commande OpenGL : **glUniform**  
-https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUniform.xhtml
-
-Commande OpenGL : **glGetUniformLocation**  
-https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetUniformLocation.xhtml
-
-Commande OpenGL : **glGetActiveUniform**  
-https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetActiveUniform.xhtml
+### Attribut de sommet
 
 Commande OpenGL : **glEnableVertexAttribArray**  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glEnableVertexAttribArray.xhtml
@@ -50,10 +41,19 @@ https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.
 Commande OpenGL : **glGetVertexAttrib**  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetVertexAttrib.xhtml
 
-### Shader
-
 Commande OpenGL : **glGetVertexAttribPointerv**  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetVertexAttribPointerv.xhtml
+
+### Shader
+
+Commande OpenGL : **glUniform**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUniform.xhtml
+
+Commande OpenGL : **glGetUniformLocation**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetUniformLocation.xhtml
+
+Commande OpenGL : **glGetActiveUniform**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetActiveUniform.xhtml
 
 Commande OpenGL : **glCreateProgram**  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glCreateProgram.xhtml
@@ -117,6 +117,23 @@ https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMultiDrawArrays.xhtm
 Commande OpenGL : **glMultiDrawElements**  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMultiDrawElements.xhtml
 
+### Primitive
+
+Commande OpenGL : **glPointSize**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPointSize.xhtml
+
+Commande OpenGL : **glPatchParameter**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPatchParameter.xhtml
+
+Commande OpenGL : **glPrimitiveRestartIndex**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPrimitiveRestartIndex.xhtml
+
+Commande OpenGL : **glMultiDrawArraysIndirect**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMultiDrawArraysIndirect.xhtml
+
+Commande OpenGL : **glMultiDrawElementsIndirect**  
+https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMultiDrawElementsIndirect.xhtml
+
 ### Face
 
 Commande OpenGL : Ordre des sommets d'un polygone (CW / CCW)  
@@ -125,30 +142,55 @@ https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glFrontFace.xhtml
 Commande OpenGL : Déterminer quelle face (avant ou arrière) peut être éliminée lorsque non-visible.  
 https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glCullFace.xhtml
 
+### Pipeline fixe (OpenGL 2.1)
+
+Commande OpenGL : **glVertexPointer**  
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glVertexPointer.xml
+
+Commande OpenGL : **glNormalPointer**  
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glNormalPointer.xml
+
+Commande OpenGL : **glTexCoordPointer**  
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glTexCoordPointer.xml
+
+Commande OpenGL : **glColorPointer**  
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glColorPointer.xml
+
+Commande OpenGL : **glEnableClientState**  
+https://registry.khronos.org/OpenGL-Refpages/gl2.1/xhtml/glEnableClientState.xml
+
+## Spécifications
+
+OpenGL 4.1 (profil core), version maximale supportée par macOS  
+https://registry.khronos.org/OpenGL/specs/gl/glspec41.core.pdf
+
+OpenGL 4.3 (profil core), version qui introduit les shaders de calcul et le rendu indirect multiple  
+https://registry.khronos.org/OpenGL/specs/gl/glspec43.core.pdf
+
 ## Wikipédia
 
-Wikipédia: Polygone  
-http://fr.wikipedia.org/wiki/Polygone  
-http://en.wikipedia.org/wiki/Polygon
+Wikipédia : Polygone  
+https://fr.wikipedia.org/wiki/Polygone  
+https://en.wikipedia.org/wiki/Polygon
 
-Wikipédia: Vertex buffer  
-http://fr.wikipedia.org/wiki/Vertex_Buffer_Object  
-http://en.wikipedia.org/wiki/Vertex_Buffer_Object
+Wikipédia : Vertex buffer object  
+https://fr.wikipedia.org/wiki/Vertex_Buffer_Object  
+https://en.wikipedia.org/wiki/Vertex_Buffer_Object
 
-Wikipédia: Maillage géométrique  
-http://fr.wikipedia.org/wiki/Maillage_(structure_de_donn%C3%A9es)  
-http://en.wikipedia.org/wiki/Polygon_mesh
+Wikipédia : Maillage géométrique  
+https://fr.wikipedia.org/wiki/Maillage_(structure_de_donn%C3%A9es)  
+https://en.wikipedia.org/wiki/Polygon_mesh
 
-Wikipédia: Rasterisation  
-http://en.wikipedia.org/wiki/Rasterisation  
+Wikipédia : Rasterisation  
+https://en.wikipedia.org/wiki/Rasterisation  
 https://fr.wikipedia.org/wiki/Rastérisation
 
-Wikipédia: Triangulation d'un polygone  
+Wikipédia : Triangulation d'un polygone  
 https://fr.wikipedia.org/wiki/Triangulation_d%27un_polygone  
 https://en.wikipedia.org/wiki/Polygon_triangulation
 
-Wikipédia: Modèles 3D classiques  
-http://en.wikipedia.org/wiki/List_of_common_3D_test_models
+Wikipédia : Modèles 3D classiques  
+https://en.wikipedia.org/wiki/List_of_common_3D_test_models
 
 ## openFrameworks
 
@@ -159,45 +201,45 @@ ofPath
 https://openframeworks.cc/documentation/graphics/ofPath/
 
 of3dPrimitive  
-http://openframeworks.cc/documentation/3d/of3dPrimitive/
+https://openframeworks.cc/documentation/3d/of3dPrimitive/
 
 ofPlanePrimitive  
-http://openframeworks.cc/documentation/3d/ofPlanePrimitive/
+https://openframeworks.cc/documentation/3d/ofPlanePrimitive/
 
 ofMesh  
 https://openframeworks.cc/documentation/3d/ofMesh/
 
 ofEnableDepthTest  
-http://openframeworks.cc/documentation/graphics/ofGraphics/#show_ofEnableDepthTest
+https://openframeworks.cc/documentation/graphics/ofGraphics/#show_ofEnableDepthTest
 
 ## Librairies
 
 Assimp : Open Asset Import Library  
-http://assimp.sourceforge.net  
+https://www.assimp.org  
 https://github.com/assimp/assimp
 
 ## Divers
 
-open.gl : drawing polygons  
-http://open.gl/drawing
+open.gl : Drawing polygons  
+https://open.gl/drawing
 
 opengl-tutorial.org : Tutorial 7 - Model loading  
 http://www.opengl-tutorial.org/beginners-tutorials/tutorial-7-model-loading/
 
-OpenGL: Red Book - Exemples de codes pour dessiner des primitives géométriques (fixe pipeline)  
+OpenGL : Red Book - Exemples de codes pour dessiner des primitives géométriques (pipeline fixe)  
 http://www.opengl.org/archives/resources/code/samples/redbook/
 
-NeHe : Model Loading (fixe pipeline)  
+NeHe : Model Loading (pipeline fixe)  
 http://nehe.gamedev.net/tutorial/model_loading/16004/
 
 Apple : Best Practices for Working with Vertex Data  
-https://developer.apple.com/library/ios/documentation/3ddrawing/conceptual/opengles_programmingguide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html
+https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html
 
 The Stanford 3D Scanning Repository  
 https://graphics.stanford.edu/data/3Dscanrep/
 
 Large Geometric Models Archive at Georgia Tech  
-http://www.cc.gatech.edu/projects/large_models/
+https://sites.cc.gatech.edu/projects/large_models/
 
 Wykobi - Computational Geometry Tutorial  
 http://wykobi.com/tutorial.html
