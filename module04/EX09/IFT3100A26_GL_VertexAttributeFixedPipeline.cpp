@@ -28,9 +28,12 @@ glEnableClientState(GL_NORMAL_ARRAY);
 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 glEnableClientState(GL_COLOR_ARRAY);
 
-// note : ces pointeurs restent activés pour les rendus suivants; après la commande de rendu, il faut les désactiver
-// si un autre buffer de géométrie ne fournit pas les mêmes attributs :
-// glDisableClientState(GL_VERTEX_ARRAY);
-// glDisableClientState(GL_NORMAL_ARRAY);
-// glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-// glDisableClientState(GL_COLOR_ARRAY);
+// rendre le modèle avec une commande de rendu
+// ...
+
+// puisque ces pointeurs restent activés, il faut les désactiver après la commande de rendu
+// si un autre buffer de géométrie ne fournit pas les mêmes attributs
+glDisableClientState(GL_VERTEX_ARRAY);
+glDisableClientState(GL_NORMAL_ARRAY);
+glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+glDisableClientState(GL_COLOR_ARRAY);
