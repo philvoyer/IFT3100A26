@@ -5,7 +5,7 @@
 
 void Renderer::setup()
 {
-  ofSetFrameRate(1);
+  ofSetFrameRate(60);
 
   point_diameter = 8.0f;
 }
