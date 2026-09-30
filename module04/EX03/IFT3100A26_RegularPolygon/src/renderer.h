@@ -25,4 +25,6 @@ public:
   void setup();
   void update();
   void draw();
+
+  void set_side_count(int count);
 };

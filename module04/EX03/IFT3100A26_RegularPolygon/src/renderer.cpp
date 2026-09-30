@@ -9,10 +9,31 @@ void Renderer::setup()
 
   // paramètres
   point_diameter = 16;
-  side_count = 3;
 
   // variables
-  polygon_name = "triangle";
+  set_side_count(3);
+}
+
+// fonction qui configure le nombre de côtés du polygone régulier et son nom
+void Renderer::set_side_count(int count)
+{
+  // un polygone a au minimum 3 côtés
+  if (count < 3)
+    count = 3;
+
+  side_count = count;
+
+  // noms des polygones réguliers de 3 à 12 côtés
+  static const char* names[] =
+  {
+    "triangle", "carré", "pentagone", "hexagone", "heptagone",
+    "octogone", "ennéagone", "décagone", "hendécagone", "dodécagone"
+  };
+
+  if (count <= 12)
+    polygon_name = names[count - 3];
+  else
+    polygon_name = "polygone à " + ofToString(count) + " côtés";
 }
 
 void Renderer::update()

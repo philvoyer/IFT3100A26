@@ -26,54 +26,23 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case '1':
-      renderer.side_count = 3;
-      renderer.polygon_name = "triangle";
+    case '1': renderer.set_side_count(3);  break; // triangle
+    case '2': renderer.set_side_count(4);  break; // carré
+    case '3': renderer.set_side_count(5);  break; // pentagone
+    case '4': renderer.set_side_count(6);  break; // hexagone
+    case '5': renderer.set_side_count(7);  break; // heptagone
+    case '6': renderer.set_side_count(8);  break; // octogone
+    case '7': renderer.set_side_count(9);  break; // ennéagone
+    case '8': renderer.set_side_count(10); break; // décagone
+    case '9': renderer.set_side_count(11); break; // hendécagone
+    case '0': renderer.set_side_count(12); break; // dodécagone
+
+    case OF_KEY_UP:   // touche ↑ : ajouter un côté
+      renderer.set_side_count(renderer.side_count + 1);
       break;
 
-    case '2':
-      renderer.side_count = 4;
-      renderer.polygon_name = "carré";
-      break;
-
-    case '3':
-      renderer.side_count = 5;
-      renderer.polygon_name = "pentagone";
-      break;
-
-    case '4':
-      renderer.side_count = 6;
-      renderer.polygon_name = "hexagone";
-      break;
-
-    case '5':
-      renderer.side_count = 7;
-      renderer.polygon_name = "heptagone";
-      break;
-
-    case '6':
-      renderer.side_count = 8;
-      renderer.polygon_name = "octogone";
-      break;
-
-    case '7':
-      renderer.side_count = 9;
-      renderer.polygon_name = "ennéagone";
-      break;
-
-    case '8':
-      renderer.side_count = 10;
-      renderer.polygon_name = "décagone";
-      break;
-
-    case '9':
-      renderer.side_count = 11;
-      renderer.polygon_name = "hendécagone";
-      break;
-
-    case '0':
-      renderer.side_count = 12;
-      renderer.polygon_name = "dodécagone";
+    case OF_KEY_DOWN: // touche ↓ : retirer un côté
+      renderer.set_side_count(renderer.side_count - 1);
       break;
 
     default:
@@ -85,7 +54,7 @@ void Application::keyReleased(int key)
 
 void Application::update_window_title()
 {
-  ofSetWindowTitle("polygone régulier : " + renderer.polygon_name + " (1-0)");
+  ofSetWindowTitle("polygone régulier : " + renderer.polygon_name + " (1-0 ↑ ↓)");
 }
 
 void Application::exit()

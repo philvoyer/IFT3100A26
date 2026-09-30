@@ -1,6 +1,6 @@
 // IFT3100A26_RegularPolygon/main.cpp
 // Exemple de dessin des polygones réguliers du triangle au dodécagone (de 3 à 12 côtés).
-// Les touches 1 à 9 et 0 sélectionnent le nombre de côtés (de 3 à 12). Chaque sommet est relié au centre du polygone.
+// Les touches 1 à 9 et 0 sélectionnent le nombre de côtés (de 3 à 12) et les flèches ↑ et ↓ l'augmentent ou le diminuent (minimum de 3). Chaque sommet est relié au centre du polygone.
 
 #include "ofMain.h"
 #include "application.h"
