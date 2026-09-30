@@ -1,4 +1,4 @@
-// IFT3100A25_EquilateralTriangle/renderer.h
+// IFT3100A26_EquilateralTriangle/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -27,14 +27,14 @@ public:
   float vertex3_x;
   float vertex3_y;
 
-  float triangle_edge_diameter;
-  float triangle_edge_diameter_half;
+  float triangle_edge_length;
+  float triangle_edge_length_half;
 
   float triangle_perimeter;
   float triangle_altitude;
   float triangle_area;
 
-  float triangle_innercircle_radius;
+  float triangle_incircle_radius;
   float triangle_circumcircle_radius;
 
   float point_diameter;

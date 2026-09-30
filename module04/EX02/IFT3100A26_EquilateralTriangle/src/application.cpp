@@ -1,10 +1,12 @@
-// IFT3100A25_EquilateralTriangle/application.cpp
+// IFT3100A26_EquilateralTriangle/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
 
 void Application::setup()
 {
+  ofLog() << "<app::setup>";
+
   ofSetWindowTitle("triangle équilatéral");
 
   renderer.setup();
