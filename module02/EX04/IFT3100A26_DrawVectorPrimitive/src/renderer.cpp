@@ -262,9 +262,9 @@ void Renderer::draw_ellipse(float x1, float y1, float x2, float y2) const
 // fonction qui détermine une couleur aléatoire pour les lignes de contour
 void Renderer::random_color_stroke()
 {
-  stroke_color_r = (int) ofRandom(0, 255);
-  stroke_color_g = (int) ofRandom(0, 255);
-  stroke_color_b = (int) ofRandom(0, 255);
+  stroke_color_r = (int) ofRandom(0, 256);
+  stroke_color_g = (int) ofRandom(0, 256);
+  stroke_color_b = (int) ofRandom(0, 256);
   stroke_color_a = 255;
 
   ofLog() << "<random color stroke>";
@@ -273,9 +273,10 @@ void Renderer::random_color_stroke()
 // fonction qui détermine une couleur aléatoire pour les zones de remplissage
 void Renderer::random_color_fill()
 {
-  fill_color_r = (int) ofRandom(0, 255);
-  fill_color_g = (int) ofRandom(0, 255);
-  fill_color_b = (int) ofRandom(0, 255);
+  // (ofRandom exclut la borne supérieure : l'intervalle [0, 256[ donne les 256 valeurs entières de 0 à 255)
+  fill_color_r = (int) ofRandom(0, 256);
+  fill_color_g = (int) ofRandom(0, 256);
+  fill_color_b = (int) ofRandom(0, 256);
   fill_color_a = 255;
 
   ofLog() << "<random color fill>";
