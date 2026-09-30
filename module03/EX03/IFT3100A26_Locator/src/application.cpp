@@ -29,9 +29,9 @@ void Application::update()
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
   if (is_key_press_left)
-    renderer.offset_x -= renderer.delta_x * time_elapsed;
-  if (is_key_press_right)
     renderer.offset_x += renderer.delta_x * time_elapsed;
+  if (is_key_press_right)
+    renderer.offset_x -= renderer.delta_x * time_elapsed;
 
   renderer.update();
 }
