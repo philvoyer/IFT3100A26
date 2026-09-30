@@ -1,4 +1,4 @@
-// IFT3100A25_LambertTeapot/application.h
+// IFT3100A26_LambertTeapot/application.h
 // Classe principale de l'application.
 
 #pragma once

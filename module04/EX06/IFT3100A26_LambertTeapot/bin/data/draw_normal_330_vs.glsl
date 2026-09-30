@@ -1,4 +1,4 @@
-// IFT3100A25 ~ lambert_330_vs.glsl
+// IFT3100A26 ~ draw_normal_330_vs.glsl
 
 #version 330
 
@@ -7,7 +7,6 @@ in vec3 position;
 in vec3 normal;
 
 // attributs en sortie
-out vec3 surface_position;
 out vec3 surface_normal;
 
 // attributs uniformes
@@ -21,9 +20,6 @@ void main()
 
   // transformation de la normale du sommet dans l'espace de vue
   surface_normal = normalize(normal_matrix * normal);
-
-  // transformation de la position du sommet dans l'espace de vue
-  surface_position = vec3(modelViewMatrix * vec4(position, 1.0));
 
   // transformation de la position du sommet par les matrices de modèle, vue et projection
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);

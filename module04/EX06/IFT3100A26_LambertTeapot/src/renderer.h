@@ -1,4 +1,4 @@
-// IFT3100A25_LambertTeapot/renderer.h
+// IFT3100A26_LambertTeapot/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -28,6 +28,7 @@ public:
   float scale_teapot;
 
   float rotation_speed;
+  float rotation_angle;
 
   bool use_rotation;
 

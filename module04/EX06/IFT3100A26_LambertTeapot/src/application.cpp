@@ -1,11 +1,13 @@
-// IFT3100A25_LambertTeapot/application.cpp
+// IFT3100A26_LambertTeapot/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
 
 void Application::setup()
 {
-  ofSetWindowTitle("teapot avec shader de Lambert");
+  ofLog() << "<app::setup>";
+
+  ofSetWindowTitle("teapot avec shader de Lambert (1 2 espace)");
 
   renderer.setup();
 
@@ -35,18 +37,21 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case 49:  // touche 1
+    case '1':
       renderer.shader = renderer.shader_lambert;
       ofLog() << "<select shader: lambert>";
       break;
 
-    case 50:  // touche 2
+    case '2':
       renderer.shader = renderer.shader_normal;
       ofLog() << "<select shader: normal>";
       break;
 
-    default:
+    case ' ': // barre d'espace : activer ou désactiver la rotation du teapot
       renderer.use_rotation = !renderer.use_rotation;
+      break;
+
+    default:
       break;
   }
 }
