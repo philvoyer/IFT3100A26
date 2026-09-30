@@ -26,7 +26,7 @@ Exemple de génération aléatoire et rendu d'une soupe aux triangles (2500 tria
 
 Les données des triangles sont stockées dans un bloc de mémoire contigu.
 
-Les flèches déplacent la soupe et les touches Z et X la font pivoter autour de l'axe Y. Un clic de souris génère une nouvelle soupe et la barre d'espace alterne entre le bol et la balle.
+Les flèches déplacent le point de vue et les touches Z et X font pivoter la soupe autour de l'axe Y. Un clic de souris génère une nouvelle soupe et la barre d'espace alterne entre le bol et la balle.
 
 ### Exemple 4.5 (TeaParty)
 
@@ -34,7 +34,7 @@ Exemple de chargement et de rendu de plusieurs instances (100) d'un modèle impo
 
 Chaque instance a une position, une rotation autour de l'axe Y et une proportion aléatoires, stockées dans un bloc de mémoire contigu. Un clic de souris redistribue les instances.
 
-Les touches 1, 2 et 3 sélectionnent le mode de rendu (surfaces, fil de fer ou sommets), les flèches déplacent la scène, les touches W, E et R activent ou désactivent la translation, la rotation et la proportion, et la touche F inverse l'axe Y.
+Les touches 1, 2 et 3 sélectionnent le mode de rendu (surfaces, fil de fer ou sommets), les flèches déplacent le point de vue, les touches W, E et R activent ou désactivent la translation, la rotation et la proportion, et la touche F inverse l'axe Y.
 
 ### Exemple 4.6 (LambertTeapot)
 
