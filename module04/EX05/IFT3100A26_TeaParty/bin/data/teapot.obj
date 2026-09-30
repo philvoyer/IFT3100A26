@@ -1,3 +1,8 @@
+# IFT3100 ~ teapot.obj
+# Modèle de teapot utilisé dans les exemples du cours (Université Laval).
+# Sommets : 1292, normales : 1289, faces : 2464 triangles.
+# Coordonnées de texture : non.
+# Les lignes suivantes sont l'en-tête original du fichier (outil d'exportation).
 # Blender v2.65 (sub 0) OBJ File
 # www.blender.org
 o teapot.005

@@ -1,4 +1,4 @@
-// IFT3100A25_TeaParty/renderer.h
+// IFT3100A26_TeaParty/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -29,10 +29,6 @@ public:
 
   ofNode node;
 
-  ofVec3f vector_position;
-  ofVec3f vector_rotation;
-  ofVec3f vector_proportion;
-
   float center_x;
   float center_y;
 
@@ -59,7 +55,7 @@ public:
   void reset();
   void draw();
 
-  void dispatch_random_locator(int count, float range);
+  void distribute_locators(int count, float range);
 
   void draw_locator(float scale);
 

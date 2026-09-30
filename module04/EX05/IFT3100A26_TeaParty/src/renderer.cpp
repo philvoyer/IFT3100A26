@@ -1,4 +1,4 @@
-// IFT3100A25_TeaParty/renderer.cpp
+// IFT3100A26_TeaParty/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -38,9 +38,12 @@ void Renderer::setup()
   locator_buffer_head = 0;
 
   // allocation d'un espace mémoire suffisamment grand pour contenir les données de l'ensemble des localisateurs de teapot
+  // (un bloc contigu d'éléments de taille fixe, comme pour un buffer de géométrie envoyé au GPU, voir l'exemple 4.8)
   locators = (Locator*) std::malloc(teapot_count * sizeof(Locator));
 
   // chargement du modèle 3D en mémoire
+  // (le chargeur normalise le modèle : sa plus grande dimension devient la moitié de la largeur de la fenêtre au moment du chargement,
+  // par exemple 256 pixels pour une fenêtre de 512, et setScale multiplie cette échelle; la taille ne change pas si la fenêtre est redimensionnée)
   teapot.load("teapot.obj");
 
   reset();
@@ -66,6 +69,10 @@ void Renderer::draw()
   ofTranslate(center_x + offset_x, is_flip_axis_y ? -center_y : center_y, offset_z);
 
   ofRotateDeg(ofGetFrameNum() * 0.1f, 0.0f, 1.0f, 0.0f);
+
+  ofVec3f vector_position;
+  ofVec3f vector_rotation;
+  ofVec3f vector_proportion;
 
   for (int index = 0; index < locator_buffer_head; ++index)
   {
@@ -107,6 +114,8 @@ void Renderer::draw()
       vector_rotation.z = 0.0f;
     }
 
+    // appliquer la rotation au localisateur (trois angles d'Euler) et au teapot (rotation autour de l'axe Y seulement)
+    // (équivalent ici, car seul l'angle en Y est non nul; les deux transformations doivent rester cohérentes)
     node.setOrientation(vector_rotation);
     teapot.setRotation(0.0f, vector_rotation.y, 0.0f, 1.0f, 0.0f);
 
@@ -163,28 +172,32 @@ void Renderer::draw()
 void Renderer::reset()
 {
   // distribuer les localisateurs dans l'espace visible de la scène
-  dispatch_random_locator(teapot_count, std::min(ofGetWidth() * 0.6f, ofGetHeight() * 0.6f));
+  distribute_locators(teapot_count, std::min(ofGetWidth() * 0.6f, ofGetHeight() * 0.6f));
 
   ofLog() << "<reset>";
 }
 
 // fonction qui distribue les localisateurs dans un espace cubique
-void Renderer::dispatch_random_locator(int count, float range)
+void Renderer::distribute_locators(int count, float range)
 {
   float scale;
 
   if (count <= 0 || range <= 0 || count > teapot_count)
     return;
 
-  float halfRange = range / 2.0f;
+  float half_range = range / 2.0f;
 
   locator_buffer_head = count;
 
+  ofVec3f vector_position;
+  ofVec3f vector_rotation;
+  ofVec3f vector_proportion;
+
   for (int index = 0; index < locator_buffer_head; ++index)
   {
-    vector_position.x = ofRandom(-halfRange, halfRange);
-    vector_position.y = ofRandom(-halfRange, halfRange);
-    vector_position.z = ofRandom(-halfRange, halfRange);
+    vector_position.x = ofRandom(-half_range, half_range);
+    vector_position.y = ofRandom(-half_range, half_range);
+    vector_position.z = ofRandom(-half_range, half_range);
 
     vector_rotation.x = 0.0f;
     vector_rotation.y = ofRandom(0.0f, 360.0f);
