@@ -58,7 +58,7 @@ void Renderer::draw()
 void Renderer::select_random_colors()
 {
   // choisir une nouvelle valeur aléatoire par chaque composante de la couleur
-  color_random.set(ofRandom(255), ofRandom(255), ofRandom(255));
+  color_random.set(ofRandom(0, 256), ofRandom(0, 256), ofRandom(0, 256));
 
   // utiliser la couleur aléatoire comme couleur d'arrière-plan
   color_background.set(color_random.r, color_random.g, color_random.b);
