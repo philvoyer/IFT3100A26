@@ -1,3 +1,8 @@
+# IFT3100 ~ teapot.obj
+# Modèle de teapot utilisé dans les exemples du cours (Université Laval).
+# Sommets : 3241, normales : 3242, faces : 6400 triangles.
+# Coordonnées de texture : oui (1588).
+# Les lignes suivantes sont l'en-tête original du fichier (outil d'exportation).
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
 # File Created: 20.12.2018 09:54:09
 
