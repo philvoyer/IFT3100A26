@@ -1,4 +1,4 @@
-// IFT3100A25_RegularPolygon/renderer.h
+// IFT3100A26_RegularPolygon/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -9,13 +9,10 @@ class Renderer
 {
 public:
 
-  std::string mode;
+  std::string polygon_name;
 
   float polygon_center_x;
   float polygon_center_y;
-
-  float position_vertex_x;
-  float position_vertex_y;
 
   float angle;
   float offset;
@@ -23,8 +20,7 @@ public:
 
   float point_diameter;
 
-  int side;
-  int index;
+  int side_count;
 
   void setup();
   void update();

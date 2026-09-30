@@ -1,4 +1,4 @@
-// IFT3100A25_RegularPolygon/application.h
+// IFT3100A26_RegularPolygon/application.h
 // Classe principale de l'application.
 
 #pragma once
@@ -17,6 +17,8 @@ public:
   void draw();
 
   void keyReleased(int key);
+
+  void update_window_title();
 
   void exit();
 };

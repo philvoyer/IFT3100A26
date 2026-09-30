@@ -1,4 +1,4 @@
-// IFT3100A25_RegularPolygon/renderer.cpp
+// IFT3100A26_RegularPolygon/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -9,10 +9,10 @@ void Renderer::setup()
 
   // paramètres
   point_diameter = 16;
-  side = 3;
+  side_count = 3;
 
-  // variable
-  mode = "triangle";
+  // variables
+  polygon_name = "triangle";
 }
 
 void Renderer::update()
@@ -25,7 +25,7 @@ void Renderer::update()
   angle = ofDegToRad(-90.0f);
 
   // calculer l'angle qui sépare chaque sommet du polygone
-  offset = ofDegToRad(360.0f / side);
+  offset = ofDegToRad(360.0f / side_count);
 
   // déterminer le rayon du polygone régulier
   radius = std::min(ofGetWidth(), ofGetHeight()) / 3.0f;
@@ -43,18 +43,14 @@ void Renderer::draw()
   ofBeginShape();
 
   // une itération pour chaque sommet du polygone régulier
-  for (index = 0; index < side; ++index)
+  for (int index = 0; index < side_count; ++index)
   {
     // calculer la position du sommet
-    position_vertex_x = polygon_center_x + cos(angle) * radius;
-    position_vertex_y = polygon_center_y + sin(angle) * radius;
+    float position_vertex_x = polygon_center_x + cos(angle + index * offset) * radius;
+    float position_vertex_y = polygon_center_y + sin(angle + index * offset) * radius;
 
     // ajouter un sommet au polygone régulier
-    ofSetColor(255);
     ofVertex(position_vertex_x, position_vertex_y);
-
-    // incrémenter l'angle pour le prochain sommet
-    angle += offset;
   }
 
   // terminer et rendre le polygone régulier
@@ -64,33 +60,27 @@ void Renderer::draw()
   ofSetLineWidth(2);
 
   // 2. dessiner une arête entre chaque sommet et le centre du polygone régulier
-  for (index = 0; index < side; ++index)
+  for (int index = 0; index < side_count; ++index)
   {
     // calculer la position du sommet
-    position_vertex_x = polygon_center_x + cos(angle) * radius;
-    position_vertex_y = polygon_center_y + sin(angle) * radius;
+    float position_vertex_x = polygon_center_x + cos(angle + index * offset) * radius;
+    float position_vertex_y = polygon_center_y + sin(angle + index * offset) * radius;
 
-    // ajouter un sommet au polygone régulier
+    // dessiner une ligne du sommet vers le centre du polygone régulier
     ofDrawLine(position_vertex_x, position_vertex_y, polygon_center_x, polygon_center_y);
-
-    // incrémenter l'angle pour le prochain sommet
-    angle += offset;
   }
 
   ofSetColor(63);
 
   // 3. dessiner chaque sommet du polygone régulier
-  for (index = 0; index < side; ++index)
+  for (int index = 0; index < side_count; ++index)
   {
     // calculer la position du sommet
-    position_vertex_x = polygon_center_x + cos(angle) * radius;
-    position_vertex_y = polygon_center_y + sin(angle) * radius;
+    float position_vertex_x = polygon_center_x + cos(angle + index * offset) * radius;
+    float position_vertex_y = polygon_center_y + sin(angle + index * offset) * radius;
 
-    // ajouter un sommet au polygone régulier
+    // dessiner un point à la position du sommet
     ofDrawEllipse(position_vertex_x, position_vertex_y, point_diameter, point_diameter);
-
-    // incrémenter l'angle pour le prochain sommet
-    angle += offset;
   }
 
   // dessiner le centre du polygone régulier
