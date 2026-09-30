@@ -18,7 +18,7 @@ Certaines de ses propriétés (longueur des arêtes, altitude, rayons des cercle
 
 Exemple de dessin des polygones réguliers du triangle au dodécagone (de 3 à 12 côtés).
 
-Les touches 1 à 9 et 0 sélectionnent le nombre de côtés (de 3 à 12). Chaque sommet est relié au centre du polygone.
+Les touches 1 à 9 et 0 sélectionnent le nombre de côtés (de 3 à 12) et les flèches ↑ et ↓ l'augmentent ou le diminuent (minimum de 3). Chaque sommet est relié au centre du polygone.
 
 ### Exemple 4.4 (TriangleSoup)
 
