@@ -1,4 +1,4 @@
-// IFT3100A25_TriangleSoup/renderer.h
+// IFT3100A26_TriangleSoup/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -19,16 +19,6 @@ class Renderer
 public:
 
   Triangle* soup;
-
-  ofVec3f vector_origin;
-
-  ofVec3f vector_position1;
-  ofVec3f vector_position2;
-  ofVec3f vector_position3;
-
-  ofColor vector_color;
-
-  ofLight light;
 
   ofNode node;
 
@@ -59,13 +49,13 @@ public:
 
   void setup();
 
-  void dispatch_random_triangle(int count, float range);
+  void update();
+
+  void distribute_triangles(int count, float range);
 
   void reset();
 
   void draw();
-
-  void draw_scene();
 
   void draw_soup();
 

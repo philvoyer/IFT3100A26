@@ -1,11 +1,13 @@
-// IFT3100A25_TriangleSoup/application.cpp
+// IFT3100A26_TriangleSoup/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
 
 void Application::setup()
 {
-  ofSetWindowTitle("soupe au triangles (↑ ↓ ← → z x)");
+  ofLog() << "<app::setup>";
+
+  ofSetWindowTitle("soupe aux triangles (↑ ↓ ← → z x espace)");
 
   is_key_press_up = false;
   is_key_press_down = false;
@@ -14,11 +16,18 @@ void Application::setup()
   is_key_press_z = false;
   is_key_press_x = false;
 
+  // initialiser le chronomètre pour que le premier delta de temps soit valide
+  time_current = ofGetElapsedTimef();
+  time_last = time_current;
+  time_elapsed = 0.0f;
+
   renderer.setup();
 }
 
 void Application::update()
 {
+  renderer.update();
+
   time_current = ofGetElapsedTimef();
   time_elapsed = time_current - time_last;
   time_last = time_current;
@@ -27,10 +36,11 @@ void Application::update()
     renderer.offset_z += renderer.delta_z * time_elapsed;
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
+  // les flèches ← et → déplacent la soupe vers la gauche et vers la droite de la fenêtre
   if (is_key_press_left)
-    renderer.offset_x += renderer.delta_x * time_elapsed;
-  if (is_key_press_right)
     renderer.offset_x -= renderer.delta_x * time_elapsed;
+  if (is_key_press_right)
+    renderer.offset_x += renderer.delta_x * time_elapsed;
 
   if (is_key_press_z)
     renderer.offset_y += renderer.delta_y * time_elapsed;
@@ -68,11 +78,11 @@ void Application::keyPressed(int key)
       is_key_press_down = true;
       break;
 
-    case 120: // touche x
+    case 'x':
       is_key_press_x = true;
       break;
 
-    case 122: // touche z
+    case 'z':
       is_key_press_z = true;
       break;
 
@@ -101,17 +111,20 @@ void Application::keyReleased(int key)
       is_key_press_down = false;
       break;
 
-    case 120: // touche x
+    case 'x':
       is_key_press_x = false;
       break;
 
-    case 122: // touche z
+    case 'z':
       is_key_press_z = false;
       break;
 
-    default:
+    case ' ': // barre d'espace : alterner entre un hémisphère et une sphère
       renderer.bowl_or_ball = !renderer.bowl_or_ball;
       renderer.reset();
+      break;
+
+    default:
       break;
   }
 }

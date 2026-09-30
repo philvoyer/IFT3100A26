@@ -1,4 +1,4 @@
-// IFT3100A25_TriangleSoup/renderer.cpp
+// IFT3100A26_TriangleSoup/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -28,56 +28,69 @@ void Renderer::setup()
   triangle_buffer_size = triangle_count;
   triangle_buffer_head = 0;
 
-  // allocation d'un espace mémoire suffisament grand pour contenir les données de l'ensemble des triangles de la soupe
+  // allocation d'un espace mémoire suffisamment grand pour contenir les données de l'ensemble des triangles de la soupe
+  // (un bloc contigu d'éléments de taille fixe, comme pour un buffer de géométrie envoyé au GPU, voir l'exemple 4.8)
   soup = (Triangle*) std::malloc(triangle_buffer_size * sizeof(Triangle));
 
   reset();
 }
 
+void Renderer::update()
+{
+  // calculer les coordonnées du centre de la fenêtre d'affichage
+  center_x = ofGetWidth() / 2.0f;
+  center_y = ofGetHeight() / 2.0f;
+}
+
 // fonction qui initialise la scène
 void Renderer::reset()
 {
-  // calculer les coordonnées du centre du framebuffer
-  center_x = ofGetWidth() / 2.0f;
-  center_y = ofGetHeight() / 2.0f;
-
   // déterminer le rayon de la soupe en fonction des dimensions de la fenêtre
   soup_radius = std::min(ofGetWidth(), ofGetHeight()) * soup_proportion;
 
   // distribuer les triangles dans l'espace de la scène
-  dispatch_random_triangle(triangle_count, soup_radius);
+  distribute_triangles(triangle_count, soup_radius);
 
   ofLog() << "<reset>";
 }
 
-// fonction qui distribue les triangles dans un hémisphère
-void Renderer::dispatch_random_triangle(int count, float range)
+// fonction qui distribue les triangles dans un hémisphère (bol) ou dans une sphère (balle)
+void Renderer::distribute_triangles(int count, float range)
 {
-  // variable temporaire
-  float scale;
-
-  // validations
+  // valider les paramètres
   if (count <= 0 || range <= 0.0f || count > triangle_buffer_size)
     return;
 
   // configurer le nombre de triangles
   triangle_buffer_head = count;
 
+  ofVec3f vector_origin;
+  ofVec3f vector_position1;
+  ofVec3f vector_position2;
+  ofVec3f vector_position3;
+  ofColor vector_color;
+
   for (int index = 0; index < triangle_buffer_head; ++index)
   {
-    // déterminer une position au hasard
-    vector_origin.x = ofRandom(-1.0f, 1.0f);
-    vector_origin.y = ofRandom(-1.0f, 1.0f);
-    vector_origin.z = ofRandom(-1.0f, 1.0f);
+    // déterminer une position au hasard à l'intérieur de la sphère unitaire
+    // (par rejet : normaliser un point tiré dans un cube favoriserait les directions vers les coins du cube,
+    // et un point trop près de l'origine ne peut pas être normalisé de façon fiable)
+    do
+    {
+      vector_origin.x = ofRandom(-1.0f, 1.0f);
+      vector_origin.y = ofRandom(-1.0f, 1.0f);
+      vector_origin.z = ofRandom(-1.0f, 1.0f);
+    }
+    while (vector_origin.lengthSquared() > 1.0f || vector_origin.lengthSquared() < 0.0001f);
 
-    // normaliser la position
+    // normaliser la position (direction uniforme sur la sphère)
     vector_origin.normalize();
 
-    // ramener la position dans une hémisphère
+    // ramener la position dans un hémisphère
     if (bowl_or_ball)
       vector_origin.z = std::abs(vector_origin.z) * -1.0f;
 
-    // proportion de la soupe
+    // mettre la position à l'échelle du rayon de la soupe
     vector_origin *= range;
 
     // déterminer des valeurs de position aléatoires pour les trois sommets du triangle
@@ -94,12 +107,13 @@ void Renderer::dispatch_random_triangle(int count, float range)
     vector_position3.z = vector_origin.z + ofRandom(-triangle_radius, triangle_radius);
 
     // déterminer une couleur RGB au hasard
-    vector_color.r = ofRandom(0, 255);
-    vector_color.g = ofRandom(0, 255);
-    vector_color.b = ofRandom(0, 255);
+    // (ofRandom exclut la borne supérieure : l'intervalle [0, 256[ donne les 256 valeurs entières de 0 à 255)
+    vector_color.r = ofRandom(0, 256);
+    vector_color.g = ofRandom(0, 256);
+    vector_color.b = ofRandom(0, 256);
     vector_color.a = 255;
 
-    // configurer les attributs de transformation du triangle
+    // enregistrer la position des trois sommets du triangle
     soup[index].position1[0] = vector_position1.x;
     soup[index].position1[1] = vector_position1.y;
     soup[index].position1[2] = vector_position1.z;
@@ -141,11 +155,11 @@ void Renderer::draw_soup()
 {
   ofPushMatrix();
 
-  // rotation en Y de la scène
+  // rotation de la soupe autour de l'axe Y (contrôlée par l'utilisateur)
   ofRotateDeg(offset_y, 0.0f, 1.0f, 0.0f);
 
-  // légère rotation en Z de la soupe
-  ofRotateDeg(ofGetFrameNum() * 0.1f, 0.0f, 0.0f, 1.0f);
+  // légère rotation en Z de la soupe (6 degrés par seconde, indépendante de la cadence d'affichage)
+  ofRotateDeg(ofGetElapsedTimef() * 6.0f, 0.0f, 0.0f, 1.0f);
 
   // dessiner les triangles
   for (int index = 0; index < triangle_buffer_head; ++index)
@@ -157,6 +171,10 @@ void Renderer::draw_soup()
 // fonction qui dessine un des triangles de la soupe
 void Renderer::draw_triangle(int index)
 {
+  ofVec3f vector_position1;
+  ofVec3f vector_position2;
+  ofVec3f vector_position3;
+
   ofFill();
 
   ofSetColor(
