@@ -28,7 +28,6 @@ void Application::update()
     renderer.offset_z += renderer.delta_z * time_elapsed;
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
-  // les flèches ← et → déplacent le point de vue vers la gauche et vers la droite (la scène se déplace en sens inverse)
   if (is_key_press_left)
     renderer.offset_x += renderer.delta_x * time_elapsed;
   if (is_key_press_right)
