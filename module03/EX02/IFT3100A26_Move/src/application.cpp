@@ -45,11 +45,11 @@ void Application::keyPressed(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // touche ←
+    case OF_KEY_LEFT:  // touche ←
       is_key_press_left = true;
       break;
 
-    case OF_KEY_UP: // touche ↑
+    case OF_KEY_UP:    // touche ↑
       is_key_press_up = true;
       break;
 
@@ -57,7 +57,7 @@ void Application::keyPressed(int key)
       is_key_press_right = true;
       break;
 
-    case OF_KEY_DOWN: // touche ↓
+    case OF_KEY_DOWN:  // touche ↓
       is_key_press_down = true;
       break;
 
@@ -70,11 +70,11 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // touche ←
+    case OF_KEY_LEFT:  // touche ←
       is_key_press_left = false;
       break;
 
-    case OF_KEY_UP: // touche ↑
+    case OF_KEY_UP:    // touche ↑
       is_key_press_up = false;
       break;
 
@@ -82,7 +82,7 @@ void Application::keyReleased(int key)
       is_key_press_right = false;
       break;
 
-    case OF_KEY_DOWN: // touche ↓
+    case OF_KEY_DOWN:  // touche ↓
       is_key_press_down = false;
       break;
 
