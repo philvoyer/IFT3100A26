@@ -1,10 +1,10 @@
-// IFT3100A25_GL_VertexBufferCreate.cpp
-// Exemple d'une section de code pour créer d'un buffer de géométrie (vbo).
+// IFT3100A26_GL_VertexBuffer.cpp
+// Exemple d'une section de code pour créer un buffer de géométrie (vbo), en version statique et dynamique, puis pour le détruire.
 
 // entrée
 // • Les données des attributs de chaque sommet d'un modèle.
 // sortie
-// • Un buffer de géométrie mis en cache en mémoire GPU et prêt à l'utilisation, en version statique et dynamique, puis destruction.
+// • Un buffer de géométrie mis en cache en mémoire GPU et prêt à l'utilisation, en version statique et dynamique, puis sa destruction.
 
 // 1. initialisation des données du modèle
 
@@ -12,7 +12,7 @@
 struct Vertex {...};
 
 // nombre de sommets à stocker dans le buffer de géométrie
-int vertex_count;
+int vertex_count = ...;
 
 // calculer la taille de la structure de sommet en nombre d'octets
 int vertex_structure_size = sizeof(Vertex);
@@ -23,7 +23,7 @@ int vertex_buffer_size = vertex_count * vertex_structure_size;
 // déclarer un pointeur sur un espace mémoire du même type que la structure de sommet
 Vertex* vertex_array;
 
-// allocation d'un espace mémoire suffisament grand pour contenir les données des attributs de tous les sommets
+// allocation d'un espace mémoire suffisamment grand pour contenir les données des attributs de tous les sommets
 vertex_array = (Vertex*) std::malloc(vertex_buffer_size);
 
 // assigner les données de chaque attribut pour chaque sommet
@@ -55,15 +55,14 @@ glGenBuffers(1, &vbo1);
 // sélectionner le nouveau buffer de géométrie
 glBindBuffer(GL_ARRAY_BUFFER, vbo1);
 
-// transférer les données de la mémoire RAM vers buffer de géométrie en mémoire du GPU
+// transférer les données de la mémoire RAM vers le buffer de géométrie en mémoire GPU
 glBufferData(GL_ARRAY_BUFFER, vertex_buffer_size, vertex_array, GL_STATIC_DRAW);
 
-// déselectionner le buffer
+// désélectionner le buffer
 glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-// les données en mémoire RAM peuvent être supprimées si le buffer de géométrie est statique
-std::free(vertex_array);
-
+// note : les données en mémoire RAM pourraient être supprimées ici, puisque le buffer de géométrie est statique
+// (elles sont conservées dans cet exemple, car elles servent aussi à initialiser le buffer dynamique)
 
 // 3. création d'un buffer de géométrie dynamique
 
@@ -73,15 +72,21 @@ GLuint vbo2;
 // création d'un nouveau buffer de géométrie dont l'identifiant unique sera retourné par OpenGL
 glGenBuffers(1, &vbo2);
 
+// lors de l'initialisation :
+
 // sélectionner le nouveau buffer de géométrie
 glBindBuffer(GL_ARRAY_BUFFER, vbo2);
 
-// lors de l'initialisation :
-
-// transférer les données de la mémoire RAM vers buffer de géométrie en mémoire du GPU
+// transférer les données de la mémoire RAM vers le buffer de géométrie en mémoire GPU
 glBufferData(GL_ARRAY_BUFFER, vertex_buffer_size, vertex_array, GL_DYNAMIC_DRAW);
 
-// après mise à jour des données du buffer de géométrie :
+// désélectionner le buffer
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+// plus tard, après mise à jour des données du buffer de géométrie :
+
+// sélectionner le buffer de géométrie à mettre à jour
+glBindBuffer(GL_ARRAY_BUFFER, vbo2);
 
 // valeur de décalage pour atteindre le premier sommet qui a été modifié
 int vertex_offset = ...;
@@ -90,12 +95,15 @@ int vertex_offset = ...;
 int updated_vertex_count = ...;
 
 // téléverser un intervalle continu de sommets de la mémoire RAM vers le buffer de géométrie en mémoire GPU
-glBufferSubData(GL_ARRAY_BUFFER, vertex_offset * sizeof(Vertex), updated_vertex_count * sizeof(Vertex), vertex_array);
+// (le décalage dans le buffer et le pointeur source en RAM doivent désigner le même premier sommet)
+glBufferSubData(GL_ARRAY_BUFFER, vertex_offset * sizeof(Vertex), updated_vertex_count * sizeof(Vertex), vertex_array + vertex_offset);
 
-// déselectionner le buffer
+// désélectionner le buffer
 glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
-// 4. destruction d'un buffer de géométrie
+// 4. destruction des buffers de géométrie
 glDeleteBuffers(1, &vbo1);
 glDeleteBuffers(1, &vbo2);
+
+// libérer la mémoire RAM qui contient les données des sommets
+std::free(vertex_array);
