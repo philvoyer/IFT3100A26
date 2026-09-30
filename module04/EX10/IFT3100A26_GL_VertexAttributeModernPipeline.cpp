@@ -61,4 +61,6 @@ glEnableVertexAttribArray(location_vertex_attribute_texcoord);
 glEnableVertexAttribArray(location_vertex_attribute_color);
 
 // pour dessiner : sélectionner le vao (glBindVertexArray(vao)), puis émettre une commande de rendu
-// (l'activation des attributs est mémorisée dans le vao, il n'est pas nécessaire de les désactiver après le rendu)
+// ...
+
+// puisque l'activation des attributs est mémorisée dans le vao, il n'est pas nécessaire de les désactiver après le rendu
