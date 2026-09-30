@@ -8,9 +8,10 @@ void Renderer::setup()
   ofSetFrameRate(60);
 
   // paramètres
-  // (multiplicateur de l'échelle normalisée du modèle : le chargeur ramène sa plus grande dimension
-  // à la moitié de la largeur de la fenêtre au moment du chargement, ce n'est pas une taille en pixels)
   scale_teapot = 1.5f;
+
+  // largeur de la fenêtre au moment du chargement du modèle
+  window_width_reference = ofGetWidth();
 
   // vitesse de rotation du teapot en degrés par seconde
   rotation_speed = 18.0f;
@@ -37,9 +38,13 @@ void Renderer::update()
   center_x = ofGetWidth() / 2.0f;
   center_y = ofGetHeight() / 2.0f;
 
-  // transformation du teapot (le décalage vertical de 90 pixels centre visuellement le modèle)
-  teapot.setScale(scale_teapot, scale_teapot, scale_teapot);
-  teapot.setPosition(center_x, center_y + 90, 0);
+  // proportion de la fenêtre courante par rapport à la fenêtre de référence
+  window_proportion = std::min(ofGetWidth(), ofGetHeight()) / window_width_reference;
+
+  // transformation du teapot, proportionnelle à la taille de la fenêtre
+  float scale = scale_teapot * window_proportion;
+  teapot.setScale(scale, scale, scale);
+  teapot.setPosition(center_x, center_y + 90.0f * window_proportion, 0);
 
   // accumuler l'angle de rotation (il reste en place lorsque la rotation est désactivée, puis reprend d'où il était)
   if (use_rotation)
@@ -50,7 +55,7 @@ void Renderer::update()
   // positionner la lumière dans l'espace de vue (relative à la caméra) plutôt que dans l'espace du monde,
   // car le shader compare cette position à celle des fragments, aussi exprimée dans l'espace de vue
   // (l'objet ofLight sert ici seulement à mémoriser la position transmise au shader, il n'est pas activé)
-  light.setGlobalPosition(center_x, center_y, 255.0f);
+  light.setGlobalPosition(center_x, center_y, 255.0f * window_proportion);
 }
 
 void Renderer::draw()

@@ -26,6 +26,8 @@ public:
   float center_y;
 
   float scale_teapot;
+  float window_width_reference;
+  float window_proportion;
 
   float rotation_speed;
   float rotation_angle;
