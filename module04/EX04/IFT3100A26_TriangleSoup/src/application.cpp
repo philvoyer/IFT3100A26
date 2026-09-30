@@ -16,7 +16,6 @@ void Application::setup()
   is_key_press_z = false;
   is_key_press_x = false;
 
-  // initialiser le chronomètre pour que le premier delta de temps soit valide
   time_current = ofGetElapsedTimef();
   time_last = time_current;
   time_elapsed = 0.0f;
@@ -36,11 +35,10 @@ void Application::update()
     renderer.offset_z += renderer.delta_z * time_elapsed;
   if (is_key_press_down)
     renderer.offset_z -= renderer.delta_z * time_elapsed;
-  // les flèches ← et → déplacent la soupe vers la gauche et vers la droite de la fenêtre
   if (is_key_press_left)
-    renderer.offset_x -= renderer.delta_x * time_elapsed;
-  if (is_key_press_right)
     renderer.offset_x += renderer.delta_x * time_elapsed;
+  if (is_key_press_right)
+    renderer.offset_x -= renderer.delta_x * time_elapsed;
 
   if (is_key_press_z)
     renderer.offset_y += renderer.delta_y * time_elapsed;
@@ -62,11 +60,11 @@ void Application::keyPressed(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // touche ←
+    case OF_KEY_LEFT:  // touche ←
       is_key_press_left = true;
       break;
 
-    case OF_KEY_UP: // touche ↑
+    case OF_KEY_UP:    // touche ↑
       is_key_press_up = true;
       break;
 
@@ -74,7 +72,7 @@ void Application::keyPressed(int key)
       is_key_press_right = true;
       break;
 
-    case OF_KEY_DOWN: // touche ↓
+    case OF_KEY_DOWN:  // touche ↓
       is_key_press_down = true;
       break;
 
@@ -95,11 +93,11 @@ void Application::keyReleased(int key)
 {
   switch (key)
   {
-    case OF_KEY_LEFT: // touche ←
+    case OF_KEY_LEFT:  // touche ←
       is_key_press_left = false;
       break;
 
-    case OF_KEY_UP: // touche ↑
+    case OF_KEY_UP:    // touche ↑
       is_key_press_up = false;
       break;
 
@@ -107,7 +105,7 @@ void Application::keyReleased(int key)
       is_key_press_right = false;
       break;
 
-    case OF_KEY_DOWN: // touche ↓
+    case OF_KEY_DOWN:  // touche ↓
       is_key_press_down = false;
       break;
 
@@ -119,7 +117,7 @@ void Application::keyReleased(int key)
       is_key_press_z = false;
       break;
 
-    case ' ': // barre d'espace : alterner entre un hémisphère et une sphère
+    case ' ':
       renderer.bowl_or_ball = !renderer.bowl_or_ball;
       renderer.reset();
       break;
