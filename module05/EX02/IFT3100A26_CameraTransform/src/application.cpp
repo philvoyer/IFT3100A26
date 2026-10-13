@@ -1,4 +1,4 @@
-// IFT3100A25_CameraTransform/application.cpp
+// IFT3100A26_CameraTransform/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -32,8 +32,6 @@ void Application::setup()
 
 void Application::update()
 {
-  ofSetWindowTitle("camera " + renderer.camera_name + " " + renderer.camera_projection + " (1-6 ↑↓←→ wasdqe uhjkyi zx op fgcvb)");
-
   renderer.is_camera_move_forward = is_key_press_up || is_key_press_w;
   renderer.is_camera_move_backward = is_key_press_down || is_key_press_s;
 
@@ -43,8 +41,8 @@ void Application::update()
   renderer.is_camera_move_up = is_key_press_q;
   renderer.is_camera_move_down = is_key_press_e;
 
-  renderer.is_camera_tilt_up = is_key_press_j;
-  renderer.is_camera_tilt_down = is_key_press_u;
+  renderer.is_camera_tilt_up = is_key_press_u;
+  renderer.is_camera_tilt_down = is_key_press_j;
 
   renderer.is_camera_pan_left = is_key_press_h;
   renderer.is_camera_pan_right = is_key_press_k;
@@ -174,7 +172,7 @@ void Application::keyReleased(int key)
       break;
 
     case 54: // touche 6
-      renderer.camera_active = Camera::down;
+      renderer.camera_active = Camera::bottom;
       renderer.setup_camera();
       break;
 
@@ -236,7 +234,7 @@ void Application::keyReleased(int key)
     case 112: // touche p
       renderer.is_camera_perspective = true;
       renderer.setup_camera();
-      ofLog() << "<perpective projection>";
+      ofLog() << "<perspective projection>";
       break;
 
     case 113: // touche q
@@ -303,8 +301,9 @@ void Application::keyReleased(int key)
       is_key_press_down = false;
       break;
 
-    case ' ':
+    case ' ': // touche espace
       renderer.reset();
+      break;
 
     default:
       break;

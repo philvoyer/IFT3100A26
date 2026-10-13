@@ -1,4 +1,4 @@
-// IFT3100A25_CameraTransform/renderer.cpp
+// IFT3100A26_CameraTransform/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -16,8 +16,11 @@ void Renderer::setup()
   camera_near = 50.0f;
   camera_far = 1750.0f;
 
-  camera_fov = 60.0f;
   camera_fov_delta = 16.0f;
+
+  // bornes du champ de vision (un angle de 0 ou de 180 degrés produirait un frustum invalide)
+  camera_fov_min = 1.0f;
+  camera_fov_max = 179.0f;
 
   speed_delta = 250.0f;
 
@@ -30,7 +33,6 @@ void Renderer::setup()
   is_visible_camera = false;
   is_visible_frustum = false;
   is_visible_box = true;
-  is_visible_locator = false;
   is_visible_text = false;
 
   is_camera_move_left = false;
@@ -50,15 +52,11 @@ void Renderer::setup()
   is_camera_fov_narrow = false;
   is_camera_fov_wide = false;
 
-  is_camera_perspective = true;
-
   use_color_fill = true;
 
   draw_as_checkerboard = false;
 
   reset();
-
-  setup_camera();
 }
 
 void Renderer::reset()
@@ -66,8 +64,21 @@ void Renderer::reset()
   // initialisation des variables
   cube_size = offset_cube / 2.0f;
   offset_scene = cube_count * offset_cube / 2.0f * -1.0f + cube_size;
-  offset_color = 255.0f / cube_count;
+  offset_color = 255.0f / (cube_count - 1);
   offset_camera = offset_scene * 3.5f * -1.0f;
+
+  // champ de vision et mode de projection par défaut
+  camera_fov = 60.0f;
+  is_camera_perspective = true;
+
+  // configurer la projection en perspective de chaque caméra (avant de les positionner, car la fonction setupPerspective remplace leur position)
+  ofCamera* cameras[6] = {&camera_front, &camera_back, &camera_left, &camera_right, &camera_top, &camera_bottom};
+
+  for (int index = 0; index < 6; ++index)
+  {
+    cameras[index]->disableOrtho();
+    cameras[index]->setupPerspective(false, camera_fov, camera_near, camera_far, glm::vec2(0.0f, 0.0f));
+  }
 
   // position initiale de chaque caméra
   camera_front.setPosition(0, 0, -offset_camera);
@@ -82,11 +93,14 @@ void Renderer::reset()
   camera_back.lookAt(camera_target);
   camera_left.lookAt(camera_target);
   camera_right.lookAt(camera_target);
-  camera_top.lookAt(camera_target, ofVec3f(1, 0, 0));
-  camera_bottom.lookAt(camera_target, ofVec3f(1, 0, 0));
+  camera_top.lookAt(camera_target, glm::vec3(1.0f, 0.0f, 0.0f));
+  camera_bottom.lookAt(camera_target, glm::vec3(1.0f, 0.0f, 0.0f));
 
   // caméra par défaut
   camera_active = Camera::front;
+
+  // configurer la caméra active (pointeur, nom et mode de projection)
+  setup_camera();
 
   ofLog() << "<reset>";
 }
@@ -115,32 +129,36 @@ void Renderer::update()
   if (is_camera_move_backward)
     camera->dolly(speed_translation);
 
+  // une rotation positive autour de l'axe X local de la caméra oriente son regard vers le haut
   if (is_camera_tilt_up)
-    camera->tiltDeg(-speed_rotation);
-  if (is_camera_tilt_down)
     camera->tiltDeg(speed_rotation);
+  if (is_camera_tilt_down)
+    camera->tiltDeg(-speed_rotation);
 
+  // la fonction panDeg pivote la caméra autour de son axe Y local, ce qui correspond au lacet (yaw) dans les notes de cours,
+  // alors que le panoramique (pan) des notes pivote autour de l'axe vertical de la scène (les deux sont équivalents sans tangage ni roulis)
   if (is_camera_pan_left)
     camera->panDeg(speed_rotation);
   if (is_camera_pan_right)
     camera->panDeg(-speed_rotation);
 
+  // une rotation positive autour de l'axe Z local de la caméra la fait rouler vers la gauche
   if (is_camera_roll_left)
-    camera->rollDeg(-speed_rotation);
-  if (is_camera_roll_right)
     camera->rollDeg(speed_rotation);
+  if (is_camera_roll_right)
+    camera->rollDeg(-speed_rotation);
 
   if (is_camera_perspective)
   {
     if (is_camera_fov_narrow)
     {
-      camera_fov = std::max(camera_fov -= camera_fov_delta * time_elapsed, 0.0f);
+      camera_fov = std::max(camera_fov - camera_fov_delta * time_elapsed, camera_fov_min);
       camera->setFov(camera_fov);
     }
 
     if (is_camera_fov_wide)
     {
-      camera_fov = std::min(camera_fov += camera_fov_delta * time_elapsed, 180.0f);
+      camera_fov = std::min(camera_fov + camera_fov_delta * time_elapsed, camera_fov_max);
       camera->setFov(camera_fov);
     }
   }
@@ -172,7 +190,7 @@ void Renderer::draw()
       camera_right.draw();
     if (camera_active != Camera::top)
       camera_top.draw();
-    if (camera_active != Camera::down)
+    if (camera_active != Camera::bottom)
       camera_bottom.draw();
   }
 
@@ -189,7 +207,7 @@ void Renderer::draw()
       camera_right.drawFrustum();
     if (camera_active != Camera::top)
       camera_top.drawFrustum();
-    if (camera_active != Camera::down)
+    if (camera_active != Camera::bottom)
       camera_bottom.drawFrustum();
   }
 
@@ -206,8 +224,8 @@ void Renderer::draw()
       ofDrawBitmapString(" camera right", camera_right.getPosition());
     if (camera_active != Camera::top)
       ofDrawBitmapString(" camera top", camera_top.getPosition());
-    if (camera_active != Camera::down)
-      ofDrawBitmapString(" camera down", camera_bottom.getPosition());
+    if (camera_active != Camera::bottom)
+      ofDrawBitmapString(" camera bottom", camera_bottom.getPosition());
   }
 
   // dessiner le contenu de la scène
@@ -219,7 +237,7 @@ void Renderer::draw()
       {
         for (index_z = 0; index_z < cube_count; ++index_z)
         {
-          if (index_x % 2 == index_y % 2 == index_z % 2 || !draw_as_checkerboard)
+          if ((index_x + index_y + index_z) % 2 == 1 || !draw_as_checkerboard)
           {
             ofSetColor(
               index_x * offset_color,
@@ -270,7 +288,7 @@ void Renderer::setup_camera()
       camera_name = "haut";
       break;
 
-    case Camera::down:
+    case Camera::bottom:
       camera = &camera_bottom;
       camera_name = "bas";
       break;
@@ -279,6 +297,7 @@ void Renderer::setup_camera()
       break;
   }
 
+  // sauvegarder la position et l'orientation de la caméra, car la fonction setupPerspective les remplace
   camera_position = camera->getPosition();
   camera_orientation = camera->getOrientationQuat();
 
@@ -286,17 +305,21 @@ void Renderer::setup_camera()
   if (is_camera_perspective)
   {
     camera->disableOrtho();
-    camera->setupPerspective(false, camera_fov, camera_near, camera_far, ofVec2f(0, 0));
+    camera->setupPerspective(false, camera_fov, camera_near, camera_far, glm::vec2(0.0f, 0.0f));
     camera_projection = "perspective";
   }
   else
   {
     camera->enableOrtho();
-    camera_projection = "orthogonale";
+    camera_projection = "orthographic";
   }
 
+  // restaurer la position et l'orientation de la caméra
   camera->setPosition(camera_position);
   camera->setOrientation(camera_orientation);
+
+  // mettre à jour le titre de la fenêtre seulement lorsque la caméra active ou son mode de projection change
+  ofSetWindowTitle("camera " + camera_name + " " + camera_projection + " (1-6 ↑↓←→ wasdqe uhjkyi zx op fgcvbt r space)");
 
   ofLog() << "<setup camera: " << camera_name << ">";
 }

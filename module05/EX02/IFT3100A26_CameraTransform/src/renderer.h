@@ -1,11 +1,11 @@
-// IFT3100A25_CameraTransform/renderer.h
+// IFT3100A26_CameraTransform/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
 
 #include "ofMain.h"
 
-enum class Camera {front, back, left, right, top, down};
+enum class Camera {front, back, left, right, top, bottom};
 
 class Renderer
 {
@@ -22,19 +22,21 @@ public:
 
   ofCamera* camera;
 
-  ofQuaternion camera_orientation;
+  glm::quat camera_orientation;
 
-  ofVec3f camera_position;
-  ofVec3f camera_target;
+  glm::vec3 camera_position;
+  glm::vec3 camera_target;
 
-  string camera_name;
-  string camera_projection;
+  std::string camera_name;
+  std::string camera_projection;
 
   float camera_near;
   float camera_far;
 
   float camera_fov;
   float camera_fov_delta;
+  float camera_fov_min;
+  float camera_fov_max;
 
   float offset_camera;
   float offset_color;
@@ -62,7 +64,6 @@ public:
   bool is_visible_camera;
   bool is_visible_frustum;
   bool is_visible_box;
-  bool is_visible_locator;
   bool is_visible_text;
 
   bool is_camera_move_left;
