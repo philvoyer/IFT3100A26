@@ -35,8 +35,9 @@ void Application::update()
   renderer.is_camera_move_forward = is_key_press_up || is_key_press_w;
   renderer.is_camera_move_backward = is_key_press_down || is_key_press_s;
 
-  renderer.is_camera_move_left = is_key_press_left || is_key_press_a;
-  renderer.is_camera_move_right = is_key_press_right || is_key_press_d;
+  // les flèches gauche et droite (et les touches A et D) sont inversées pour avoir la même direction que dans les exemples 3.3 et 4.5
+  renderer.is_camera_move_left = is_key_press_right || is_key_press_d;
+  renderer.is_camera_move_right = is_key_press_left || is_key_press_a;
 
   renderer.is_camera_move_up = is_key_press_q;
   renderer.is_camera_move_down = is_key_press_e;
