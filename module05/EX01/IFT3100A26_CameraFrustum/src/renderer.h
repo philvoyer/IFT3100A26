@@ -1,4 +1,4 @@
-// IFT3100A25_CameraFrustum/renderer.h
+// IFT3100A26_CameraFrustum/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -8,6 +8,7 @@
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 class Renderer
 {
@@ -17,22 +18,24 @@ public:
 
   ofColor color_stroke;
   ofColor color_fill;
+  ofColor color_invalid_stroke;
+  ofColor color_invalid_fill;
 
-  float camera_viewport_x;
-  float camera_viewport_y;
+  bool is_frustum_valid;
 
   float camera_clip_n;
   float camera_clip_f;
 
-  float camera_fov;
+  float camera_fov_h;
+  float camera_fov_v;
 
   float camera_zoom;
 
-  float clip_half_width_n;
-  float clip_half_width_f;
+  float clip_half_height_n;
+  float clip_half_height_f;
 
-  float clip_width_n;
-  float clip_width_f;
+  float clip_height_n;
+  float clip_height_f;
 
   float camera_resolution_w;
   float camera_resolution_h;
@@ -46,12 +49,19 @@ public:
   glm::vec3 camera_position;
   glm::vec3 camera_target;
 
-  glm::vec3 position_clip_n_l;
+  glm::vec3 position_clip_n_b;
   glm::vec3 position_clip_n_c;
-  glm::vec3 position_clip_n_r;
-  glm::vec3 position_clip_f_l;
+  glm::vec3 position_clip_n_t;
+  glm::vec3 position_clip_f_b;
   glm::vec3 position_clip_f_c;
-  glm::vec3 position_clip_f_r;
+  glm::vec3 position_clip_f_t;
+
+  glm::mat4 matrix_model;
+  glm::mat4 matrix_view;
+  glm::mat4 matrix_camera;
+  glm::mat4 matrix_projection;
+  glm::mat4 matrix_model_view;
+  glm::mat4 matrix_model_view_projection;
 
   void setup();
   void reset();
@@ -59,6 +69,7 @@ public:
   void draw();
 
   void generate_matrix();
+  void log_matrix();
 
   float compute_fov_from_zoom(float zoom);
   float compute_zoom_from_fov(float fov);
