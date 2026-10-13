@@ -12,6 +12,8 @@ void Application::setup()
 
   renderer.setup();
 
+  time_last = ofGetElapsedTimef();
+
   ofSetWindowTitle("camera projection (1234 ↑↓←→) with " + renderer.camera_name);
 
   gui.setup();
@@ -266,12 +268,15 @@ void Application::keyReleased(int key)
       is_key_press_down = false;
       break;
 
+    case 114: // touche r
+      renderer.use_rotation = !renderer.use_rotation;
+      break;
+
     case ' ':
       renderer.camera_current_state_log();
       break;
 
     default:
-      renderer.use_rotation = !renderer.use_rotation;
       break;
   }
 }
