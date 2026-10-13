@@ -1,4 +1,4 @@
-// IFT3100A25 ~ lambert_330_fs.glsl
+// IFT3100A26 ~ lambert_330_fs.glsl
 
 #version 330
 
