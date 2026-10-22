@@ -1,4 +1,4 @@
-// IFT3100A25_Convolution/main.cpp
+// IFT3100A26_Convolution/main.cpp
 // Exemples d'application de filtres de convolution sur une image.
 
 #include "ofMain.h"

@@ -1,4 +1,4 @@
-// IFT3100A25_Convolution/renderer.cpp
+// IFT3100A26_Convolution/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -8,7 +8,7 @@ void Renderer::setup()
   ofSetFrameRate(60);
   ofSetBackgroundColor(31);
 
-  // définir la valeur de l'espacements vertical et horizontal
+  // définir la valeur des espacements vertical et horizontal
   offset_vertical = 32;
   offset_horizontal = 32;
 
@@ -68,10 +68,10 @@ void Renderer::filter()
   int x, y;
 
   // indices du kernel
-  int i, j;
+  int kx, ky;
 
-  // indices d'échantillonnage;
-  int xi, yj;
+  // indices d'échantillonnage
+  int x_src, y_src;
 
   // index des composantes de couleur
   int c;
@@ -82,7 +82,7 @@ void Renderer::filter()
   // index du pixel de l'image de destination en cours de filtrage
   int pixel_index_img_dst;
 
-  // index du pixel de l'image de destination en cours de filtrage
+  // indice du facteur à lire dans le kernel de convolution
   int kernel_index;
 
   // valeur à un des indices du kernel de convolution
@@ -116,28 +116,29 @@ void Renderer::filter()
       // déterminer l'index du pixel de l'image de destination
       pixel_index_img_dst = (image_width * y + x) * color_component_count;
 
-      // itération sur les colonnes du kernel de convolution
-      for (j = -kernel_offset; j <= kernel_offset; ++j)
+      // itération sur les rangées du kernel de convolution
+      for (ky = -kernel_offset; ky <= kernel_offset; ++ky)
       {
-        // itération sur les rangées du kernel de convolution
-        for (i = -kernel_offset; i <= kernel_offset; ++i)
+        // itération sur les colonnes du kernel de convolution
+        for (kx = -kernel_offset; kx <= kernel_offset; ++kx)
         {
           // calculer les indices d'échantillonnage
-          xi = x - i;
-          yj = y - j;
+          x_src = x - kx;
+          y_src = y - ky;
 
-          // traitement de la bordure
-          if (xi < 0 || xi > image_width || yj < 0 || yj > image_height)
+          // traitement de la bordure : ignorer les échantillons à l'extérieur de l'image (équivalent à une bordure noire)
+          // (les indices valides vont de 0 à la dimension de l'image moins 1)
+          if (x_src < 0 || x_src >= image_width || y_src < 0 || y_src >= image_height)
             continue;
 
           // déterminer l'index du pixel de l'image source à lire
-          pixel_index_img_src = (image_width * yj + xi) * color_component_count;
+          pixel_index_img_src = (image_width * y_src + x_src) * color_component_count;
 
           // lire la couleur du pixel de l'image source
           pixel_color_src = pixel_array_src.getColor(pixel_index_img_src);
 
           // déterminer l'indice du facteur à lire dans le kernel de convolution
-          kernel_index = kernel_size * (j + kernel_offset) + (i + kernel_offset);
+          kernel_index = kernel_size * (ky + kernel_offset) + (kx + kernel_offset);
 
           // extraction de la valeur à cet index du kernel
           switch (kernel_type)
