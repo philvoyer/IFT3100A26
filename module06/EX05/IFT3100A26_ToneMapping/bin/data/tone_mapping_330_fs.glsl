@@ -1,4 +1,4 @@
-// IFT3100A25 ~ tone_mapping_330_fs.glsl
+// IFT3100A26 ~ tone_mapping_330_fs.glsl
 
 #version 330
 
@@ -52,7 +52,8 @@ void main()
   color = pow(color, vec3(tone_mapping_gamma));
 
   // ajustement de l'exposition
-  color = vec3(1.0) - exp(-color * tone_mapping_exposure);
+  // (simple multiplication, car le mappage tonal qui suit compresse déjà la couleur hdr vers ldr)
+  color = color * tone_mapping_exposure;
 
   // mappage tonal de la couleur hdr vers ldr
   if (tone_mapping_toggle)

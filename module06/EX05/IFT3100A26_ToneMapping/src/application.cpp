@@ -1,4 +1,4 @@
-// IFT3100A25_ToneMapping/application.cpp
+// IFT3100A26_ToneMapping/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -12,7 +12,7 @@ void Application::setup()
   renderer.setup();
 
   slider_exposure.set("exposure", renderer.tone_mapping_exposure, 0.0f, 5.0f);
-  slider_gamma.set("gamma", renderer.tone_mapping_gamma, 0.0f, 5.0f);
+  slider_gamma.set("gamma", renderer.tone_mapping_gamma, 0.1f, 5.0f);
 
   if (renderer.tone_mapping_toggle)
     toggle_tone_mapping.set("aces filmic", true);
@@ -57,7 +57,7 @@ void Application::dragEvent(ofDragInfo dragInfo)
   renderer.image.load(dragInfo.files.at(0));
 
   if (renderer.image.getWidth() > 0 && renderer.image.getHeight() > 0)
-    ofSetWindowShape(renderer.image.getWidth() * 2, renderer.image.getHeight());
+    renderer.resize_window();
 }
 
 void Application::exit()

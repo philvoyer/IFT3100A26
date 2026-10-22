@@ -1,6 +1,6 @@
-// IFT3100A25_ToneMapping/main.cpp
+// IFT3100A26_ToneMapping/main.cpp
 // Exemple d'un filtre d'image créé avec un shader de fragments.
-// Le filtre applique une teinte de couleur RGB mixée avec la couleur de l'image d'origine.
+// Le filtre applique une correction de couleur sur l'image d'origine avec trois techniques : un facteur d'exposition, un mappage tonal (Reinhard ou ACES filmic) et une correction gamma.
 
 #include "ofMain.h"
 #include "application.h"
