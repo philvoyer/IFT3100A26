@@ -1,4 +1,4 @@
-// IFT3100A25_ImageFilter/application.cpp
+// IFT3100A26_ImageFilter/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -39,7 +39,7 @@ void Application::dragEvent(ofDragInfo dragInfo)
   renderer.image.load(dragInfo.files.at(0));
 
   if (renderer.image.getWidth() > 0 && renderer.image.getHeight() > 0)
-    ofSetWindowShape(renderer.image.getWidth() * 2, renderer.image.getHeight());
+    renderer.resize_window();
 }
 
 void Application::exit()

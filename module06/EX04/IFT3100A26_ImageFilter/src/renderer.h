@@ -1,4 +1,4 @@
-// IFT3100A25_ImageFilter/renderer.h
+// IFT3100A26_ImageFilter/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -23,4 +23,6 @@ public:
 
   void setup();
   void draw();
+
+  void resize_window();
 };

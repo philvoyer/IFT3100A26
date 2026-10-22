@@ -1,4 +1,4 @@
-// IFT3100A25_ImageFilter/renderer.cpp
+// IFT3100A26_ImageFilter/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -18,9 +18,7 @@ void Renderer::setup()
 
   image.load("teapot.jpg");
 
-  ofSetWindowShape(
-    image.getWidth() * 2 + offset_horizontal * 3,
-    image.getHeight() * 1 + offset_vertical * 2);
+  resize_window();
 
   shader.load("image_filter_330_vs.glsl", "image_filter_330_fs.glsl");
 }
@@ -42,6 +40,14 @@ void Renderer::draw()
   // dessiner l'image sur la seconde moitié de la surface de la fenêtre
   image.draw(image.getWidth() + offset_horizontal * 2, offset_vertical, image.getWidth(), image.getHeight());
 
- // désactiver le filtre
+  // désactiver le filtre
   shader.end();
+}
+
+// fonction qui ajuste la taille de la fenêtre en fonction de la taille de l'image
+void Renderer::resize_window()
+{
+  ofSetWindowShape(
+    image.getWidth() * 2 + offset_horizontal * 3,
+    image.getHeight() * 1 + offset_vertical * 2);
 }

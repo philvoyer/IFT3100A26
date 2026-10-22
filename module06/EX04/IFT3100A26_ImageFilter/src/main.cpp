@@ -1,6 +1,6 @@
-// IFT3100A25_ImageFilter/main.cpp
+// IFT3100A26_ImageFilter/main.cpp
 // Exemple d'un filtre d'image créé avec un shader de fragments.
-// Le filtre applique une teinte de couleur RGB mixée avec la couleur de l'image d'origine.
+// Le filtre applique une teinte de couleur RGB mixée avec la couleur de l'image d'origine, avec un facteur d'opacité.
 
 #include "ofMain.h"
 #include "application.h"
