@@ -1,4 +1,4 @@
-// IFT3100A25_Lighting/renderer.h
+// IFT3100A26_Lighting/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -42,7 +42,7 @@ public:
 
   float speed_motion;
 
-  float oscillation_frequency;
+  float oscillation_period;
   float oscillation_amplitude;
 
   float offset_x;
@@ -54,7 +54,7 @@ public:
   float initial_x;
   float initial_z;
 
-  bool is_active_ligh_ambient;
+  bool is_active_light_ambient;
   bool is_active_light_directional;
   bool is_active_light_point;
   bool is_active_light_spot;
@@ -72,5 +72,5 @@ public:
   void lighting_on();
   void lighting_off();
 
-  float oscillate(float time, float frequency, float amplitude);
+  float oscillate(float time, float amplitude, float period);
 };

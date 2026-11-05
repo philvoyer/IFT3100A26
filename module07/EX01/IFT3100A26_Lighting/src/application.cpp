@@ -1,4 +1,4 @@
-// IFT3100A25_Lighting/application.cpp
+// IFT3100A26_Lighting/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -18,6 +18,9 @@ void Application::setup()
   ofSetWindowTitle("éclairage dynamique (1-4 ↑↓←→ s r)");
 
   renderer.setup();
+
+  // initialiser le temps du dernier frame pour le calcul du temps écoulé
+  time_last = ofGetElapsedTimef();
 }
 
 void Application::update()
@@ -78,8 +81,8 @@ void Application::keyReleased(int key)
   switch (key)
   {
     case 49: // key 1
-      renderer.is_active_ligh_ambient = !renderer.is_active_ligh_ambient;
-      ofLog() << "<light ambient: " << renderer.is_active_ligh_ambient << ">";
+      renderer.is_active_light_ambient = !renderer.is_active_light_ambient;
+      ofLog() << "<light ambient: " << renderer.is_active_light_ambient << ">";
       break;
 
     case 50: // key 2
@@ -102,6 +105,7 @@ void Application::keyReleased(int key)
       break;
 
     case 115: // key s
+      // alterner entre un ombrage lisse (GL_SMOOTH) et plat (GL_FLAT), seulement avec le pipeline fixe (OpenGL 2.1)
       renderer.use_smooth_lighting = !renderer.use_smooth_lighting;
       ofSetSmoothLighting(renderer.use_smooth_lighting);
       ofLog() << "<smooth lighting: " << renderer.use_smooth_lighting << ">";

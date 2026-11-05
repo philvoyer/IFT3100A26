@@ -1,4 +1,4 @@
-// IFT3100A25_Lighting/renderer.cpp
+// IFT3100A26_Lighting/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -14,7 +14,7 @@ void Renderer::setup()
   // paramètres
   camera_offset = 350.0f;
   speed_motion = 150.0f;
-  oscillation_frequency = 7500.0f;
+  oscillation_period = 7.5f;
   oscillation_amplitude = 45.0;
   initial_x = 0.0f;
   initial_z = -100.0f;
@@ -40,7 +40,7 @@ void Renderer::reset()
 
   use_smooth_lighting = true;
 
-  is_active_ligh_ambient = true;
+  is_active_light_ambient = true;
   is_active_light_directional = true;
   is_active_light_point = true;
   is_active_light_spot = true;
@@ -122,7 +122,7 @@ void Renderer::update()
   if (is_active_light_spot)
   {
     // transformer la lumière projecteur
-    oscillation = oscillate(ofGetElapsedTimeMillis(), oscillation_frequency, oscillation_amplitude);
+    oscillation = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period);
 
     orientation_spot.makeRotate(30.0f, ofVec3f(1, 0, 0), oscillation, ofVec3f(0, 1, 0), 0.0f, ofVec3f(0, 0, 1));
 
@@ -247,10 +247,10 @@ void Renderer::draw()
   ofDisableLighting();
 }
 
-// désactivation des lumières dynamiques
+// activation des lumières dynamiques
 void Renderer::lighting_on()
 {
-  if (is_active_ligh_ambient)
+  if (is_active_light_ambient)
     ofSetGlobalAmbientColor(light_ambient);
   else
     ofSetGlobalAmbientColor(ofColor(0, 0, 0));
@@ -265,7 +265,7 @@ void Renderer::lighting_on()
     light_spot.enable();
 }
 
-// activation des lumières dynamiques
+// désactivation des lumières dynamiques
 void Renderer::lighting_off()
 {
   ofSetGlobalAmbientColor(ofColor(0, 0, 0));
@@ -274,8 +274,8 @@ void Renderer::lighting_off()
   light_spot.disable();
 }
 
-// fonction d'oscillation
-float Renderer::oscillate(float time, float frequency, float amplitude)
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * t / période)
+float Renderer::oscillate(float time, float amplitude, float period)
 {
-  return sinf(time * 2.0f * PI / frequency) * amplitude;
+  return amplitude * sin(2.0 * PI * time / period);
 }
