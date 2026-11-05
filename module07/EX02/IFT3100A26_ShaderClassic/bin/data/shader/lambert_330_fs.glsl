@@ -1,4 +1,4 @@
-// IFT3100A25 ~ lambert_330_fs.glsl
+// IFT3100A26 ~ lambert_330_fs.glsl
 
 #version 330
 
@@ -13,7 +13,7 @@ out vec4 fragment_color;
 uniform vec3 color_ambient;
 uniform vec3 color_diffuse;
 
-// position d'une source de lumière
+// position d'une source de lumière dans l'espace de vue (même espace que surface_position)
 uniform vec3 light_position;
 
 void main()

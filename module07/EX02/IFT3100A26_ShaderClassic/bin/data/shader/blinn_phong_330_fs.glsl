@@ -1,4 +1,4 @@
-// IFT3100A25 ~ blinn_phong_330_fs.glsl
+// IFT3100A26 ~ blinn_phong_330_fs.glsl
 
 #version 330
 
@@ -17,7 +17,7 @@ uniform vec3 color_specular;
 // facteur de brillance spéculaire du matériau
 uniform float brightness;
 
-// position d'une source de lumière
+// position d'une source de lumière dans l'espace de vue (même espace que surface_position)
 uniform vec3 light_position;
 
 void main()
@@ -40,7 +40,7 @@ void main()
     // calculer la direction de la surface vers la caméra (v)
     vec3 v = normalize(-surface_position);
 
-    // calculer la direction du demi-vecteur de réflection (h) en fonction du vecteur de vue (v) et de lumière (l)
+    // calculer la direction du demi-vecteur de réflexion (h) en fonction du vecteur de vue (v) et de lumière (l)
     vec3 h = normalize(v + l);
 
     // calculer le niveau de réflexion spéculaire (n • h)

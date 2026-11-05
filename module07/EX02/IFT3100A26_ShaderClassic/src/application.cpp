@@ -1,4 +1,4 @@
-// IFT3100A25_ShaderClassic/application.cpp
+// IFT3100A26_ShaderClassic/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -13,6 +13,9 @@ void Application::setup()
   is_key_press_right = false;
 
   renderer.setup();
+
+  // initialiser le temps du dernier frame pour le calcul du temps écoulé
+  time_last = ofGetElapsedTimef();
 }
 
 void Application::update()

@@ -1,4 +1,4 @@
-// IFT3100A25_ShaderClassic/renderer.cpp
+// IFT3100A26_ShaderClassic/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -13,7 +13,7 @@ void Renderer::setup()
 
   // paramètres
   oscillation_amplitude = 32.0f;
-  oscillation_frequency = 7500.0f;
+  oscillation_period = 7.5f;
   speed_motion = 150.0f;
   initial_x = 0.0f;
   initial_z = -100.0f;
@@ -82,14 +82,15 @@ void Renderer::reset()
 
 void Renderer::update()
 {
-  // transformer la lumière
+  // positionner la lumière dans l'espace de vue (relative à la caméra) plutôt que dans l'espace du monde,
+  // car les shaders comparent cette position à celle des sommets ou des fragments, aussi exprimée dans l'espace de vue
   light.setGlobalPosition(
     ofMap(ofGetMouseX()/ (float) ofGetWidth(), 0.0f, 1.0f, -ofGetWidth() / 2.0f, ofGetWidth() / 2.0f),
     ofMap(ofGetMouseY()/ (float) ofGetHeight(), 0.0f, 1.0f, -ofGetHeight() / 2.0f, ofGetHeight() / 2.0f),
     -offset_z * 1.5f);
 
-  // mise à jour d'une valeur numérique animée par un oscillateur
-  float oscillation = oscillate(ofGetElapsedTimeMillis(), oscillation_frequency, oscillation_amplitude) + oscillation_amplitude;
+  // mise à jour d'une valeur numérique animée par un oscillateur, décalée pour que le facteur de brillance reste au moins 1
+  float oscillation = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period) + oscillation_amplitude + 1.0f;
 
   // passer les attributs uniformes au shader de sommets
   switch (shader_active)
@@ -168,7 +169,7 @@ void Renderer::draw()
 
     ofPushMatrix();
 
-      // positionnner le cube
+      // positionner le cube
       ofTranslate(
         position_cube.x,
         position_cube.y,
@@ -229,8 +230,8 @@ void Renderer::draw()
   ofDisableLighting();
 }
 
-// fonction d'oscillation
-float Renderer::oscillate(float time, float frequency, float amplitude)
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * t / période)
+float Renderer::oscillate(float time, float amplitude, float period)
 {
-  return sinf(time * 2.0f * PI / frequency) * amplitude;
+  return amplitude * sin(2.0 * PI * time / period);
 }

@@ -1,17 +1,13 @@
-// IFT3100A25 ~ gouraud_330_vs.glsl
+// IFT3100A26 ~ phong_330_fs.glsl
 
 #version 330
 
-// attributs de sommet
-in vec3 position;
-in vec3 normal;
+// attributs interpolés à partir des valeurs en sortie du shader de sommets
+in vec3 surface_position;
+in vec3 surface_normal;
 
-// attributs en sortie
-out vec3 surface_color;
-
-// attributs uniformes
-uniform mat4 modelViewMatrix;
-uniform mat4 projectionMatrix;
+// attribut en sortie
+out vec4 fragment_color;
 
 // couleurs de réflexion du matériau
 uniform vec3 color_ambient;
@@ -21,21 +17,12 @@ uniform vec3 color_specular;
 // facteur de brillance spéculaire du matériau
 uniform float brightness;
 
-// position d'une source de lumière
+// position d'une source de lumière dans l'espace de vue (même espace que surface_position)
 uniform vec3 light_position;
 
 void main()
 {
-  // calculer la matrice normale
-  mat3 normal_matrix = transpose(inverse(mat3(modelViewMatrix)));
-
-  // transformation de la normale du sommet dans l'espace de vue
-  vec3 surface_normal = normal_matrix * normal;
-
-  // transformation de la position du sommet dans l'espace de vue
-  vec3 surface_position = vec3(modelViewMatrix * vec4(position, 1.0));
-
-  // re-normaliser la normale
+  // re-normaliser la normale après interpolation
   vec3 n = normalize(surface_normal);
 
   // calculer la direction de la surface vers la lumière (l)
@@ -53,7 +40,7 @@ void main()
     // calculer la direction de la surface vers la caméra (v)
     vec3 v = normalize(-surface_position);
 
-    // calculer la direction de la réflection (v) du rayon incident (-l) en fonction de la normale (n)
+    // calculer la direction de la réflexion (r) du rayon incident (-l) en fonction de la normale (n)
     vec3 r = reflect(-l, n);
 
     // calculer le niveau de réflexion spéculaire (r • v)
@@ -61,11 +48,8 @@ void main()
   }
 
   // calculer la couleur du fragment
-  surface_color = vec3(
+  fragment_color = vec4(
     color_ambient +
     color_diffuse * reflection_diffuse +
-    color_specular * reflection_specular);
-
-  // transformation de la position du sommet par les matrices de modèle, vue et projection
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    color_specular * reflection_specular, 1.0);
 }

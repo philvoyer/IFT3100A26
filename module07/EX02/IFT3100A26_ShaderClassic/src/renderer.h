@@ -1,4 +1,4 @@
-// IFT3100A25_ShaderClassic/renderer.h
+// IFT3100A26_ShaderClassic/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -39,7 +39,7 @@ public:
   float scale_sphere;
   float scale_teapot;
 
-  float oscillation_frequency;
+  float oscillation_period;
   float oscillation_amplitude;
 
   float speed_motion;
@@ -61,5 +61,5 @@ public:
   void draw();
   void reset();
 
-  float oscillate(float time, float frequency, float amplitude);
+  float oscillate(float time, float amplitude, float period);
 };

@@ -1,4 +1,4 @@
-// IFT3100A25 ~ lambert_330_vs.glsl
+// IFT3100A26 ~ phong_330_vs.glsl
 
 #version 330
 
