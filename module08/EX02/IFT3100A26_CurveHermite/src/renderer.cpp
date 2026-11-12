@@ -1,10 +1,23 @@
-// IFT3100A25_CurveHermite/renderer.cpp
+// IFT3100A26_CurveHermite/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
 
-// fonction d'évaluation d'une courbe de hermite (4 points de contrôle)
-void hermite(
+// deux implémentations équivalentes de l'évaluation d'une courbe de Hermite cubique :
+//
+//   hermite(t) = (2t³ - 3t² + 1) P1 + (t³ - 2t² + t) V1 + (t³ - t²) V2 + (-2t³ + 3t²) P2
+//
+// les paramètres p1 et p4 sont les points de départ et d'arrivée (P1 et P2),
+// les paramètres p2 et p3 sont les tangentes au départ et à l'arrivée (V1 et V2).
+//
+// les deux fonctions retournent la même position, mais pas avec le même coût :
+// - hermite_direct : 63 multiplications par appel (21 par dimension);
+// - hermite_precomputed : 17 multiplications par appel (5 pour les puissances de t et les fonctions de base, 12 pour x, y et z).
+// l'exemple utilise hermite_precomputed, car la fonction est appelée plus de 100 fois par frame.
+
+// fonction d'évaluation d'une courbe de Hermite sans aucune valeur précalculée
+// (traduction directe de l'équation : les puissances de t sont recalculées dans chaque terme et pour chaque dimension)
+void hermite_direct(
   float t,
   float p1x, float p1y, float p1z,
   float p2x, float p2y, float p2z,
@@ -12,19 +25,15 @@ void hermite(
   float p4x, float p4y, float p4z,
   float&  x,  float& y, float&  z)
 {
-  float u = 1 - t;
-  float uu = u * u;
-  float uuu = uu * u;
-  float tt = t * t;
-  float ttt = tt * t;
-
-  x = (2 * ttt - 3 * tt + 1) * p1x + (ttt - 2 * tt + t) * p2x + (ttt - tt) * p3x + (-2 * ttt + 3 * tt) * p4x;
-  y = (2 * ttt - 3 * tt + 1) * p1y + (ttt - 2 * tt + t) * p2y + (ttt - tt) * p3y + (-2 * ttt + 3 * tt) * p4y;
-  z = (2 * ttt - 3 * tt + 1) * p1z + (ttt - 2 * tt + t) * p2z + (ttt - tt) * p3z + (-2 * ttt + 3 * tt) * p4z;
+  x = (2 * t * t * t - 3 * t * t + 1) * p1x + (t * t * t - 2 * t * t + t) * p2x + (t * t * t - t * t) * p3x + (-2 * t * t * t + 3 * t * t) * p4x;
+  y = (2 * t * t * t - 3 * t * t + 1) * p1y + (t * t * t - 2 * t * t + t) * p2y + (t * t * t - t * t) * p3y + (-2 * t * t * t + 3 * t * t) * p4y;
+  z = (2 * t * t * t - 3 * t * t + 1) * p1z + (t * t * t - 2 * t * t + t) * p2z + (t * t * t - t * t) * p3z + (-2 * t * t * t + 3 * t * t) * p4z;
 }
 
-// fonction d'évaluation d'une courbe de Bézier cubique (4 points de contrôle)
-void bezier_cubic(
+// fonction d'évaluation d'une courbe de Hermite avec un maximum de valeurs précalculées
+// (les puissances de t et les quatre fonctions de base ne dépendent pas de la dimension,
+// elles sont donc calculées une seule fois puis réutilisées pour x, y et z)
+void hermite_precomputed(
   float t,
   float p1x, float p1y, float p1z,
   float p2x, float p2y, float p2z,
@@ -32,21 +41,74 @@ void bezier_cubic(
   float p4x, float p4y, float p4z,
   float&  x,  float& y, float&  z)
 {
+  // puissances du paramètre t
+  float tt = t * t;
+  float ttt = tt * t;
+
+  // fonctions de base de Hermite, communes aux trois dimensions
+  float h1 = 2 * ttt - 3 * tt + 1;
+  float h2 = ttt - 2 * tt + t;
+  float h3 = ttt - tt;
+
+  // les fonctions de base des deux points ont une somme de 1 (h1 + h4 = 1), donc h4 ne coûte aucune multiplication
+  float h4 = 1 - h1;
+
+  x = h1 * p1x + h2 * p2x + h3 * p3x + h4 * p4x;
+  y = h1 * p1y + h2 * p2y + h3 * p3y + h4 * p4y;
+  z = h1 * p1z + h2 * p2z + h3 * p3z + h4 * p4z;
+}
+
+// deux implémentations équivalentes de l'évaluation d'une courbe de Bézier cubique :
+//
+//   bézier cubique(t) = (1 - t)³ P1 + 3 t (1 - t)² P2 + 3 t² (1 - t) P3 + t³ P4
+//
+// les deux fonctions retournent la même position, mais pas avec le même coût :
+// - bezier_cubic_direct : 42 multiplications par appel (14 par dimension);
+// - bezier_cubic_precomputed : 20 multiplications par appel (8 pour les puissances et les fonctions de base, 12 pour x, y et z).
+// l'exemple utilise bezier_cubic_precomputed, car la fonction est appelée plus de 100 fois par frame.
+
+// fonction d'évaluation d'une courbe de Bézier cubique sans aucune valeur précalculée
+// (traduction directe de l'équation : (1 - t) et les puissances sont recalculés dans chaque terme et pour chaque dimension)
+void bezier_cubic_direct(
+  float t,
+  float p1x, float p1y, float p1z,
+  float p2x, float p2y, float p2z,
+  float p3x, float p3y, float p3z,
+  float p4x, float p4y, float p4z,
+  float&  x,  float& y, float&  z)
+{
+  x = (1 - t) * (1 - t) * (1 - t) * p1x + 3 * t * (1 - t) * (1 - t) * p2x + 3 * t * t * (1 - t) * p3x + t * t * t * p4x;
+  y = (1 - t) * (1 - t) * (1 - t) * p1y + 3 * t * (1 - t) * (1 - t) * p2y + 3 * t * t * (1 - t) * p3y + t * t * t * p4y;
+  z = (1 - t) * (1 - t) * (1 - t) * p1z + 3 * t * (1 - t) * (1 - t) * p2z + 3 * t * t * (1 - t) * p3z + t * t * t * p4z;
+}
+
+// fonction d'évaluation d'une courbe de Bézier cubique avec un maximum de valeurs précalculées
+// (les puissances de t et de (1 - t) ainsi que les quatre polynômes de Bernstein ne dépendent pas de la dimension,
+// ils sont donc calculés une seule fois puis réutilisés pour x, y et z)
+void bezier_cubic_precomputed(
+  float t,
+  float p1x, float p1y, float p1z,
+  float p2x, float p2y, float p2z,
+  float p3x, float p3y, float p3z,
+  float p4x, float p4y, float p4z,
+  float&  x,  float& y, float&  z)
+{
+  // puissances du paramètre t et de son complément u = 1 - t
   float u = 1 - t;
   float uu = u * u;
   float uuu = uu * u;
   float tt = t * t;
   float ttt = tt * t;
 
-  x = uuu * p1x + 3 * uu * t * p2x + 3 * u * tt * p3x + ttt * p4x;
-  y = uuu * p1y + 3 * uu * t * p2y + 3 * u * tt * p3y + ttt * p4y;
-  z = uuu * p1z + 3 * uu * t * p2z + 3 * u * tt * p3z + ttt * p4z;
-}
+  // polynômes de Bernstein de degré 3, communs aux trois dimensions
+  float b1 = uuu;
+  float b2 = 3 * uu * t;
+  float b3 = 3 * u * tt;
+  float b4 = ttt;
 
-// fonction d'oscillation
-float oscillate(float time, float frequency, float amplitude)
-{
-  return sinf(time * 2.0f * PI / frequency) * amplitude;
+  x = b1 * p1x + b2 * p2x + b3 * p3x + b4 * p4x;
+  y = b1 * p1y + b2 * p2y + b3 * p3y + b4 * p4y;
+  z = b1 * p1z + b2 * p2z + b3 * p3z + b4 * p4z;
 }
 
 // fonction qui calcule une interpolation linéaire entre deux valeurs numériques
@@ -65,10 +127,10 @@ float interpolation_linear(float value1, float value2, float t)
 float interpolation_smoothstep(float value1, float value2, float t)
 {
   if (t < 0.0f)
-    return t = 0.0f;
+    t = 0.0f;
 
   if (t > 1.0f)
-    return t = 1.0f;
+    t = 1.0f;
 
   t = t * t * (3.0f - 2.0f * t);
 
@@ -92,8 +154,8 @@ void Renderer::setup()
   motion_speed = 250.0f;
 
   oscillation = 0.5f;
-  oscillation_frequency = 5000.0f;
-  oscillation_amplitude = 0.5;
+  oscillation_period = 5.0f;
+  oscillation_amplitude = 0.5f;
 
   isAnimationActive = true;
 
@@ -182,10 +244,12 @@ void Renderer::update()
     {
       case CurveType::hermite:
 
-        tangent1 = ctrl_point2 - ctrl_point1;
-        tangent2 = ctrl_point3 - ctrl_point4;
+        // conversion des points de contrôle de Bézier en tangentes de Hermite (V1 = 3 (P2 - P1), V2 = 3 (P4 - P3)),
+        // ce qui fait en sorte que la courbe de Hermite et la courbe de Bézier cubique soient identiques
+        tangent1 = (ctrl_point2 - ctrl_point1) * 3.0f;
+        tangent2 = (ctrl_point4 - ctrl_point3) * 3.0f;
 
-        hermite(
+        hermite_precomputed(
           index / (float) line_resolution,
           ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
           tangent1.x, tangent1.y, tangent1.z,
@@ -197,7 +261,7 @@ void Renderer::update()
 
       case CurveType::bezier_cubic:
 
-        bezier_cubic(
+        bezier_cubic_precomputed(
           index / (float) line_resolution,
           ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
           ctrl_point2.x, ctrl_point2.y, ctrl_point2.z,
@@ -215,9 +279,9 @@ void Renderer::update()
     line_renderer[index] = position;
   }
 
-  // mise à jour de l'oscillateur
+  // mise à jour de l'oscillateur, décalé de son amplitude pour que sa valeur reste entre 0 et 1
   if (isAnimationActive)
-    oscillation = oscillation_amplitude + oscillate(ofGetElapsedTimeMillis(), oscillation_frequency, oscillation_amplitude);
+    oscillation = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period) + oscillation_amplitude;
 
   // animation de la tête de lecture en fonction de la valeur courante de l'oscillateur
   switch (interpolation_type)
@@ -239,7 +303,7 @@ void Renderer::update()
   {
     case CurveType::hermite:
 
-      hermite(
+      hermite_precomputed(
         playhead,
         ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
         tangent1.x, tangent1.y, tangent1.z,
@@ -251,7 +315,7 @@ void Renderer::update()
 
     case CurveType::bezier_cubic:
 
-      bezier_cubic(
+      bezier_cubic_precomputed(
         playhead,
         ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
         ctrl_point2.x, ctrl_point2.y, ctrl_point2.z,
@@ -276,7 +340,7 @@ void Renderer::draw()
   ofDrawEllipse(initial_position4.x, initial_position4.y, radius / 2.0f, radius / 2.0f);
   ofDrawEllipse(initial_position5.x, initial_position5.y, radius / 2.0f, radius / 2.0f);
 
-  // dessiner la ligne contour
+  // dessiner la ligne de contour
   ofSetColor(0, 0, 255);
   ofSetLineWidth(line_width_outline);
   ofDrawLine(ctrl_point1.x, ctrl_point1.y, ctrl_point2.x, ctrl_point2.y);
@@ -303,4 +367,10 @@ void Renderer::draw()
   // dessiner un repère à la position courante de l'animation sur la courbe
   ofSetColor(255);
   ofDrawEllipse(playhead_position.x, playhead_position.y, radius / 1.0f, radius / 1.0f);
+}
+
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * t / période)
+float Renderer::oscillate(float time, float amplitude, float period)
+{
+  return amplitude * sin(2.0 * PI * time / period);
 }
