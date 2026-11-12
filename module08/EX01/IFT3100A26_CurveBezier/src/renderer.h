@@ -1,4 +1,4 @@
-// IFT3100A25_CurveBezier/renderer.h
+// IFT3100A26_CurveBezier/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -56,7 +56,7 @@ public:
   float motion_speed;
 
   float oscillation;
-  float oscillation_frequency;
+  float oscillation_period;
   float oscillation_amplitude;
 
   int framebuffer_width;
@@ -72,4 +72,6 @@ public:
   void update();
   void draw();
   void reset();
+
+  float oscillate(float time, float amplitude, float period);
 };

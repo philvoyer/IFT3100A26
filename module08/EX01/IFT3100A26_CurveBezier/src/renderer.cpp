@@ -1,25 +1,66 @@
-// IFT3100A25_CurveBezier/renderer.cpp
+// IFT3100A26_CurveBezier/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
 
-// fonction d'évaluation d'une courbe de Bézier quadratique (3 points de contrôle)
-void bezier_quadratic(
+// voici deux implémentations équivalentes de l'évaluation d'une courbe de Bézier quadratique :
+//
+//   bézier quadratique(t) = (1 - t)² P1 + 2 (1 - t) t P2 + t² P3
+//
+// les deux fonctions retournent la même position, mais pas avec le même coût :
+// - bezier_quadratic_direct : 21 multiplications par appel (7 par dimension);
+// - bezier_quadratic_precomputed : 13 multiplications par appel (4 pour les fonctions de base, 9 pour x, y et z).
+// l'exemple utilise bezier_quadratic_precomputed, car la fonction est appelée plus de 100 fois par frame.
+
+// fonction d'évaluation d'une courbe de Bézier quadratique sans aucune valeur précalculée
+// (traduction directe de l'équation : (1 - t) et les produits sont recalculés dans chaque terme et pour chaque dimension)
+void bezier_quadratic_direct(
   float t,
   float p1x, float p1y, float p1z,
   float p2x, float p2y, float p2z,
   float p3x, float p3y, float p3z,
   float&  x,  float& y, float&  z)
 {
-  float u = 1 - t;
-
-  x = u * (u * p1x + t * p2x) + t * (u * p2x + t * p3x);
-  y = u * (u * p1y + t * p2y) + t * (u * p2y + t * p3y);
-  z = u * (u * p1z + t * p2z) + t * (u * p2z + t * p3z);
+  x = (1 - t) * (1 - t) * p1x + 2 * (1 - t) * t * p2x + t * t * p3x;
+  y = (1 - t) * (1 - t) * p1y + 2 * (1 - t) * t * p2y + t * t * p3y;
+  z = (1 - t) * (1 - t) * p1z + 2 * (1 - t) * t * p2z + t * t * p3z;
 }
 
-// fonction d'évaluation d'une courbe de Bézier cubique (4 points de contrôle)
-void bezier_cubic(
+// fonction d'évaluation d'une courbe de Bézier quadratique avec un maximum de valeurs précalculées
+// (les trois polynômes de Bernstein ne dépendent pas de la dimension,
+// ils sont donc calculés une seule fois puis réutilisés pour x, y et z)
+void bezier_quadratic_precomputed(
+  float t,
+  float p1x, float p1y, float p1z,
+  float p2x, float p2y, float p2z,
+  float p3x, float p3y, float p3z,
+  float&  x,  float& y, float&  z)
+{
+  // complément du paramètre t
+  float u = 1 - t;
+
+  // polynômes de Bernstein de degré 2, communs aux trois dimensions
+  float b1 = u * u;
+  float b2 = 2 * u * t;
+  float b3 = t * t;
+
+  x = b1 * p1x + b2 * p2x + b3 * p3x;
+  y = b1 * p1y + b2 * p2y + b3 * p3y;
+  z = b1 * p1z + b2 * p2z + b3 * p3z;
+}
+
+// voici deux implémentations équivalentes de l'évaluation d'une courbe de Bézier cubique :
+//
+//   bézier cubique(t) = (1 - t)³ P1 + 3 t (1 - t)² P2 + 3 t² (1 - t) P3 + t³ P4
+//
+// les deux fonctions retournent la même position, mais pas avec le même coût :
+// - bezier_cubic_direct : 42 multiplications par appel (14 par dimension);
+// - bezier_cubic_precomputed : 20 multiplications par appel (8 pour les puissances et les fonctions de base, 12 pour x, y et z).
+// l'exemple utilise bezier_cubic_precomputed, car la fonction est appelée plus de 100 fois par frame.
+
+// fonction d'évaluation d'une courbe de Bézier cubique sans aucune valeur précalculée
+// (traduction directe de l'équation : (1 - t) et les puissances sont recalculés dans chaque terme et pour chaque dimension)
+void bezier_cubic_direct(
   float t,
   float p1x, float p1y, float p1z,
   float p2x, float p2y, float p2z,
@@ -27,21 +68,38 @@ void bezier_cubic(
   float p4x, float p4y, float p4z,
   float&  x,  float& y, float&  z)
 {
+  x = (1 - t) * (1 - t) * (1 - t) * p1x + 3 * t * (1 - t) * (1 - t) * p2x + 3 * t * t * (1 - t) * p3x + t * t * t * p4x;
+  y = (1 - t) * (1 - t) * (1 - t) * p1y + 3 * t * (1 - t) * (1 - t) * p2y + 3 * t * t * (1 - t) * p3y + t * t * t * p4y;
+  z = (1 - t) * (1 - t) * (1 - t) * p1z + 3 * t * (1 - t) * (1 - t) * p2z + 3 * t * t * (1 - t) * p3z + t * t * t * p4z;
+}
+
+// fonction d'évaluation d'une courbe de Bézier cubique avec un maximum de valeurs précalculées
+// (les puissances de t et de (1 - t) ainsi que les quatre polynômes de Bernstein ne dépendent pas de la dimension,
+// ils sont donc calculés une seule fois puis réutilisés pour x, y et z)
+void bezier_cubic_precomputed(
+  float t,
+  float p1x, float p1y, float p1z,
+  float p2x, float p2y, float p2z,
+  float p3x, float p3y, float p3z,
+  float p4x, float p4y, float p4z,
+  float&  x,  float& y, float&  z)
+{
+  // puissances du paramètre t et de son complément u = 1 - t
   float u = 1 - t;
   float uu = u * u;
   float uuu = uu * u;
   float tt = t * t;
   float ttt = tt * t;
 
-  x = uuu * p1x + 3 * uu * t * p2x + 3 * u * tt * p3x + ttt * p4x;
-  y = uuu * p1y + 3 * uu * t * p2y + 3 * u * tt * p3y + ttt * p4y;
-  z = uuu * p1z + 3 * uu * t * p2z + 3 * u * tt * p3z + ttt * p4z;
-}
+  // polynômes de Bernstein de degré 3, communs aux trois dimensions
+  float b1 = uuu;
+  float b2 = 3 * uu * t;
+  float b3 = 3 * u * tt;
+  float b4 = ttt;
 
-// fonction d'oscillation
-float oscillate(float time, float frequency, float amplitude)
-{
-  return sinf(time * 2.0f * PI / frequency) * amplitude;
+  x = b1 * p1x + b2 * p2x + b3 * p3x + b4 * p4x;
+  y = b1 * p1y + b2 * p2y + b3 * p3y + b4 * p4y;
+  z = b1 * p1z + b2 * p2z + b3 * p3z + b4 * p4z;
 }
 
 // fonction qui calcule une interpolation linéaire entre deux valeurs numériques
@@ -60,10 +118,10 @@ float interpolation_linear(float value1, float value2, float t)
 float interpolation_smoothstep(float value1, float value2, float t)
 {
   if (t < 0.0f)
-    return t = 0.0f;
+    t = 0.0f;
 
   if (t > 1.0f)
-    return t = 1.0f;
+    t = 1.0f;
 
   t = t * t * (3.0f - 2.0f * t);
 
@@ -87,8 +145,8 @@ void Renderer::setup()
   motion_speed = 250.0f;
 
   oscillation = 0.5f;
-  oscillation_frequency = 5000.0f;
-  oscillation_amplitude = 0.5;
+  oscillation_period = 5.0f;
+  oscillation_amplitude = 0.5f;
 
   isAnimationActive = true;
 
@@ -98,6 +156,9 @@ void Renderer::setup()
 
   // courbe au lancement de l'application
   curve_type = CurveType::bezier_quadratic;
+
+  // type d'interpolation au lancement de l'application
+  interpolation_type = InterpolationType::lerp;
 
   // initialisation de la scène
   reset();
@@ -173,21 +234,21 @@ void Renderer::update()
     {
       case CurveType::bezier_quadratic:
 
-        bezier_quadratic(
+        bezier_quadratic_precomputed(
           index / (float) line_resolution,
           ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
           ctrl_point2.x, ctrl_point2.y, ctrl_point2.z,
           ctrl_point3.x, ctrl_point3.y, ctrl_point3.z,
           position.x, position.y, position.z);
 
-        // pour masquer le 4ième point de contrôle
+        // pour masquer le 4e point de contrôle
         ctrl_point4 = ctrl_point3;
 
         break;
 
       case CurveType::bezier_cubic:
 
-        bezier_cubic(
+        bezier_cubic_precomputed(
           index / (float) line_resolution,
           ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
           ctrl_point2.x, ctrl_point2.y, ctrl_point2.z,
@@ -204,9 +265,9 @@ void Renderer::update()
     line_renderer[index] = position;
   }
 
-  // mise à jour de l'oscillateur
+  // mise à jour de l'oscillateur, décalé de son amplitude pour que sa valeur reste entre 0 et 1
   if (isAnimationActive)
-    oscillation = oscillation_amplitude + oscillate(ofGetElapsedTimeMillis(), oscillation_frequency, oscillation_amplitude);
+    oscillation = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period) + oscillation_amplitude;
 
   // animation de la tête de lecture en fonction de la valeur courante de l'oscillateur
   switch (interpolation_type)
@@ -228,7 +289,7 @@ void Renderer::update()
   {
     case CurveType::bezier_quadratic:
 
-      bezier_quadratic(
+      bezier_quadratic_precomputed(
         playhead,
         ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
         ctrl_point2.x, ctrl_point2.y, ctrl_point2.z,
@@ -239,7 +300,7 @@ void Renderer::update()
 
     case CurveType::bezier_cubic:
 
-      bezier_cubic(
+      bezier_cubic_precomputed(
         playhead,
         ctrl_point1.x, ctrl_point1.y, ctrl_point1.z,
         ctrl_point2.x, ctrl_point2.y, ctrl_point2.z,
@@ -264,7 +325,7 @@ void Renderer::draw()
   ofDrawEllipse(initial_position4.x, initial_position4.y, radius/2, radius/2);
   ofDrawEllipse(initial_position5.x, initial_position5.y, radius/2, radius/2);
 
-  // dessiner la ligne contour
+  // dessiner la ligne de contour
   ofSetColor(0, 0, 255);
   ofSetLineWidth(line_width_outline);
   ofDrawLine(ctrl_point1.x, ctrl_point1.y, ctrl_point2.x, ctrl_point2.y);
@@ -287,4 +348,10 @@ void Renderer::draw()
   // dessiner un repère à la position courante de l'animation sur la courbe
   ofSetColor(255);
   ofDrawEllipse(playhead_position.x, playhead_position.y, radius / 1.0f, radius / 1.0f);
+}
+
+// fonction d'oscillation x(t) = amplitude * sin(2 * PI * t / période)
+float Renderer::oscillate(float time, float amplitude, float period)
+{
+  return amplitude * sin(2.0 * PI * time / period);
 }
