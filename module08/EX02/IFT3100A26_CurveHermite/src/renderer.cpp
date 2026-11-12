@@ -13,7 +13,11 @@
 // les deux fonctions retournent la même position, mais pas avec le même coût :
 // - hermite_direct : 63 multiplications par appel (21 par dimension);
 // - hermite_precomputed : 17 multiplications par appel (5 pour les puissances de t et les fonctions de base, 12 pour x, y et z).
-// l'exemple utilise hermite_precomputed, car la fonction est appelée plus de 100 fois par frame.
+// l'exemple utilise hermite_precomputed, car la fonction est appelée plus de 100 fois par frame,
+// soit environ 6000 fois par seconde à 60 fps.
+// le nombre d'opérations mathématiques (multiplications, additions et soustractions) est donc d'environ :
+// - hermite_direct : 90 par appel, soit environ 540 000 par seconde;
+// - hermite_precomputed : 32 par appel, soit environ 192 000 par seconde.
 
 // fonction d'évaluation d'une courbe de Hermite sans aucune valeur précalculée
 // (traduction directe de l'équation : les puissances de t sont recalculées dans chaque terme et pour chaque dimension)
@@ -56,30 +60,6 @@ void hermite_precomputed(
   x = h1 * p1x + h2 * p2x + h3 * p3x + h4 * p4x;
   y = h1 * p1y + h2 * p2y + h3 * p3y + h4 * p4y;
   z = h1 * p1z + h2 * p2z + h3 * p3z + h4 * p4z;
-}
-
-// deux implémentations équivalentes de l'évaluation d'une courbe de Bézier cubique :
-//
-//   bézier cubique(t) = (1 - t)³ P1 + 3 t (1 - t)² P2 + 3 t² (1 - t) P3 + t³ P4
-//
-// les deux fonctions retournent la même position, mais pas avec le même coût :
-// - bezier_cubic_direct : 42 multiplications par appel (14 par dimension);
-// - bezier_cubic_precomputed : 20 multiplications par appel (8 pour les puissances et les fonctions de base, 12 pour x, y et z).
-// l'exemple utilise bezier_cubic_precomputed, car la fonction est appelée plus de 100 fois par frame.
-
-// fonction d'évaluation d'une courbe de Bézier cubique sans aucune valeur précalculée
-// (traduction directe de l'équation : (1 - t) et les puissances sont recalculés dans chaque terme et pour chaque dimension)
-void bezier_cubic_direct(
-  float t,
-  float p1x, float p1y, float p1z,
-  float p2x, float p2y, float p2z,
-  float p3x, float p3y, float p3z,
-  float p4x, float p4y, float p4z,
-  float&  x,  float& y, float&  z)
-{
-  x = (1 - t) * (1 - t) * (1 - t) * p1x + 3 * t * (1 - t) * (1 - t) * p2x + 3 * t * t * (1 - t) * p3x + t * t * t * p4x;
-  y = (1 - t) * (1 - t) * (1 - t) * p1y + 3 * t * (1 - t) * (1 - t) * p2y + 3 * t * t * (1 - t) * p3y + t * t * t * p4y;
-  z = (1 - t) * (1 - t) * (1 - t) * p1z + 3 * t * (1 - t) * (1 - t) * p2z + 3 * t * t * (1 - t) * p3z + t * t * t * p4z;
 }
 
 // fonction d'évaluation d'une courbe de Bézier cubique avec un maximum de valeurs précalculées
@@ -244,10 +224,8 @@ void Renderer::update()
     {
       case CurveType::hermite:
 
-        // conversion des points de contrôle de Bézier en tangentes de Hermite (V1 = 3 (P2 - P1), V2 = 3 (P4 - P3)),
-        // ce qui fait en sorte que la courbe de Hermite et la courbe de Bézier cubique soient identiques
-        tangent1 = (ctrl_point2 - ctrl_point1) * 3.0f;
-        tangent2 = (ctrl_point4 - ctrl_point3) * 3.0f;
+        tangent1 = ctrl_point2 - ctrl_point1;
+        tangent2 = ctrl_point3 - ctrl_point4;
 
         hermite_precomputed(
           index / (float) line_resolution,
