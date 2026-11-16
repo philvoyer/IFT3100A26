@@ -3,7 +3,7 @@
 
 #include "renderer.h"
 
-// deux implémentations équivalentes de l'évaluation d'une courbe de Hermite cubique :
+// voici deux implémentations équivalentes de l'évaluation d'une courbe de Hermite cubique :
 //
 //   hermite(t) = (2t³ - 3t² + 1) P1 + (t³ - 2t² + t) V1 + (t³ - t²) V2 + (-2t³ + 3t²) P2
 //
