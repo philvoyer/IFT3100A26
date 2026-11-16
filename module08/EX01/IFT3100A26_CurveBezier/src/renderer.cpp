@@ -10,7 +10,11 @@
 // les deux fonctions retournent la même position, mais pas avec le même coût :
 // - bezier_quadratic_direct : 21 multiplications par appel (7 par dimension);
 // - bezier_quadratic_precomputed : 13 multiplications par appel (4 pour les fonctions de base, 9 pour x, y et z).
-// l'exemple utilise bezier_quadratic_precomputed, car la fonction est appelée plus de 100 fois par frame.
+// l'exemple utilise bezier_quadratic_precomputed, car la fonction est appelée plus de 100 fois par frame,
+// soit environ 6000 fois par seconde à 60 fps.
+// le nombre d'opérations mathématiques (multiplications, additions et soustractions) est donc d'environ :
+// - bezier_quadratic_direct : 36 par appel, soit environ 216 000 par seconde;
+// - bezier_quadratic_precomputed : 20 par appel, soit environ 120 000 par seconde.
 
 // fonction d'évaluation d'une courbe de Bézier quadratique sans aucune valeur précalculée
 // (traduction directe de l'équation : (1 - t) et les produits sont recalculés dans chaque terme et pour chaque dimension)
@@ -56,7 +60,11 @@ void bezier_quadratic_precomputed(
 // les deux fonctions retournent la même position, mais pas avec le même coût :
 // - bezier_cubic_direct : 42 multiplications par appel (14 par dimension);
 // - bezier_cubic_precomputed : 20 multiplications par appel (8 pour les puissances et les fonctions de base, 12 pour x, y et z).
-// l'exemple utilise bezier_cubic_precomputed, car la fonction est appelée plus de 100 fois par frame.
+// l'exemple utilise bezier_cubic_precomputed, car la fonction est appelée plus de 100 fois par frame,
+// soit environ 6000 fois par seconde à 60 fps.
+// le nombre d'opérations mathématiques (multiplications, additions et soustractions) est donc d'environ :
+// - bezier_cubic_direct : 69 par appel, soit environ 414 000 par seconde;
+// - bezier_cubic_precomputed : 30 par appel, soit environ 180 000 par seconde.
 
 // fonction d'évaluation d'une courbe de Bézier cubique sans aucune valeur précalculée
 // (traduction directe de l'équation : (1 - t) et les puissances sont recalculés dans chaque terme et pour chaque dimension)
