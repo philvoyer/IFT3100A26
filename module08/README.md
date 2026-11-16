@@ -12,8 +12,6 @@ Le code compare deux implémentations équivalentes de chaque courbe, une traduc
 
 Exemple d'une courbe de Hermite cubique et d'une courbe de Bézier cubique.
 
-Les tangentes de la courbe de Hermite sont obtenues par conversion des points de contrôle de la courbe de Bézier (V1 = 3 (P2 - P1), V2 = 3 (P4 - P3)), donc les deux courbes se superposent quand on passe de l'une à l'autre.
-
 Le code compare aussi deux implémentations équivalentes de la courbe de Hermite, une traduction directe de l'équation et une version précalculée qui fait environ 3,7 fois moins de multiplications et 2,8 fois moins d'opérations mathématiques.
 
 ### Exemple 8.3 (SurfaceCoons)
