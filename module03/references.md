@@ -100,6 +100,12 @@ https://openframeworks.cc/documentation/math/ofMatrix4x4/
 Quaternion  
 https://openframeworks.cc/documentation/math/ofQuaternion/
 
+Guide : utilisation de GLM dans openFrameworks (vecteurs, matrices et quaternions des exemples)  
+https://openframeworks.cc/learning/02_graphics/how_to_use_glm/
+
+Manuel de GLM  
+https://github.com/g-truc/glm/blob/master/manual.md
+
 Noeud de transformation  
 https://openframeworks.cc/documentation/3d/ofNode/
 
