@@ -21,9 +21,9 @@ public:
 
   ofNode node;
 
-  ofVec3f vector_position;
-  ofVec3f vector_rotation;
-  ofVec3f vector_proportion;
+  glm::vec3 vector_position;
+  glm::vec3 vector_rotation;
+  glm::vec3 vector_proportion;
 
   float center_x;
   float center_y;
