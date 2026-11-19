@@ -70,9 +70,9 @@ void Renderer::draw()
 
   ofRotateDeg(ofGetFrameNum() * 0.1f, 0.0f, 1.0f, 0.0f);
 
-  ofVec3f vector_position;
-  ofVec3f vector_rotation;
-  ofVec3f vector_proportion;
+  glm::vec3 vector_position;
+  glm::vec3 vector_rotation;
+  glm::vec3 vector_proportion;
 
   for (int index = 0; index < locator_buffer_head; ++index)
   {
@@ -189,9 +189,9 @@ void Renderer::distribute_locators(int count, float range)
 
   locator_buffer_head = count;
 
-  ofVec3f vector_position;
-  ofVec3f vector_rotation;
-  ofVec3f vector_proportion;
+  glm::vec3 vector_position;
+  glm::vec3 vector_rotation;
+  glm::vec3 vector_proportion;
 
   for (int index = 0; index < locator_buffer_head; ++index)
   {
