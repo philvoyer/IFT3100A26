@@ -64,10 +64,10 @@ void Renderer::distribute_triangles(int count, float range)
   // configurer le nombre de triangles
   triangle_buffer_head = count;
 
-  ofVec3f vector_origin;
-  ofVec3f vector_position1;
-  ofVec3f vector_position2;
-  ofVec3f vector_position3;
+  glm::vec3 vector_origin;
+  glm::vec3 vector_position1;
+  glm::vec3 vector_position2;
+  glm::vec3 vector_position3;
   ofColor vector_color;
 
   for (int index = 0; index < triangle_buffer_head; ++index)
@@ -81,10 +81,11 @@ void Renderer::distribute_triangles(int count, float range)
       vector_origin.y = ofRandom(-1.0f, 1.0f);
       vector_origin.z = ofRandom(-1.0f, 1.0f);
     }
-    while (vector_origin.lengthSquared() > 1.0f || vector_origin.lengthSquared() < 0.0001f);
+    while (glm::dot(vector_origin, vector_origin) > 1.0f || glm::dot(vector_origin, vector_origin) < 0.0001f);
+    // produit scalaire d'un vecteur avec lui-même : v · v = x·x + y·y + z·z = x² + y² + z², soit le carré de sa longueur
 
     // normaliser la position (direction uniforme sur la sphère)
-    vector_origin.normalize();
+    vector_origin = glm::normalize(vector_origin);
 
     // ramener la position dans un hémisphère
     if (bowl_or_ball)
@@ -171,9 +172,9 @@ void Renderer::draw_soup()
 // fonction qui dessine un des triangles de la soupe
 void Renderer::draw_triangle(int index)
 {
-  ofVec3f vector_position1;
-  ofVec3f vector_position2;
-  ofVec3f vector_position3;
+  glm::vec3 vector_position1;
+  glm::vec3 vector_position2;
+  glm::vec3 vector_position3;
 
   ofFill();
 
