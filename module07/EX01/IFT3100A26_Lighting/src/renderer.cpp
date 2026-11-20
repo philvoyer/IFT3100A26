@@ -50,9 +50,9 @@ void Renderer::reset()
   center_y = ofGetHeight() / 2.0f;
 
   // déterminer la position des géométries
-  position_cube.set(-ofGetWidth() * (1.0f / 4.0f), 0.0f, 0.0f);
-  position_sphere.set(0.0f, 0.0f, 0.0f);
-  position_teapot.set(ofGetWidth() * (1.0f / 4.0f), 50.0f, 0.0f);
+  position_cube = glm::vec3(-ofGetWidth() * (1.0f / 4.0f), 0.0f, 0.0f);
+  position_sphere = glm::vec3(0.0f, 0.0f, 0.0f);
+  position_teapot = glm::vec3(ofGetWidth() * (1.0f / 4.0f), 50.0f, 0.0f);
 
   // configurer le matériau du cube
   material_cube.setAmbientColor(ofColor(63, 63, 63));
@@ -81,7 +81,7 @@ void Renderer::reset()
   // configurer la lumière directionnelle
   light_directional.setDiffuseColor(ofColor(31, 255, 31));
   light_directional.setSpecularColor(ofColor(191, 191, 191));
-  light_directional.setOrientation(ofVec3f(0.0f, 0.0f, 0.0f));
+  light_directional.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
   light_directional.setDirectional();
 
   // configurer la lumière ponctuelle
@@ -92,7 +92,7 @@ void Renderer::reset()
   // configurer la lumière projecteur
   light_spot.setDiffuseColor(ofColor(191, 191, 191));
   light_spot.setSpecularColor(ofColor(191, 191, 191));
-  light_spot.setOrientation(ofVec3f(0.0f, 0.0f, 0.0f));
+  light_spot.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
   light_spot.setSpotConcentration(2);
   light_spot.setSpotlightCutOff(30);
   light_spot.setSpotlight();
@@ -107,7 +107,7 @@ void Renderer::update()
   if (is_active_light_directional)
   {
     // transformer la lumière directionnelle
-    orientation_directional.makeRotate(int(ofGetElapsedTimeMillis() * 0.1f) % 360, 0, 1, 0);
+    orientation_directional = glm::angleAxis(glm::radians(float(int(ofGetElapsedTimeMillis() * 0.1f) % 360)), glm::vec3(0, 1, 0));
 
     light_directional.setPosition(center_x, center_y + 60, camera_offset * 0.75f);
     light_directional.setOrientation(orientation_directional);
@@ -124,7 +124,9 @@ void Renderer::update()
     // transformer la lumière projecteur
     oscillation = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period);
 
-    orientation_spot.makeRotate(30.0f, ofVec3f(1, 0, 0), oscillation, ofVec3f(0, 1, 0), 0.0f, ofVec3f(0, 0, 1));
+    // rotation de 30 degrés autour de l'axe x, suivie de la rotation de l'oscillation autour de l'axe y
+    // (avec glm, la rotation appliquée en premier est celle de droite dans le produit des quaternions)
+    orientation_spot = glm::angleAxis(glm::radians(oscillation), glm::vec3(0, 1, 0)) * glm::angleAxis(glm::radians(30.0f), glm::vec3(1, 0, 0));
 
     light_spot.setOrientation(orientation_spot);
 

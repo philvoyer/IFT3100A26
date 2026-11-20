@@ -22,12 +22,12 @@ public:
 
   ofxAssimpModelLoader teapot;
 
-  ofQuaternion orientation_directional;
-  ofQuaternion orientation_spot;
+  glm::quat orientation_directional;
+  glm::quat orientation_spot;
 
-  ofVec3f position_cube;
-  ofVec3f position_sphere;
-  ofVec3f position_teapot;
+  glm::vec3 position_cube;
+  glm::vec3 position_sphere;
+  glm::vec3 position_teapot;
 
   float camera_offset;
 
