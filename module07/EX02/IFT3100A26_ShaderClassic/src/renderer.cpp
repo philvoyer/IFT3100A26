@@ -73,9 +73,9 @@ void Renderer::reset()
   offset_z = initial_z;
 
   // déterminer la position des géométries
-  position_cube.set(-ofGetWidth() * (1.0f / 4.0f), 0.0f, 0.0f);
-  position_sphere.set(0.0f, 0.0f, 0.0f);
-  position_teapot.set(ofGetWidth() * (1.0f / 4.0f), 50.0f, 0.0f);
+  position_cube = glm::vec3(-ofGetWidth() * (1.0f / 4.0f), 0.0f, 0.0f);
+  position_sphere = glm::vec3(0.0f, 0.0f, 0.0f);
+  position_teapot = glm::vec3(ofGetWidth() * (1.0f / 4.0f), 50.0f, 0.0f);
 
   ofLog() << "<reset>";
 }

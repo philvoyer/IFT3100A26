@@ -27,9 +27,9 @@ public:
 
   ofxAssimpModelLoader teapot;
 
-  ofVec3f position_cube;
-  ofVec3f position_sphere;
-  ofVec3f position_teapot;
+  glm::vec3 position_cube;
+  glm::vec3 position_sphere;
+  glm::vec3 position_teapot;
 
   string shader_name;
 
