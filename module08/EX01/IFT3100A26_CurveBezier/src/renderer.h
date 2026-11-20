@@ -1,72 +1,60 @@
-// IFT3100A26_CurveBezier/renderer.h
+// IFT3100A26_ShaderClassic/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
 
 #include "ofMain.h"
+#include "ofxAssimpModelLoader.h"
 
-// énumération de types de courbe
-enum class CurveType {bezier_quadratic, bezier_cubic};
-
-// énumération de types d'interpolation
-enum class InterpolationType {lerp, smoothstep};
+// énumération des types de shader
+enum class ShaderType {color_fill, lambert, gouraud, phong, blinn_phong};
 
 class Renderer
 {
 public:
 
-  CurveType curve_type;
+  ShaderType shader_active;
 
-  InterpolationType interpolation_type;
+  ofShader shader_color_fill;
+  ofShader shader_lambert;
+  ofShader shader_gouraud;
+  ofShader shader_phong;
+  ofShader shader_blinn_phong;
 
-  string curve_name;
+  ofShader* shader;
 
-  ofPolyline line_renderer;
+  ofLight light;
 
-  ofVec3f* selected_ctrl_point;
+  ofxAssimpModelLoader teapot;
 
-  ofVec3f ctrl_point1;
-  ofVec3f ctrl_point2;
-  ofVec3f ctrl_point3;
-  ofVec3f ctrl_point4;
+  glm::vec3 position_cube;
+  glm::vec3 position_sphere;
+  glm::vec3 position_teapot;
 
-  ofVec3f initial_position1;
-  ofVec3f initial_position2;
-  ofVec3f initial_position3;
-  ofVec3f initial_position4;
-  ofVec3f initial_position5;
-
-  ofVec3f position;
-
-  ofVec3f playhead_position;
-
-  float playhead;
-
-  float line_width_outline;
-  float line_width_curve;
-
-  float radius;
-  float scale;
-  float smooth;
-  float offset;
-
-  float delta_x;
-  float delta_y;
-
-  float motion_speed;
+  string shader_name;
 
   float oscillation;
+
+  float scale_cube;
+  float scale_sphere;
+  float scale_teapot;
+
   float oscillation_period;
   float oscillation_amplitude;
 
-  int framebuffer_width;
-  int framebuffer_height;
+  float speed_motion;
 
-  int line_resolution;
+  float offset_x;
+  float offset_z;
 
-  int index;
+  float delta_x;
+  float delta_z;
 
-  bool isAnimationActive;
+  float initial_x;
+  float initial_z;
+
+  float center_x;
+  float center_y;
 
   void setup();
   void update();
