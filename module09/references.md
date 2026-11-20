@@ -1,6 +1,6 @@
-# Module 8 : Lancer de rayons
+# Module 9 : Lancer de rayons
 
-Références en lien avec le module 8 : lancer de rayons.
+Références en lien avec le module 9 : lancer de rayons.
 
 ## Wikipédia
 
@@ -19,10 +19,10 @@ https://en.wikipedia.org/wiki/Distributed_ray_tracing
 
 Illumination globale  
 https://fr.wikipedia.org/wiki/Illumination_globale  
-https://en.wikipedia.org/wiki/Global_illumination​
+https://en.wikipedia.org/wiki/Global_illumination
 
 Radiosité  
-https://en.wikipedia.org/wiki/Radiosity_(computer_graphics)​
+https://en.wikipedia.org/wiki/Radiosity_(computer_graphics)
 
 Monte Carlo  
 https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Monte-Carlo  
@@ -30,7 +30,7 @@ https://en.wikipedia.org/wiki/Monte_Carlo_method#Computer_graphics
 https://en.wikipedia.org/wiki/Metropolis_light_transport
 
 Raymarching  
-https://en.wikipedia.org/wiki/Volume_ray_casting
+https://en.wikipedia.org/wiki/Ray_marching
 
 Réfraction  
 http://en.wikipedia.org/wiki/Refraction
@@ -53,6 +53,65 @@ https://en.wikipedia.org/wiki/Möller–Trumbore_intersection_algorithm
 Ray Tracing: Rendering a Triangle  
 https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates?url=3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates
 
+## Articles
+
+Appel : Some Techniques for Shading Machine Renderings of Solids (1968)  
+https://doi.org/10.1145/1468075.1468082
+
+Bentley : Multidimensional Binary Search Trees Used for Associative Searching (1975)  
+https://doi.org/10.1145/361002.361007
+
+Whitted : An Improved Illumination Model for Shaded Display (1980)  
+https://doi.org/10.1145/358876.358882
+
+Roth : Ray Casting for Modeling Solids (1982)  
+https://doi.org/10.1016/0146-664X(82)90169-1
+
+Cook, Porter et Carpenter : Distributed Ray Tracing (1984)  
+https://doi.org/10.1145/964965.808590
+
+Goral, Torrance, Greenberg et Battaile : Modeling the Interaction of Light Between Diffuse Surfaces (1984)  
+https://doi.org/10.1145/800031.808601
+
+Arvo : Backward Ray Tracing (1986)  
+Developments in Ray Tracing, SIGGRAPH '86 Course Notes, vol. 12, p. 259-263
+
+Kajiya : The Rendering Equation (1986)  
+https://doi.org/10.1145/15886.15902
+
+Kay et Kajiya : Ray Tracing Complex Scenes (1986)  
+https://doi.org/10.1145/15886.15916
+
+Goldsmith et Salmon : Automatic Creation of Object Hierarchies for Ray Tracing (1987)  
+https://doi.org/10.1109/MCG.1987.276983
+
+Levoy : Display of Surfaces from Volume Data (1988)  
+https://doi.org/10.1109/38.511
+
+Heckbert : Adaptive Radiosity Textures for Bidirectional Ray Tracing (1990)  
+https://doi.org/10.1145/97880.97895
+
+MacDonald et Booth : Heuristics for Ray Tracing Using Space Subdivision (1990)  
+https://doi.org/10.1007/BF01911006
+
+Lafortune et Willems : Bi-directional Path Tracing (1993)  
+https://graphics.cs.kuleuven.be/publications/BDPT/
+
+Veach et Guibas : Optimally Combining Sampling Techniques for Monte Carlo Rendering (1995)  
+https://doi.org/10.1145/218380.218498
+
+Jensen : Global Illumination using Photon Maps (1996)  
+https://doi.org/10.1007/978-3-7091-7484-5_3
+
+Veach et Guibas : Metropolis Light Transport (1997)  
+https://doi.org/10.1145/258734.258775
+
+Christensen : Faster Photon Map Global Illumination (1999)  
+https://doi.org/10.1080/10867651.1999.10487505
+
+Jensen, Marschner, Levoy et Hanrahan : A Practical Model for Subsurface Light Transport (2001)  
+https://doi.org/10.1145/383259.383319
+
 ## Technologies
 
 Chaos group V-Ray  
@@ -72,7 +131,7 @@ https://www.nvidia.com/en-us/design-visualization/iray/features/
 
 Nvidia Optix  
 https://developer.nvidia.com/optix
-​
+
 Corona  
 https://corona-renderer.com/  
 https://corona-renderer.com/features  
@@ -81,7 +140,7 @@ https://corona-renderer.com/features/rendering-quality
 Redshift  
 https://www.redshift3d.com/  
 https://www.redshift3d.com/product  
-https://www.redshift3d.com/product/features#all​
+https://www.redshift3d.com/product/features#all
 
 POV Ray  
 http://povray.org  
@@ -112,7 +171,7 @@ http://www.iquilezles.org/www/articles/raymarchingdf/raymarchingdf.htm
 Nvidia RTX  
 https://developer.nvidia.com/rtx
 
-Microsoft DRX  
+Microsoft DXR  
 https://devblogs.microsoft.com/directx/announcing-microsoft-directx-raytracing/
 
 Star Wars elevator demo  
