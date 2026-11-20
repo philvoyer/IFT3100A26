@@ -115,22 +115,25 @@ void Renderer::setup()
   oscillation_period_v = 10.5f;
   oscillation_amplitude = 0.5f;
 
+  // temps d'animation, qui avance seulement quand l'animation est active
+  animation_time = 0.0f;
+
   isAnimationActive = true;
 
   // initialisation des sommets des lignes
   for (index = 0; index <= line_resolution; ++index)
   {
     for (int curve = 0; curve < boundary_count; ++curve)
-      boundary_renderer[curve].addVertex(ofPoint());
+      boundary_renderer[curve].addVertex(glm::vec3(0.0f));
 
     for (int i = 0; i <= isoline_count; ++i)
     {
-      isoline_u_renderer[i].addVertex(ofPoint());
-      isoline_v_renderer[i].addVertex(ofPoint());
+      isoline_u_renderer[i].addVertex(glm::vec3(0.0f));
+      isoline_v_renderer[i].addVertex(glm::vec3(0.0f));
     }
 
-    playhead_u_renderer.addVertex(ofPoint());
-    playhead_v_renderer.addVertex(ofPoint());
+    playhead_u_renderer.addVertex(glm::vec3(0.0f));
+    playhead_v_renderer.addVertex(glm::vec3(0.0f));
   }
 
   // nom de la surface
@@ -246,14 +249,14 @@ void Renderer::select_next_ctrl_point()
 }
 
 // fonction qui évalue la position d'une des courbes de bord (une courbe de Bézier cubique) au paramètre t
-ofVec3f Renderer::evaluate_boundary(int curve, float t)
+glm::vec3 Renderer::evaluate_boundary(int curve, float t)
 {
-  const ofVec3f& p1 = ctrl_point[boundary_index[curve][0]];
-  const ofVec3f& p2 = ctrl_point[boundary_index[curve][1]];
-  const ofVec3f& p3 = ctrl_point[boundary_index[curve][2]];
-  const ofVec3f& p4 = ctrl_point[boundary_index[curve][3]];
+  const glm::vec3& p1 = ctrl_point[boundary_index[curve][0]];
+  const glm::vec3& p2 = ctrl_point[boundary_index[curve][1]];
+  const glm::vec3& p3 = ctrl_point[boundary_index[curve][2]];
+  const glm::vec3& p4 = ctrl_point[boundary_index[curve][3]];
 
-  ofVec3f p;
+  glm::vec3 p;
 
   bezier_cubic_precomputed(
     t,
@@ -267,28 +270,28 @@ ofVec3f Renderer::evaluate_boundary(int curve, float t)
 }
 
 // fonction qui évalue la position sur la surface de Coons aux paramètres (u, v)
-ofVec3f Renderer::evaluate_surface(float u, float v)
+glm::vec3 Renderer::evaluate_surface(float u, float v)
 {
   // positions sur les quatre courbes de bord
-  ofVec3f c1 = evaluate_boundary(0, u);
-  ofVec3f c2 = evaluate_boundary(1, u);
-  ofVec3f c3 = evaluate_boundary(2, v);
-  ofVec3f c4 = evaluate_boundary(3, v);
+  glm::vec3 c1 = evaluate_boundary(0, u);
+  glm::vec3 c2 = evaluate_boundary(1, u);
+  glm::vec3 c3 = evaluate_boundary(2, v);
+  glm::vec3 c4 = evaluate_boundary(3, v);
 
   // positions des quatre coins de la surface
-  const ofVec3f& c1_0 = ctrl_point[0]; // C1(0) = C3(0)
-  const ofVec3f& c1_1 = ctrl_point[1]; // C1(1) = C4(0)
-  const ofVec3f& c2_0 = ctrl_point[2]; // C2(0) = C3(1)
-  const ofVec3f& c2_1 = ctrl_point[3]; // C2(1) = C4(1)
+  const glm::vec3& c1_0 = ctrl_point[0]; // C1(0) = C3(0)
+  const glm::vec3& c1_1 = ctrl_point[1]; // C1(1) = C4(0)
+  const glm::vec3& c2_0 = ctrl_point[2]; // C2(0) = C3(1)
+  const glm::vec3& c2_1 = ctrl_point[3]; // C2(1) = C4(1)
 
   // interpolation linéaire entre les courbes opposées C1 et C2
-  ofVec3f lerp_u = c1 * (1.0f - v) + c2 * v;
+  glm::vec3 lerp_u = c1 * (1.0f - v) + c2 * v;
 
   // interpolation linéaire entre les courbes opposées C3 et C4
-  ofVec3f lerp_v = c3 * (1.0f - u) + c4 * u;
+  glm::vec3 lerp_v = c3 * (1.0f - u) + c4 * u;
 
   // interpolation bilinéaire entre les quatre coins
-  ofVec3f blerp =
+  glm::vec3 blerp =
     c1_0 * ((1.0f - u) * (1.0f - v)) +
     c1_1 * (u * (1.0f - v)) +
     c2_0 * ((1.0f - u) * v) +
@@ -335,8 +338,10 @@ void Renderer::update()
   // mise à jour des deux oscillateurs, décalés de leur amplitude pour que leur valeur reste entre 0 et 1
   if (isAnimationActive)
   {
-    oscillation_u = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period_u) + oscillation_amplitude;
-    oscillation_v = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period_v) + oscillation_amplitude;
+    animation_time += ofGetLastFrameTime();
+
+    oscillation_u = oscillate(animation_time, oscillation_amplitude, oscillation_period_u) + oscillation_amplitude;
+    oscillation_v = oscillate(animation_time, oscillation_amplitude, oscillation_period_v) + oscillation_amplitude;
   }
 
   // animation de la tête de lecture sur les deux axes en fonction de la valeur courante des oscillateurs
@@ -401,8 +406,8 @@ void Renderer::draw()
   {
     for (int k = 0; k < 3; ++k)
     {
-      const ofVec3f& p1 = ctrl_point[boundary_index[curve][k]];
-      const ofVec3f& p2 = ctrl_point[boundary_index[curve][k + 1]];
+      const glm::vec3& p1 = ctrl_point[boundary_index[curve][k]];
+      const glm::vec3& p2 = ctrl_point[boundary_index[curve][k + 1]];
       ofDrawLine(p1, p2);
     }
   }

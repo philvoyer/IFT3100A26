@@ -36,11 +36,11 @@ public:
   ofPolyline playhead_u_renderer;
   ofPolyline playhead_v_renderer;
 
-  ofVec3f* selected_ctrl_point;
+  glm::vec3* selected_ctrl_point;
 
-  ofVec3f ctrl_point[ctrl_point_count];
+  glm::vec3 ctrl_point[ctrl_point_count];
 
-  ofVec3f initial_position[ctrl_point_count];
+  glm::vec3 initial_position[ctrl_point_count];
 
   // couleur de chacune des courbes de bord
   ofColor curve_color[boundary_count];
@@ -48,9 +48,9 @@ public:
   // couleur de chaque point de contrôle (la somme des couleurs des courbes auxquelles il appartient)
   ofColor ctrl_point_color[ctrl_point_count];
 
-  ofVec3f position;
+  glm::vec3 position;
 
-  ofVec3f playhead_position;
+  glm::vec3 playhead_position;
 
   float playhead_u;
   float playhead_v;
@@ -79,6 +79,8 @@ public:
   float oscillation_period_v;
   float oscillation_amplitude;
 
+  float animation_time;
+
   int framebuffer_width;
   int framebuffer_height;
 
@@ -97,8 +99,8 @@ public:
 
   void select_next_ctrl_point();
 
-  ofVec3f evaluate_boundary(int curve, float t);
-  ofVec3f evaluate_surface(float u, float v);
+  glm::vec3 evaluate_boundary(int curve, float t);
+  glm::vec3 evaluate_surface(float u, float v);
 
   float oscillate(float time, float amplitude, float period);
 };
