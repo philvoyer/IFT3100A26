@@ -23,25 +23,25 @@ public:
 
   ofPolyline line_renderer;
 
-  ofVec3f* selected_ctrl_point;
+  glm::vec3* selected_ctrl_point;
 
-  ofVec3f ctrl_point1;
-  ofVec3f ctrl_point2;
-  ofVec3f ctrl_point3;
-  ofVec3f ctrl_point4;
+  glm::vec3 ctrl_point1;
+  glm::vec3 ctrl_point2;
+  glm::vec3 ctrl_point3;
+  glm::vec3 ctrl_point4;
 
-  ofVec3f initial_position1;
-  ofVec3f initial_position2;
-  ofVec3f initial_position3;
-  ofVec3f initial_position4;
-  ofVec3f initial_position5;
+  glm::vec3 initial_position1;
+  glm::vec3 initial_position2;
+  glm::vec3 initial_position3;
+  glm::vec3 initial_position4;
+  glm::vec3 initial_position5;
 
-  ofVec3f position;
+  glm::vec3 position;
 
-  ofVec3f tangent1;
-  ofVec3f tangent2;
+  glm::vec3 tangent1;
+  glm::vec3 tangent2;
 
-  ofVec3f playhead_position;
+  glm::vec3 playhead_position;
 
   float playhead;
 
@@ -60,6 +60,8 @@ public:
   float oscillation;
   float oscillation_period;
   float oscillation_amplitude;
+
+  float animation_time;
 
   int framebuffer_width;
   int framebuffer_height;

@@ -137,11 +137,14 @@ void Renderer::setup()
   oscillation_period = 5.0f;
   oscillation_amplitude = 0.5f;
 
+  // temps d'animation, qui avance seulement quand l'animation est active
+  animation_time = 0.0f;
+
   isAnimationActive = true;
 
   // initialisation des sommets de la ligne
   for (index = 0; index <= line_resolution; ++index)
-    line_renderer.addVertex(ofPoint());
+    line_renderer.addVertex(glm::vec3(0.0f));
 
   // courbe au lancement de l'application
   curve_type = CurveType::hermite;
@@ -259,7 +262,11 @@ void Renderer::update()
 
   // mise à jour de l'oscillateur, décalé de son amplitude pour que sa valeur reste entre 0 et 1
   if (isAnimationActive)
-    oscillation = oscillate(ofGetElapsedTimef(), oscillation_amplitude, oscillation_period) + oscillation_amplitude;
+  {
+    animation_time += ofGetLastFrameTime();
+
+    oscillation = oscillate(animation_time, oscillation_amplitude, oscillation_period) + oscillation_amplitude;
+  }
 
   // animation de la tête de lecture en fonction de la valeur courante de l'oscillateur
   switch (interpolation_type)
