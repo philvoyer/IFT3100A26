@@ -191,10 +191,11 @@ void Renderer::setup()
   camera_rotation_speed = 10.0f;
 
   // deux oscillateurs désynchronisés pour que le rayon balaie toute la scène
+  // (période en secondes d'un aller-retour : une plus grande période ralentit le balayage)
   oscillation_x = 0.0f;
   oscillation_y = 0.0f;
-  oscillation_period_x = 7.5f;
-  oscillation_period_y = 10.5f;
+  oscillation_period_x = 15.0f;
+  oscillation_period_y = 21.0f;
   oscillation_amplitude = 0.5f;
 
   // temps d'animation, qui avance seulement quand l'animation est active
@@ -203,9 +204,14 @@ void Renderer::setup()
   // nombre d'intervalles de la grille qui représente le plan
   plane_grid_count = 10;
 
-  // nombre d'échantillons lancés à chaque frame (1 : le rayon seul) et ouverture du cône des échantillons (environ 3 degrés)
+  // nombre d'échantillons lancés à chaque frame (1 : le rayon seul)
   sample_count = 1;
-  sample_spread = 0.05f;
+
+  // demi-angle du cône des échantillons (en degrés), ajustable pendant l'exécution entre deux seuils
+  sample_cone_angle = 3.0f;
+  sample_cone_angle_min = 0.5f;
+  sample_cone_angle_max = 30.0f;
+  sample_cone_angle_step = 1.5f;
 
   isAnimationActive = true;
 
@@ -373,11 +379,17 @@ void Renderer::update()
     reflection_direction = reflection(ray_direction, hit_normal[nearest_index]);
 
   // échantillons de Monte Carlo : le premier est le rayon lui-même, les autres ont une direction choisie au hasard
-  // dans un petit cône autour de celle du rayon, comme les rayons qui couvrent la surface d'un pixel dans un raytracer
+  // dans un cône autour de celle du rayon, comme les rayons qui couvrent la surface d'un pixel dans un raytracer
   if (sample_count < 1)
     sample_count = 1;
   if (sample_count > sample_count_max)
     sample_count = sample_count_max;
+
+  // garder l'ouverture du cône entre ses deux seuils
+  if (sample_cone_angle < sample_cone_angle_min)
+    sample_cone_angle = sample_cone_angle_min;
+  if (sample_cone_angle > sample_cone_angle_max)
+    sample_cone_angle = sample_cone_angle_max;
 
   for (index = 0; index < surface_count; ++index)
     sample_hit_count[index] = 0;
@@ -390,6 +402,9 @@ void Renderer::update()
   glm::vec3 u = glm::normalize(glm::cross(axis, ray_direction));
   glm::vec3 v = glm::cross(ray_direction, u);
 
+  // rayon du disque des points visés, à une distance de 1 le long du rayon : tan(demi-angle) = rayon du disque / 1
+  float sample_disk_radius = tan(glm::radians(sample_cone_angle));
+
   for (int sample = 0; sample < sample_count; ++sample)
   {
     if (sample == 0)
@@ -401,10 +416,10 @@ void Renderer::update()
     }
     else
     {
-      // point aléatoire dans un disque de rayon sample_spread, perpendiculaire à la direction du rayon
+      // point aléatoire dans ce disque, perpendiculaire à la direction du rayon
       // (la racine carrée répartit les points uniformément sur le disque, sinon ils seraient plus denses près du centre)
       float angle = ofRandom(0.0f, TWO_PI);
-      float distance = sample_spread * sqrt(ofRandom(0.0f, 1.0f));
+      float distance = sample_disk_radius * sqrt(ofRandom(0.0f, 1.0f));
 
       // direction de l'échantillon : direction du rayon décalée vers ce point aléatoire
       sample_direction[sample] = glm::normalize(ray_direction + u * (distance * cos(angle)) + v * (distance * sin(angle)));
@@ -648,10 +663,10 @@ void Renderer::draw()
   ofDrawBitmapString("nearest  " + (nearest_index != -1 ? surface_name[nearest_index] : string("none")), x, y);
 
   // proportion des échantillons qui frappent chaque surface en premier : c'est l'estimation de Monte Carlo
-  // de la part de chaque surface dans le petit cône couvert par les échantillons (plus il y a d'échantillons, plus elle est stable)
+  // de la part de chaque surface dans le cône couvert par les échantillons (plus il y a d'échantillons, plus elle est stable)
   if (sample_count > 1)
   {
-    string text = "samples  " + ofToString(sample_count);
+    string text = "samples  " + ofToString(sample_count) + "  cone " + ofToString(sample_cone_angle, 1) + " deg";
 
     for (index = 0; index < surface_count; ++index)
       text += "  " + surface_name[index] + " " + ofToString(100.0f * sample_hit_count[index] / sample_count, 0) + "%";

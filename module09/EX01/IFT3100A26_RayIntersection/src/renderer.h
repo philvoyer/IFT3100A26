@@ -15,7 +15,7 @@ const int surface_sphere = 2;
 const int surface_triangle = 3;
 
 // nombre maximal d'échantillons (rayons) lancés à chaque frame
-const int sample_count_max = 256;
+const int sample_count_max = 4096;
 
 class Renderer
 {
@@ -76,8 +76,13 @@ public:
   // légèrement différents sont ajoutés, dont la direction est choisie au hasard autour de celle du rayon (approche de Monte Carlo)
   int sample_count;
 
-  // ouverture du cône dans lequel la direction des échantillons est choisie (tangente de son demi-angle)
-  float sample_spread;
+  // ouverture du cône dans lequel la direction des échantillons est choisie (demi-angle en degrés, entre l'axe du cône et son bord)
+  float sample_cone_angle;
+
+  // seuils minimal et maximal de l'ouverture du cône, et facteur par lequel elle est multipliée ou divisée à chaque touche
+  float sample_cone_angle_min;
+  float sample_cone_angle_max;
+  float sample_cone_angle_step;
 
   // direction, distance de l'impact et surface la plus rapprochée frappée par chaque échantillon (-1 si aucune)
   glm::vec3 sample_direction[sample_count_max];

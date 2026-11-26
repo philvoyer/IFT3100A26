@@ -22,7 +22,7 @@ void Application::setup()
 
 void Application::update()
 {
-  ofSetWindowTitle("intersections rayon-surface (↑↓←→ wasd qe r +- spacebar) samples " + ofToString(renderer.sample_count));
+  ofSetWindowTitle("intersections rayon-surface (↑↓←→ wasd qe r +- cx spacebar) samples " + ofToString(renderer.sample_count) + " cone " + ofToString(renderer.sample_cone_angle, 1) + "°");
 
   time_current = ofGetElapsedTimef();
   time_elapsed = time_current - time_last;
@@ -142,6 +142,20 @@ void Application::keyReleased(int key)
       if (renderer.sample_count > 1)
         renderer.sample_count /= 2;
       ofLog() << "<sample count: " << renderer.sample_count << ">";
+      break;
+
+    case 99: // touche c (concentrer le cône des échantillons, jusqu'à son seuil minimal)
+      renderer.sample_cone_angle /= renderer.sample_cone_angle_step;
+      if (renderer.sample_cone_angle < renderer.sample_cone_angle_min)
+        renderer.sample_cone_angle = renderer.sample_cone_angle_min;
+      ofLog() << "<sample cone angle: " << renderer.sample_cone_angle << ">";
+      break;
+
+    case 120: // touche x (dilater le cône des échantillons, jusqu'à son seuil maximal)
+      renderer.sample_cone_angle *= renderer.sample_cone_angle_step;
+      if (renderer.sample_cone_angle > renderer.sample_cone_angle_max)
+        renderer.sample_cone_angle = renderer.sample_cone_angle_max;
+      ofLog() << "<sample cone angle: " << renderer.sample_cone_angle << ">";
       break;
 
     default:
