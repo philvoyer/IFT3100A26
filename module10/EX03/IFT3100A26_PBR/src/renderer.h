@@ -1,4 +1,4 @@
-// IFT3100A25_PBR/renderer.h
+// IFT3100A26_PBR/renderer.h
 // Classe responsable du rendu de l'application.
 
 #pragma once
@@ -21,7 +21,7 @@ public:
   float material_occlusion;
   float material_brightness;
 
-  glm::vec3 material_fresnel_ior;
+  glm::vec3 material_fresnel_f0;
 
   ofImage texture_diffuse;
   ofImage texture_metallic;
@@ -39,9 +39,9 @@ public:
 
   ofxAssimpModelLoader teapot;
 
-  ofVec3f position_cube;
-  ofVec3f position_sphere;
-  ofVec3f position_teapot;
+  glm::vec3 position_cube;
+  glm::vec3 position_sphere;
+  glm::vec3 position_teapot;
 
   float scale_cube;
   float scale_sphere;

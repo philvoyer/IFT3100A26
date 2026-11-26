@@ -1,4 +1,4 @@
-// IFT3100A25_PBR/renderer.cpp
+// IFT3100A26_PBR/renderer.cpp
 // Classe responsable du rendu de l'application.
 
 #include "renderer.h"
@@ -48,9 +48,9 @@ void Renderer::reset()
   scale_teapot = 0.618f;
 
   // positions initiales des maillages géométriques
-  position_cube.set(-ofGetWidth() * (1.0f / 4.0f), 0.0f, 0.0f);
-  position_sphere.set(0.0f, 0.0f, 0.0f);
-  position_teapot.set(ofGetWidth() * (1.0f / 4.0f), 50.0f, 0.0f);
+  position_cube = glm::vec3(-ofGetWidth() * (1.0f / 4.0f), 0.0f, 0.0f);
+  position_sphere = glm::vec3(0.0f, 0.0f, 0.0f);
+  position_teapot = glm::vec3(ofGetWidth() * (1.0f / 4.0f), 50.0f, 0.0f);
 
   // paramètres du matériau
   material_color_ambient = ofColor(63, 63, 63);
@@ -62,7 +62,7 @@ void Renderer::reset()
   material_occlusion = 1.0f;
   material_brightness = 1.0f;
 
-  material_fresnel_ior = glm::vec3(0.04f, 0.04f, 0.04f);
+  material_fresnel_f0 = glm::vec3(0.04f, 0.04f, 0.04f);
 
   // paramètres de la lumière
   light_color = ofColor(255, 255, 255);
@@ -93,7 +93,8 @@ void Renderer::update()
 
   if (light_motion)
   {
-    // transformer la lumière
+    // positionner la lumière dans l'espace de vue (relative à la caméra) plutôt que dans l'espace du monde,
+    // car le shader compare cette position à celle des fragments, aussi exprimée dans l'espace de vue
     light.setGlobalPosition(
       ofMap(ofGetMouseX() / (float) ofGetWidth(), 0.0f, 1.0f, -center_x, center_x),
       ofMap(ofGetMouseY() / (float) ofGetHeight(), 0.0f, 1.0f, -center_y, center_y),
@@ -112,7 +113,7 @@ void Renderer::update()
   shader.setUniform1f("material_roughness", material_roughness);
   shader.setUniform1f("material_occlusion", material_occlusion);
 
-  shader.setUniform3f("material_fresnel_ior", material_fresnel_ior);
+  shader.setUniform3f("material_fresnel_f0", material_fresnel_f0);
 
   shader.setUniformTexture("texture_diffuse", texture_diffuse.getTexture(), 1);
   shader.setUniformTexture("texture_metallic", texture_metallic.getTexture(), 2);
@@ -154,7 +155,7 @@ void Renderer::draw()
 
     ofPushMatrix();
 
-      // positionnner le cube
+      // positionner le cube
       ofTranslate(
         position_cube.x,
         position_cube.y,

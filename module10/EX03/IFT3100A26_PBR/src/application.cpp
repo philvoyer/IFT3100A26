@@ -1,4 +1,4 @@
-// IFT3100A25_PBR/application.cpp
+// IFT3100A26_PBR/application.cpp
 // Classe principale de l'application.
 
 #include "application.h"
@@ -41,7 +41,7 @@ void Application::setup()
   group_material_factor.add(slider_occlusion);
   group_material_factor.add(slider_brightness);
 
-  group_material_factor.add(slider_fresnel_ior);
+  group_material_factor.add(slider_fresnel_f0);
 
   gui.add(&group_material_factor);
 
@@ -70,6 +70,9 @@ void Application::setup()
   button_reset.setup("reset");
   button_reset.addListener(this, &Application::button_reset_pressed);
   gui.add(&button_reset);
+
+  // initialiser le temps du dernier frame pour le calcul du temps écoulé
+  time_last = ofGetElapsedTimef();
 }
 
 void Application::reset()
@@ -85,7 +88,7 @@ void Application::reset()
   slider_occlusion.set("occlusion", renderer.material_occlusion, 0.0f, 5.0f);
   slider_brightness.set("brightness", renderer.material_brightness, 0.0f, 5.0f);
 
-  slider_fresnel_ior.set("fresnel ior", renderer.material_fresnel_ior, glm::vec3(0.0f), glm::vec3(1.0f));
+  slider_fresnel_f0.set("fresnel f0", renderer.material_fresnel_f0, glm::vec3(0.0f), glm::vec3(1.0f));
 
   color_picker_light_color.set("color", renderer.light_color, ofColor(0, 0), ofColor(255, 255));
   slider_light_intensity.set("intensity", renderer.light_intensity, 0.0f, 10.0f);
@@ -129,7 +132,7 @@ void Application::update()
   renderer.material_occlusion = slider_occlusion;
   renderer.material_brightness = slider_brightness;
 
-  renderer.material_fresnel_ior = slider_fresnel_ior;
+  renderer.material_fresnel_f0 = slider_fresnel_f0;
 
   renderer.light_color = color_picker_light_color;
   renderer.light_intensity = slider_light_intensity;

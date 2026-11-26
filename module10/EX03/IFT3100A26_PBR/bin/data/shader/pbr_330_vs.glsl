@@ -1,4 +1,4 @@
-// IFT3100A25 ~ pbr_330_vs.glsl
+// IFT3100A26 ~ pbr_330_vs.glsl
 
 #version 330
 

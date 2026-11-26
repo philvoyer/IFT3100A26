@@ -1,4 +1,4 @@
-// IFT3100A25 ~ pbr_330_fs.glsl
+// IFT3100A26 ~ pbr_330_fs.glsl
 
 #version 330
 
@@ -33,8 +33,8 @@ uniform float material_roughness;
 // facteur d'occlusion ambiante
 uniform float material_occlusion;
 
-// indice de réfraction de l'effet de Fresnel;
-uniform vec3 material_fresnel_ior;
+// réflectance de Fresnel à incidence nulle (f0)
+uniform vec3 material_fresnel_f0;
 
 // facteur d'exposition
 uniform float tone_mapping_exposure;
@@ -57,7 +57,7 @@ uniform sampler2D texture_roughness;
 // texture d'occlusion ambiante
 uniform sampler2D texture_occlusion;
 
-// position d'une source de lumière
+// position d'une source de lumière dans l'espace de vue (même espace que surface_position)
 uniform vec3 light_position;
 
 // couleur de la source de lumière
@@ -80,16 +80,17 @@ float trowbridge_reitz(vec3 n, vec3 h, float roughness)
 }
 
 // fonction géométrique pour calculer l'impact de l'occlusion et de l'ombrage des microfacettes (Schlick-Beckmann)
+// (la valeur de k est celle d'Unreal Engine 4 pour les lumières directes, comme la lumière ponctuelle de cet exemple)
 float schlick_beckmann(float costheta, float roughness)
 {
-  float r = (roughness + 1.0);
-  float k = (r * r) / 8.0;
+  float k = (roughness + 1.0) * (roughness + 1.0) / 8.0;
   float numerator = costheta;
   float denominator = costheta * (1.0 - k) + k;
   return numerator / denominator;
 }
 
 // fonction géométrique avec occlusion et ombrage combinés (méthode de Smith)
+// (la valeur de k est calculée à partir de la rugosité dans la fonction schlick_beckmann)
 float smith(vec3 n, vec3 l, vec3 v, float roughness)
 {
   float ndl = max(dot(n, l), 0.0);
@@ -99,7 +100,7 @@ float smith(vec3 n, vec3 l, vec3 v, float roughness)
   return shadow * occlusion;
 }
 
-// fonction qui calcul l'effet de Fresnel
+// fonction qui calcule l'effet de Fresnel
 vec3 schlick_fresnel(float costheta, vec3 f0)
 {
   return f0 + (1.0 - f0) * pow(1.0 - costheta, 5.0);
@@ -134,28 +135,32 @@ vec3 brdf_cook_torrance()
   // calculer la direction de la surface vers la caméra (v)
   vec3 v = normalize(-surface_position);
 
-  // calculer la direction du demi-vecteur de réflection (h) en fonction du vecteur de lumière (l) et de vue (v)
+  // calculer la direction du demi-vecteur de réflexion (h) en fonction du vecteur de lumière (l) et de vue (v)
   vec3 h = normalize(l + v);
 
-  // échantillonage de la texture diffuse
+  // échantillonnage de la texture diffuse
   vec3 texture_sample_diffuse = texture(texture_diffuse, surface_texcoord).rgb;
 
   // conversion de l'échantillon de la texture diffuse de l'espace gamma vers l'espace linéaire
-  texture_sample_diffuse = pow(texture_sample_diffuse, vec3(tone_mapping_gamma));
+  // (avec le gamma de 2.2 de l'espace sRGB de l'image, indépendant du facteur gamma de sortie)
+  texture_sample_diffuse = pow(texture_sample_diffuse, vec3(2.2));
 
-  // échantillonage de la texture de métallicité
+  // échantillonnage de la texture de métallicité
   float texture_sample_metallic = texture(texture_metallic, surface_texcoord).r;
 
-  // échantillonage de la texture de rugosité
+  // échantillonnage de la texture de rugosité
   float texture_sample_roughness = texture(texture_roughness, surface_texcoord).r;
 
-  // échantillonage de la texture d'occlusion
+  // échantillonnage de la texture d'occlusion
   float texture_sample_occlusion = texture(texture_occlusion, surface_texcoord).r;
 
-  // facteurs du matériau combinées avec les échantillons de couleur
+  // facteurs du matériau combinés avec les échantillons de couleur
   float metallic = material_metallic * texture_sample_metallic;
   float roughness = material_roughness * texture_sample_roughness;
   float occlusion = material_occlusion * texture_sample_occlusion;
+
+  // borner la rugosité, parce qu'une rugosité nulle cause une division 0 / 0 dans la fonction de Trowbridge-Reitz quand n et h sont alignés
+  roughness = max(roughness, 0.05);
 
   // combiner l'échantillon de la texture diffuse avec la couleur diffuse du matériau
   vec3 albedo = material_color_diffuse * texture_sample_diffuse;
@@ -172,8 +177,8 @@ vec3 brdf_cook_torrance()
   // calculer la radiance de la lumière
   vec3 radiance = light_color * light_attenuation * light_intensity;
 
-  // calculer le niveau de réflexion diffuse (n • l)
-  float diffuse_reflection = max(dot(n, l), 0.0);
+  // calculer le facteur cosinus (n • l) de l'équation de rendu, qui s'applique aux réflexions diffuse et spéculaire
+  float ndl = max(dot(n, l), 0.0);
 
   // calculer la distribution des microfacettes
   float d = trowbridge_reitz(n, h, roughness);
@@ -182,37 +187,37 @@ vec3 brdf_cook_torrance()
   float g = smith(n, l, v, roughness);
 
   // reflexion de la surface avec un angle d'incidence nul
-  vec3 f0 = material_fresnel_ior;
+  vec3 f0 = material_fresnel_f0;
 
-  // moduler l'effet de Fresnel ave la couleur diffuse en fonction du facteur de métallicité
+  // moduler l'effet de Fresnel avec la couleur diffuse en fonction du facteur de métallicité
   f0 = mix(f0, albedo, metallic);
 
   // calculer l'effet de Fresnel
   vec3 f = schlick_fresnel(max(dot(h, v), 0.0), f0);
 
   // calculer le numérateur de l'équation (produit des fonctions d, f et g)
-  vec3 coor_torrance_numerator = d * f * g;
+  vec3 cook_torrance_numerator = d * f * g;
 
   // calculer le dénominateur de l'équation (facteur de normalisation)
-  float coor_torrance_denominator = 4.0 * max(dot(n, v), 0.0) * diffuse_reflection;
+  float cook_torrance_denominator = 4.0 * max(dot(n, v), 0.0) * ndl;
 
-  // calculer le résultat de l'équation avec le numérateur et de dénominateur
-  vec3 specular = coor_torrance_numerator / max(coor_torrance_denominator, 0.001);
+  // calculer le résultat de l'équation avec le numérateur et le dénominateur
+  vec3 specular = cook_torrance_numerator / max(cook_torrance_denominator, 0.001);
 
   // mixer avec la couleur spéculaire du matériau
   specular = specular * material_color_specular;
 
-  // calculer le ratio de réflection de la lumière à partir de l'effet de Fresnel (contribution spéculaire)
+  // calculer le ratio de réflexion de la lumière à partir de l'effet de Fresnel (contribution spéculaire)
   vec3 ks = f;
 
-  // calculer le ratio de réfraction (contribution diffuse) proportionnelement à la contribution spéculaire
+  // calculer le ratio de réfraction (contribution diffuse) proportionnellement à la contribution spéculaire
   vec3 kd = vec3(1.0) - ks;
 
   // pondérer la contribution diffuse en fonction du niveau de métallicité de la surface
   kd *= 1.0 - metallic;
 
   // calculer la réflectance de la fonction BRDF de Cook-Torrance
-  vec3 reflectance = (kd * albedo / PI + specular) * radiance * diffuse_reflection;
+  vec3 reflectance = (kd * albedo / PI + specular) * radiance * ndl;
 
   // mixer la couleur des composantes de réflexion
   vec3 color = (ambient + reflectance) * material_brightness;
@@ -227,7 +232,8 @@ void main()
   vec3 color = brdf_cook_torrance();
 
   // ajustement de la couleur en fonction du facteur d'exposition
-  color = vec3(1.0) - exp(-color * tone_mapping_exposure);
+  // (une simple multiplication, puisque le mappage tonal est fait par la fonction suivante)
+  color = color * tone_mapping_exposure;
 
   // mappage tonal de la couleur HDR vers LDR
   if (tone_mapping_toggle)
@@ -238,6 +244,6 @@ void main()
   // conversion de couleur de l'espace linéaire vers l'espace gamma
   color = pow(color, vec3(1.0 / tone_mapping_gamma));
 
-  // assigner la couleur final du fragment dans un attribut en sortie
+  // assigner la couleur finale du fragment dans un attribut en sortie
   fragment_color = vec4(color, 1.0);
 }

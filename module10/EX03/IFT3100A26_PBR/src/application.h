@@ -1,4 +1,4 @@
-// IFT3100A25_PBR/application.h
+// IFT3100A26_PBR/application.h
 // Classe principale de l'application.
 
 #pragma once
@@ -28,7 +28,7 @@ class Application : public ofBaseApp
   ofParameter<float> slider_occlusion;
   ofParameter<float> slider_brightness;
 
-  ofParameter<glm::vec3> slider_fresnel_ior;
+  ofParameter<glm::vec3> slider_fresnel_f0;
 
   ofParameter<ofColor> color_picker_light_color;
 
