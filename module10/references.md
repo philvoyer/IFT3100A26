@@ -47,6 +47,40 @@ https://fr.wikipedia.org/wiki/Approximation_de_Schlick
 https://en.wikipedia.org/wiki/Ambient_occlusion  
 https://fr.wikipedia.org/wiki/Occlusion_ambiante
 
+## Radiométrie
+
+https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Radiometry
+
+## BRDF et équation de rendu
+
+https://nvlpubs.nist.gov/nistpubs/Legacy/MONO/nbsmonograph160.pdf
+
+https://doi.org/10.1145/15886.15902  
+https://doi.org/10.1145/15886.15901
+
+https://graphics.stanford.edu/papers/veach_thesis/
+
+https://pbr-book.org/4ed/Radiometry,_Spectra,_and_Color/Surface_Reflection.html  
+https://pbr-book.org/4ed/Light_Transport_I_Surface_Reflection/The_Light_Transport_Equation
+
+## Ward
+
+https://doi.org/10.1145/142920.134078
+
+## Cook-Torrance et GGX
+
+https://graphics.pixar.com/library/ReflectanceModel
+
+https://www.cs.cornell.edu/~srm/publications/EGSR07-btdf.html
+
+https://pharr.org/matt/blog/2022/05/06/trowbridge-reitz
+
+https://boksajak.github.io/files/CrashCourseBRDF.pdf
+
+## Occlusion ambiante
+
+https://doi.org/10.1145/1281500.1281671
+
 ## Divers
 
 https://graphicrants.blogspot.com/2013/08/specular-brdf-reference.html
@@ -122,5 +156,23 @@ https://en.wikipedia.org/wiki/Deferred_shading
 http://www.realtimerendering.com/blog/deferred-lighting-approaches/
 
 https://gamedevelopment.tutsplus.com/articles/forward-rendering-vs-deferred-rendering--gamedev-12342
+
+https://learnopengl.com/Advanced-Lighting/Deferred-Shading
+
+https://www.intel.com/content/www/us/en/developer/articles/technical/deferred-rendering-for-current-and-future-rendering-pipelines.html
+
+https://www.ea.com/frostbite/news/directx-11-rendering-in-battlefield-3
+
+https://diglib.eg.org/handle/10.2312/conf.EG2012.short.005-008  
+https://takahiroharada.github.io/forward+
+
+https://research.chalmers.se/en/publication/161725  
+https://research.chalmers.se/en/publication/161726
+
+https://dev.epicgames.com/documentation/en-us/unreal-engine/forward-shading-renderer-in-unreal-engine
+
+https://docs.unity3d.com/Manual/urp/rendering-paths-comparison.html
+
+https://docs.godotengine.org/en/4.5/engine_details/architecture/internal_rendering_architecture.html
 
 https://renderdoc.org
